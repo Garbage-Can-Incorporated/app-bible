@@ -23,7 +23,7 @@
 
 body {
   display: flex;
-  font-family: 'Varela Round', sans-serif;
+  font-family: 'Varela Round', sans-serif!important;
   margin: 0;
   padding: 0;
   background-color: var(--white);
@@ -32,4 +32,37 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   color: var(--dark-grey)!important;
+}
+
+app-root {
+  width: inherit;
+  height: inherit;
+}
+
+.__grey {
+  /* background-color: var(--light-red);
+  box-shadow: 0 0 5px .5px var(--dark); */
+  background-color: #f8f9fa;
+  box-shadow: 0 0 3px 1px var(--dark-red);
+  /* transition: 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53); */
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
