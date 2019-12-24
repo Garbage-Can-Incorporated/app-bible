@@ -12,5 +12,29 @@
 </head>
 <body>
   <app-root></app-root>
+
+  <script src="./assets/vendor/jquery/jquery-3.4.1.min.js"></script>
+  <script src="./assets/vendor/bootstrap/popper.min.js"></script>
+  <script src="./assets/vendor/bootstrap/bootstrap.min.js"></script>
+
+  <script>
+    const el = '.__app-scripture-toolbar';
+    const scripToolbar = document.querySelector(el);
+
+    $(function() {
+      $(window).scroll(function () {
+          if ($(this).scrollTop() > 50) {
+            if (scripToolbar) {
+              scripToolbar.classList.add('__grey');
+            }
+          }
+          if ($(this).scrollTop() < 50) {
+            if (scripToolbar) {
+              scripToolbar.classList.remove('__grey');
+            }
+          }
+      });
+    });
+  </script>
 </body>
 </html>

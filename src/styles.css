@@ -1,4 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@font-face {
+  font-family: "Varela Round"!important;
+  src: url("./assets/fonts/varela/varela_round-regular.ttf") format("truetype");
+}
+
+:root {
+  --cover-height: 25%;
+  --scripture-toolbar-height: 60px;
+  --light-grey: #eeebebf6;
+  --dark-grey: grey;
+  --dark-red: #260403;
+  --light-red: #4c0503;
+  --light-red-1x: #bf0803;
+  --player-bottom: 30px;
+  --player-height: 200px;
+  --player-width: 60px;
+  --player-right: 20px;
+  --player-bottom-radius: 30px;
+}
+
+
+body {
+  display: flex;
+  font-family: 'Varela Round', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--white);
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: var(--dark-grey)!important;
+}
