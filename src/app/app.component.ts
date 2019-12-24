@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app-bible';
+
+  constructor() { }
+
+  public onActivated(e): void {
+    console.log({e});
+  }
+
+  public onDeactivated(e): void {
+    console.log({e});
+  }
 }
