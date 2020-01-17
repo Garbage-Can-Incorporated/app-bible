@@ -43,6 +43,15 @@ app-root {
   padding-bottom: 0!important;
 }
 
+/* typeahead modiification */
+typeahead-container {
+  width: 100%;
+}
+
+typeahead-container button {
+  height: 40px;
+}
+
 .__grey {
   /* background-color: var(--light-red);
   box-shadow: 0 0 5px .5px var(--dark); */
