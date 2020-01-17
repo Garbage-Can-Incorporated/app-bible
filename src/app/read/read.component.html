@@ -6,18 +6,46 @@
   <div class="d-flex mx-auto my-auto __app--scripture-console">
     <mat-form-field class="mr-2 ml-auto" appearance="outline">
       <mat-label>book</mat-label>
-      <input matInput (keydown)="searchScripture()" [(ngModel)]="scripture.book" placeholder="book" [type]="'text'" [typeahead]="bookList"
-       [isAnimated]="true" [adaptivePosition]="true" [typeaheadSingleWords]="true">
+      <input 
+      matInput 
+      (keydown)="searchScripture()" 
+      [(ngModel)]="scripture.book" 
+      placeholder="book" 
+      [type]="'text'" 
+      [typeahead]="bookList"
+       [isAnimated]="true" 
+       [adaptivePosition]="true" 
+       [typeaheadSingleWords]="true">
     </mat-form-field>
 
     <mat-form-field class="mr-2" appearance="outline">
       <mat-label>chapter</mat-label>
-      <input matInput (keydown)="searchScripture()" [(ngModel)]="scripture.chapter" placeholder="chapter" [type]="'number'" [min]="1">
+      <input
+        matInput
+        (keydown)="searchScripture()" 
+        [(ngModel)]="scripture.chapter"
+        placeholder="chapter"
+        [type]="'number'"
+        [min]="1"
+        [typeahead]="chapterList"
+        [isAnimated]="true"
+        [adaptivePosition]="true"
+        [typeaheadSingleWords]="true">
     </mat-form-field>
 
     <mat-form-field class="mr-auto" appearance="outline">
       <mat-label>verse</mat-label>
-      <input matInput (keydown)="searchScripture()" [(ngModel)]="scripture.verse" placeholder="verse" [type]="'number'" [min]="1">
+      <input 
+      matInput 
+      (keydown)="searchScripture()" 
+      [(ngModel)]="scripture.verse" 
+      placeholder="verse" 
+      [type]="'number'" 
+      [min]="1" 
+      [typeahead]="verseList"
+      [isAnimated]="true" 
+      [adaptivePosition]="true" 
+      [typeaheadSingleWords]="true">
     </mat-form-field>
   </div>
 </div>

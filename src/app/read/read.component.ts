@@ -19,6 +19,8 @@ export class ReadComponent implements OnInit {
     'exodus'
   ];
   public playerState = <boolean>false;
+  public chapterList: number[] = [1, 2, 3];
+  public verseList: number[] = [1, 2, 3];
 
   constructor() { }
 
