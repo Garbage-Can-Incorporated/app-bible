@@ -120,3 +120,14 @@
   /* box-shadow: 0 0 3px 1px var(--dark-grey); */
   z-index: 1000;
 }
+
+/* breakpoints */
+@media (min-width: 678px) {
+  .__app--scripture-console mat-form-field:nth-child(n+1) {
+    max-width: 150px;
+  }
+
+  .__app--scripture-console mat-form-field:first-of-type {
+    max-width: 50%;
+  }
+}
