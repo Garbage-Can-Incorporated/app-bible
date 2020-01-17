@@ -3,19 +3,30 @@
 </div>
 
 <div class="d-flex w-100 mt-auto __app-scripture-toolbar">
-  <form class="mx-auto">
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Form Title</mat-label>
-      <input matInput placeholder="Book">
+  <div class="d-flex mx-auto my-auto __app--scripture-console">
+    <mat-form-field class="mr-2 ml-auto" appearance="outline">
+      <mat-label>book</mat-label>
+      <input matInput [(ngModel)]="scripture.book" placeholder="book" [type]="'text'" [typeahead]="bookList"
+       [isAnimated]="true">
     </mat-form-field>
-  </form>
+
+    <mat-form-field class="mr-2" appearance="outline">
+      <mat-label>chapter</mat-label>
+      <input matInput [(ngModel)]="scripture.chapter" placeholder="chapter" [type]="'number'" [min]="1">
+    </mat-form-field>
+
+    <mat-form-field class="mr-auto" appearance="outline">
+      <mat-label>verse</mat-label>
+      <input matInput [(ngModel)]="scripture.verse" placeholder="verse" [type]="'number'" [min]="1">
+    </mat-form-field>
+  </div>
 </div>
 
 <!-- <div class="d-flex __app-scripture-search-pane"></div> -->
 
 <div class="d-flex w-100 __app-scriptures-container">
   <span class="d-flex __app-scriptures-book text-uppercase mt-3">
-    <p class="my-0 ml-0 mr-2 text-capitalize">The book of</p>
+    <p class="my-auto ml-0 mr-2 text-capitalize">The book of</p>
     Romans
   </span>
 

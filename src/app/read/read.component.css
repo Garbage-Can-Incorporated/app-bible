@@ -25,6 +25,15 @@
   transition: all .5s ease-in;
   box-shadow: 0 0 3px .5px var(--dark-red);
 }
+
+.__app--scripture-console mat-form-field:nth-child(n+1) {
+  max-width: 100px;
+}
+
+.__app--scripture-console mat-form-field:first-of-type {
+  max-width: 40%;
+}
+
 .__app-scriptures-container,
 .__app-scriptures-player,
 .__app-scriptures-item {
@@ -39,6 +48,10 @@
 .__app-scriptures-book {
   font-size: 16px;
   font-weight: 600;
+}
+
+.__app-scriptures-book p {
+  line-height: normal;  
 }
 
 .__app-scriptures-item {
