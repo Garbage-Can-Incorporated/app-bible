@@ -18,6 +18,7 @@ export class ReadComponent implements OnInit {
     'genesis',
     'exodus'
   ];
+  public playerState = <boolean>false;
 
   constructor() { }
 
@@ -42,5 +43,9 @@ export class ReadComponent implements OnInit {
     for (let i = 0; i < children.length; i++) {
       el.children[i].classList.add('d-none');
     }
+  }
+
+  public togglePlayerState(): void {
+    this.playerState = !this.playerState;
   }
 }
