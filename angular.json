@@ -33,7 +33,7 @@
               "src/assets/vendor/jquery/jquery-3.4.1.min.js",
               "src/assets/vendor/bootstrap/popper.min.js",
               "src/assets/vendor/bootstrap/bootstrap.min.js",
-              "./node_modules/material-design-lite/material.min.jsH"
+              "./node_modules/material-design-lite/material.min.js"
             ]
           },
           "configurations": {
