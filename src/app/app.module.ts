@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { AppComponent } from './app.component';
 import { ReadComponent } from './read/read.component';
@@ -23,7 +24,8 @@ import { ReadComponent } from './read/read.component';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    TypeaheadModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
