@@ -70,6 +70,15 @@
   font-size: 10px;
 }
 
+.__app--reactions--container {
+  transition: ease-out 1s ease-in 1s;
+}
+
+.__app--reactions--container i,
+.__app-scriptures-player i {
+  cursor: pointer;
+}
+
 .__app-scriptures-item:first-of-type {
   margin-top: .4rem;
 }

@@ -31,7 +31,13 @@ export class ReadComponent implements OnInit {
   public showReactionConsole(el: any): void {
     console.log({el});
 
-    el.classList.toggle('d-none');
-    el.classList.toggle('d-flex');
+    el.classList.remove('invisible');
+    el.classList.toggle('visible');
+    // el.classList.toggle('d-flex');
+  }
+
+  public hideReactionConsole(el: any): void {
+    el.classList.remove('visible');
+    el.classList.toggle('invisible');
   }
 }
