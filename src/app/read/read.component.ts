@@ -29,15 +29,18 @@ export class ReadComponent implements OnInit {
   }
 
   public showReactionConsole(el: any): void {
-    console.log({el});
+    const children: HTMLCollection[] = el.children;
 
-    el.classList.remove('invisible');
-    el.classList.toggle('visible');
-    // el.classList.toggle('d-flex');
+    for (let i = 0; i < children.length; i++) {
+      el.children[i].classList.remove('d-none');
+    }
   }
 
   public hideReactionConsole(el: any): void {
-    el.classList.remove('visible');
-    el.classList.toggle('invisible');
+    const children: HTMLCollection[] = el.children;
+
+    for (let i = 0; i < children.length; i++) {
+      el.children[i].classList.add('d-none');
+    }
   }
 }
