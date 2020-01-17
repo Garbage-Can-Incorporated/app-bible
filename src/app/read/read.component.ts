@@ -11,5 +11,4 @@ export class ReadComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
