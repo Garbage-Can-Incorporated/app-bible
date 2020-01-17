@@ -1,10 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { IScriptures } from '../interfaces/i-scriptures';
 
-export interface IScripture {
-  book: string;
-  chapter: number;
-  verse: number;
-}
 
 @Component({
   selector: 'app-read',
@@ -12,12 +8,12 @@ export interface IScripture {
   styleUrls: ['./read.component.css']
 })
 export class ReadComponent implements OnInit {
-  private _scripture: IScripture =  {
+  private _scripture: IScriptures =  {
     book: 'genesis',
     chapter: 1,
     verse: 1
   };
-  public scripture: IScripture = { ...this._scripture };
+  public scripture: IScriptures = { ...this._scripture };
   public bookList: any = [
     'genesis',
     'exodus'
@@ -30,5 +26,12 @@ export class ReadComponent implements OnInit {
 
   public searchScripture(): void {
     console.log({scripture: this.scripture, _scripture: this._scripture});
+  }
+
+  public showReactionConsole(el: any): void {
+    console.log({el});
+
+    el.classList.toggle('d-none');
+    el.classList.toggle('d-flex');
   }
 }
