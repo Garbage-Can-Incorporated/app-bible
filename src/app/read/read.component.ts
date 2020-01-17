@@ -17,7 +17,7 @@ export class ReadComponent implements OnInit {
     chapter: 1,
     verse: 1
   };
-  public scripture: IScripture = this._scripture;
+  public scripture: IScripture = { ...this._scripture };
   public bookList: any = [
     'genesis',
     'exodus'
@@ -26,5 +26,9 @@ export class ReadComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public searchScripture(): void {
+    console.log({scripture: this.scripture, _scripture: this._scripture});
   }
 }
