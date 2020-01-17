@@ -39,6 +39,10 @@ app-root {
   height: inherit;
 }
 
+.mat-form-field-wrapper {
+  padding-bottom: 0!important;
+}
+
 .__grey {
   /* background-color: var(--light-red);
   box-shadow: 0 0 5px .5px var(--dark); */
