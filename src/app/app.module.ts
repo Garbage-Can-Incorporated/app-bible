@@ -6,10 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { HttpClientModule } from '@angular/common/http';
+
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { AppComponent } from './app.component';
 import { ReadComponent } from './read/read.component';
+
+import { ScripturesService } from './services/scriptures.service';
+import { ResourceHandlerService } from './services/resource-handler.service'; 
 
 @NgModule({
   declarations: [
@@ -25,9 +30,10 @@ import { ReadComponent } from './read/read.component';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ScripturesService, ResourceHandlerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
