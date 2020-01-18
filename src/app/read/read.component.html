@@ -8,11 +8,13 @@
       <mat-label>book</mat-label>
       <input 
       matInput 
-      (keydown)="searchScripture()" 
+      (keyup)="searchScripture()"
+      (mouseout)="testFn($event)"
       [(ngModel)]="scripture.book" 
       placeholder="book" 
       [type]="'text'" 
       [typeahead]="bookList"
+      (typeaheadOnSelect)="typeaheadOnSelect($event, 'b')"
       [typeaheadScrollable]="true"
       [typeaheadOptionsInScrollableView]="5"
       [typeaheadOptionsLimit]="bookList.length"
@@ -26,12 +28,14 @@
       <mat-label>chapter</mat-label>
       <input
         matInput
-        (keydown)="searchScripture()" 
+        (keyup)="searchScripture()"
+        (mouseout)="testFn($event)" 
         [(ngModel)]="scripture.chapter"
         placeholder="chapter"
         [type]="'number'"
         [min]="1"
         [typeahead]="chapterList"
+        (typeaheadOnSelect)="typeaheadOnSelect($event, 'c')"
         [typeaheadLatinize]="false"
         [typeaheadScrollable]="true"
         [typeaheadOptionsLimit]="chapterList.length"
@@ -45,13 +49,14 @@
       <mat-label>verse</mat-label>
       <input 
       matInput 
-      (keydown)="searchScripture()" 
+      (keyup)="searchScripture()"
+      (mouseout)="testFn($event)" 
       [(ngModel)]="scripture.verse" 
       placeholder="verse" 
       [type]="'number'"
       [min]="1"
       [typeahead]="verseList"
-      [typeahead]="chapterList"
+      (typeaheadOnSelect)="typeaheadOnSelect($event, 'v')"
       [typeaheadLatinize]="false"
       [typeaheadScrollable]="true"
       [typeaheadOptionsLimit]="chapterList.length"
@@ -71,7 +76,7 @@
     Romans
   </span>
 
-  <div class="d-flex w-100 __app-scriptures-item" (mouseenter)="showReactionConsole(reactionConsole)" (mouseleave)="hideReactionConsole(reactionConsole)">
+  <div class="d-flex w-100 __app-scriptures-item" (mouseenter)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
     <div class="text-left w-100 form-inline">
       <p class="my-0 mr-2 mb-2 font-weight-bold">1</p>
       <span class="d-flex"> The earth is the Lord's and its fulness thereof... </span>

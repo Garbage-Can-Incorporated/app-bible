@@ -19,8 +19,8 @@ export class ReadComponent implements OnInit {
   public scripture: IScriptures = { ...this._scripture };
   public bookList: Array<string> = [];
   public playerState = <boolean>false;
-  public chapterList: string[] = [];
-  public verseList: string[] = [];
+  public chapterList: number[] = [];
+  public verseList: number[] = [];
 
   constructor(
     private _scripturesProvider: ScripturesService
@@ -34,7 +34,13 @@ export class ReadComponent implements OnInit {
   }
 
   public searchScripture(): void {
-    const {book} = this.scripture;
+    const {book, verse, chapter} = this.scripture;
+
+    console.log({book, verse, chapter}, 'keyup');
+  }
+
+  public testFn(e): void {
+    console.log({s: this.scripture}, 'mouseleave');
   }
 
   private populateVerseList(): void {
@@ -42,7 +48,6 @@ export class ReadComponent implements OnInit {
     .getVerseLength()
     .subscribe(
       (data) => {
-        console.log({data});
         this.verseList = this.generateListNumbers(data);
       }
     );
@@ -58,10 +63,9 @@ export class ReadComponent implements OnInit {
     );
   }
 
-  private generateListNumbers(data: any): void {
-    const res: string[] = Array.from({ length: data + 1}, (_, i) => i);
+  private generateListNumbers(data: any): number[] {
+    const res: number[] = Array.from({ length: data + 1}, (_, i) => i);
     res.shift();
-    console.log({res});
     return res;
   }
 
@@ -76,6 +80,23 @@ export class ReadComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  public typeaheadOnSelect(e: any, key: string): void {
+    console.log({e});
+    if (key === 'b') {
+      this.scripture.book = e.value;
+    }
+
+    if (key === 'c') {
+      this.scripture.chapter = e.value;
+    }
+
+    if (key === 'v') {
+      this.scripture.verse = e.value;
+    }
+
+    console.log({s: this.scripture}, 'typeaheadselect');
   }
 
   public showReactionConsole(el: any): void {
