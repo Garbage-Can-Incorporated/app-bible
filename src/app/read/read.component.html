@@ -13,6 +13,7 @@
       placeholder="book" 
       [type]="'text'" 
       [typeahead]="bookList"
+      [typeaheadAsync]="true"
        [isAnimated]="true" 
        [adaptivePosition]="true" 
        [typeaheadSingleWords]="true">
@@ -40,7 +41,7 @@
       (keydown)="searchScripture()" 
       [(ngModel)]="scripture.verse" 
       placeholder="verse" 
-      [type]="'number'" 
+      [type]="'number'"
       [min]="1" 
       [typeahead]="verseList"
       [isAnimated]="true" 

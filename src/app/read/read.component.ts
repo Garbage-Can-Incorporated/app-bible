@@ -1,7 +1,8 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { IScriptures } from '../interfaces/i-scriptures';
 
-
+import { ScripturesService } from '../services/scriptures.service';
 @Component({
   selector: 'app-read',
   templateUrl: './read.component.html',
@@ -22,9 +23,22 @@ export class ReadComponent implements OnInit {
   public chapterList: number[] = [1, 2, 3];
   public verseList: number[] = [1, 2, 3];
 
-  constructor() { }
+  constructor(
+    private _scripturesProvider: ScripturesService
+  ) { }
 
   ngOnInit() {
+    this._scripturesProvider.getBible();
+    this._scripturesProvider
+    .getBookList()
+    .subscribe(
+      (data) => {
+        this.bookList.push(data.toString());
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   public searchScripture(): void {
