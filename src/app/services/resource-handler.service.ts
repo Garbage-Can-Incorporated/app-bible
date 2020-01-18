@@ -13,24 +13,13 @@ export class ResourceHandlerService {
     private http: HttpClient
   ) { }
 
-  private getResource(): Observable<any> {
-    return this.http.get(this.url, {
+  public fetchResource(): Observable<any> {
+    return this.http.get<any>(this.url, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
       observe: 'body',
       responseType: 'json',
     });
-  }
-
-  public logResource(): void {
-    this.getResource().subscribe(
-      (data) => {
-        console.log({ data });
-      },
-      (error) => {
-        console.log({ error });
-      }
-    );
   }
 }
