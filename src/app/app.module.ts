@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
 import { ReadComponent } from './read/read.component';
 
 import { ScripturesService } from './services/scriptures.service';
-import { ResourceHandlerService } from './services/resource-handler.service'; 
+import { ResourceHandlerService } from './services/resource-handler.service';
 
 @NgModule({
   declarations: [
