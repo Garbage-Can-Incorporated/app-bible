@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Observable } from 'rxjs';
+
 import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
@@ -15,34 +17,65 @@ export class ReadComponent implements OnInit {
     verse: 1
   };
   public scripture: IScriptures = { ...this._scripture };
-  public bookList: any = [
-    'genesis',
-    'exodus'
-  ];
+  public bookList: Array<string> = [];
   public playerState = <boolean>false;
-  public chapterList: number[] = [1, 2, 3];
-  public verseList: number[] = [1, 2, 3];
+  public chapterList: string[] = [];
+  public verseList: string[] = [];
 
   constructor(
     private _scripturesProvider: ScripturesService
   ) { }
 
   ngOnInit() {
-    this._scripturesProvider.getBible();
+    this.populateBookList();
+
+    this.populateChapterList();
+    this.populateVerseList();
+  }
+
+  public searchScripture(): void {
+    const {book} = this.scripture;
+  }
+
+  private populateVerseList(): void {
     this._scripturesProvider
-    .getBookList()
+    .getVerseLength()
     .subscribe(
       (data) => {
-        this.bookList.push(data.toString());
-      },
-      (error) => {
-        console.log(error);
+        console.log({data});
+        this.verseList = this.generateListNumbers(data);
       }
     );
   }
 
-  public searchScripture(): void {
-    console.log({scripture: this.scripture, _scripture: this._scripture});
+  private populateChapterList(): void {
+    this._scripturesProvider
+    .getChapterLength()
+    .subscribe(
+      (data: number) => {
+        this.chapterList = this.generateListNumbers(data);
+      }
+    );
+  }
+
+  private generateListNumbers(data: any): void {
+    const res: string[] = Array.from({ length: data + 1}, (_, i) => i);
+    res.shift();
+    console.log({res});
+    return res;
+  }
+
+  private populateBookList(): void {
+    this._scripturesProvider
+      .getBookList()
+      .subscribe(
+        (data) => {
+          this.bookList.push(data.toString()/* .charAt(0).toUpperCase() */);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   public showReactionConsole(el: any): void {

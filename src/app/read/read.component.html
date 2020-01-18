@@ -13,10 +13,13 @@
       placeholder="book" 
       [type]="'text'" 
       [typeahead]="bookList"
-      [typeaheadAsync]="true"
-       [isAnimated]="true" 
-       [adaptivePosition]="true" 
-       [typeaheadSingleWords]="true">
+      [typeaheadScrollable]="true"
+      [typeaheadOptionsInScrollableView]="5"
+      [typeaheadOptionsLimit]="bookList.length"
+      [typeaheadMinLength]="0"
+      [isAnimated]="true" 
+      [adaptivePosition]="true" 
+      [typeaheadSingleWords]="true">
     </mat-form-field>
 
     <mat-form-field class="mr-2" appearance="outline">
@@ -29,6 +32,10 @@
         [type]="'number'"
         [min]="1"
         [typeahead]="chapterList"
+        [typeaheadLatinize]="false"
+        [typeaheadScrollable]="true"
+        [typeaheadOptionsLimit]="chapterList.length"
+        [typeaheadMinLength]="0"
         [isAnimated]="true"
         [adaptivePosition]="true"
         [typeaheadSingleWords]="true">
@@ -42,8 +49,13 @@
       [(ngModel)]="scripture.verse" 
       placeholder="verse" 
       [type]="'number'"
-      [min]="1" 
+      [min]="1"
       [typeahead]="verseList"
+      [typeahead]="chapterList"
+      [typeaheadLatinize]="false"
+      [typeaheadScrollable]="true"
+      [typeaheadOptionsLimit]="chapterList.length"
+      [typeaheadMinLength]="0"
       [isAnimated]="true" 
       [adaptivePosition]="true" 
       [typeaheadSingleWords]="true">
