@@ -46,6 +46,7 @@ app-root {
 /* typeahead modiification */
 typeahead-container {
   width: 100%;
+  min-height: 150px;
 }
 
 typeahead-container button {
