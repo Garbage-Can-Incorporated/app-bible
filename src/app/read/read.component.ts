@@ -43,6 +43,12 @@ export class ReadComponent implements OnInit {
 
     playIcon.classList.toggle('fa-play');
     playIcon.classList.toggle('fa-pause');
+
+    if (playIcon.classList.contains('fa-pause')) {
+      playIcon.classList.add('__blue--color');
+    } else {
+      playIcon.classList.remove('__blue--color');
+    }
   }
 
   public searchScripture(): void {
