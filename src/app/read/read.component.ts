@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
-
 import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
+import { PlayerService } from '../services/player.service';
 @Component({
   selector: 'app-read',
   templateUrl: './read.component.html',
@@ -27,7 +26,8 @@ export class ReadComponent implements OnInit {
   public _showSearchPane = <boolean>false;
 
   constructor(
-    private _scripturesProvider: ScripturesService
+    private _scripturesProvider: ScripturesService,
+    private _player: PlayerService
   ) { }
 
   ngOnInit() {
@@ -38,17 +38,30 @@ export class ReadComponent implements OnInit {
     this.searchScripture();
   }
 
+  public stopPlay(): void {
+    this._player.stop();
+  }
+
+  private toggleVersePlay (icon, content: string): void {
+   if (this._player.isPending) {
+      return;
+    }
+
+    icon.classList.toggle('fa-play');
+    icon.classList.toggle('fa-pause');
+
+    if (icon.classList.contains('fa-pause')) {
+      icon.classList.add('__blue--color');
+      this._player.play(content);
+    } else {
+      icon.classList.remove('__blue--color');
+      this._player.pause();
+    }
+  }
+
   public readVerse(i: number, playIcon): void {
     console.log({i, p: this.passages[i]});
-
-    playIcon.classList.toggle('fa-play');
-    playIcon.classList.toggle('fa-pause');
-
-    if (playIcon.classList.contains('fa-pause')) {
-      playIcon.classList.add('__blue--color');
-    } else {
-      playIcon.classList.remove('__blue--color');
-    }
+    this.toggleVersePlay(playIcon, this.passages[i]);
   }
 
   public searchScripture(): void {
