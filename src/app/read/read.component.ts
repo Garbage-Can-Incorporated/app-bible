@@ -39,7 +39,7 @@ export class ReadComponent implements OnInit {
   }
 
   public searchScripture(): void {
-    const {book, verse, chapter} = this.scripture;bm:
+    const {book, verse, chapter} = this.scripture;
     if (
       book !== '' && book !== undefined && book !== ' ' &&
       chapter !== undefined &&
