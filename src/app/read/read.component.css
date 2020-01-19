@@ -29,6 +29,7 @@
 }
 
 .__app-scriptures-container,
+.__app-scriptures-container div,
 .__app-scriptures-player,
 .__app-scriptures-item {
   flex-direction: column;
@@ -84,6 +85,12 @@
 
 .__app-scriptures-item:last-of-type {
   margin-bottom: 4rem;
+}
+
+.__app--preloading__icon {
+  color: #e2dfdf;
+  margin-top: 20%;
+  margin-bottom: 20%;
 }
 
 /* .__app-scriptures-item:hover {

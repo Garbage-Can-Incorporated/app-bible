@@ -73,20 +73,26 @@
     {{ scripture.book.toUpperCase() }}
   </span>
 
-  <div *ngFor="let passage of passages; index as i" class="d-flex w-100 __app-scriptures-item mb-2" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
-    <div class="d-flex text-left w-100" [ngClass]="{'__app-scriptures-item--focus': i + 1 === focusElementNo}">
-      <p class="my-0 mr-2 mb-2 font-weight-bold">{{ i + 1 }}</p>
-      <span class="d-flex"> {{ passage }} </span>
-    </div>
+  <div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100">
+    <div *ngFor="let passage of passages; index as i" class="d-flex w-100 __app-scriptures-item mb-2" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
+      <div class="d-flex text-left w-100" [ngClass]="{'__app-scriptures-item--focus': i + 1 === focusElementNo}">
+        <p class="my-0 mr-2 mb-2 font-weight-bold">{{ i + 1 }}</p>
+        <span class="d-flex"> {{ passage }} </span>
+      </div>
 
-    <div class="d-flex ml-auto my-2 __app--reactions--container" #reactionConsole>
-      <i class="fa fa-play ml-auto mr-3 my-auto d-none"></i>
-      <i class="far fa-bell mr-3 my-auto d-none"></i>
-      <i class="far fa-heart mr-3 my-auto d-none"></i>
-      <i class="far fa-smile-wink mr-3 my-auto d-none"></i>
-      <i class="fa fa-share-alt mr-3 my-auto d-none"></i>
+      <div class="d-flex ml-auto my-2 __app--reactions--container" #reactionConsole>
+        <i class="fa fa-play ml-auto mr-3 my-auto d-none"></i>
+        <i class="far fa-bell mr-3 my-auto d-none"></i>
+        <i class="far fa-heart mr-3 my-auto d-none"></i>
+        <i class="far fa-smile-wink mr-3 my-auto d-none"></i>
+        <i class="fa fa-share-alt mr-3 my-auto d-none"></i>
+      </div>
     </div>
   </div>
+
+  <ng-template #loadingElseBlock class="d-flex w-100">
+    <i class="fa fa-bible fa-spin fa-3x mx-auto __app--preloading__icon"> </i>
+  </ng-template>
 </div>
 
 <div class="d-flex __app-scriptures-player __player-position-left">
