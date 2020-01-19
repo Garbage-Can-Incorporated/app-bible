@@ -12,10 +12,12 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { AppComponent } from './app.component';
 import { ReadComponent } from './read/read.component';
+import { SearchPaneComponent } from './search-pane/search-pane.component';
 
 import { ScripturesService } from './services/scriptures.service';
 import { ResourceHandlerService } from './services/resource-handler.service';
-import { SearchPaneComponent } from './search-pane/search-pane.component';
+import {PlayerService } from './services/player.service';
+import { SpeechSynthesisService } from './services/speech-synthesis.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,12 @@ import { SearchPaneComponent } from './search-pane/search-pane.component';
     TypeaheadModule.forRoot(),
     HttpClientModule
   ],
-  providers: [ScripturesService, ResourceHandlerService],
+  providers: [
+    ScripturesService,
+    ResourceHandlerService,
+    PlayerService,
+    SpeechSynthesisService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
