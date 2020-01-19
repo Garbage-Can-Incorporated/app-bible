@@ -15,11 +15,13 @@ import { ReadComponent } from './read/read.component';
 
 import { ScripturesService } from './services/scriptures.service';
 import { ResourceHandlerService } from './services/resource-handler.service';
+import { SearchPaneComponent } from './search-pane/search-pane.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ReadComponent
+    ReadComponent,
+    SearchPaneComponent
   ],
   imports: [
     BrowserModule,
