@@ -9,11 +9,26 @@ import { ResourceHandlerService } from './resource-handler.service';
   providedIn: 'root'
 })
 export class ScripturesService {
-  public wholeBook: any;
-
   constructor(
     private _resources: ResourceHandlerService
   ) { }
+
+  public getPassage(b: string, c: number): Observable<any> {
+    return new Observable((obs) => {
+      this.getBible((book: any): void => {
+        obs.next(
+          book
+            .find((cur: any) => {
+              return (
+                cur.bookTitle === b.toLowerCase() &&
+                cur.chapterNo === `chapter-${c}`
+                );
+            })
+            .verses
+        );
+      });
+    });
+  }
 
   public getVerseLength(bookTitle: string = 'genesis', chapNo: number = 1): Observable<number> {
     return new Observable((obs) => {
