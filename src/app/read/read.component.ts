@@ -38,6 +38,13 @@ export class ReadComponent implements OnInit {
     this.searchScripture();
   }
 
+  public readVerse(i: number, playIcon): void {
+    console.log({i, p: this.passages[i]});
+
+    playIcon.classList.toggle('fa-play');
+    playIcon.classList.toggle('fa-pause');
+  }
+
   public searchScripture(): void {
     const {book, verse, chapter} = this.scripture;
     if (
