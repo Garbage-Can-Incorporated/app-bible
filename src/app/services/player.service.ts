@@ -9,9 +9,10 @@ export class PlayerService {
 
   constructor(
     private _speechSynth: SpeechSynthesisService
-  ) { }
+  ) {  }
 
   public play(content: string): void {
+    this._speechSynth.__init__();
     this._speechSynth.play(content);
   }
 
@@ -23,7 +24,7 @@ export class PlayerService {
     this._speechSynth.stop();
   }
 
-  public get isPending():boolean {
+  public get isPending(): boolean {
     return this._speechSynth.isPending();
   }
 }
