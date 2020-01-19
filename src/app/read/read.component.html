@@ -70,7 +70,7 @@
 <div class="d-flex w-100 __app-scriptures-container">
   <span class="d-flex __app-scriptures-book text-uppercase mt-3">
     <p class="my-auto ml-0 mr-2 text-capitalize">The book of</p>
-    Romans
+    {{ scripture.book.toUpperCase() }}
   </span>
 
   <div *ngFor="let passage of passages; index as i" class="d-flex w-100 __app-scriptures-item mb-2" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
