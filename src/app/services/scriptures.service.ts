@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { distinct } from 'rxjs/operators';
+import { distinct, map } from 'rxjs/operators';
 
 import { ResourceHandlerService } from './resource-handler.service';
 
@@ -27,7 +27,10 @@ export class ScripturesService {
             .verses
         );
       });
-    });
+    })
+      .pipe(
+          map((v: Array<any>) => v.map((vv) => vv.split(' ').slice(2).join(' ')))
+        );
   }
 
   public getVerseLength(bookTitle: string = 'genesis', chapNo: number = 1): Observable<number> {
