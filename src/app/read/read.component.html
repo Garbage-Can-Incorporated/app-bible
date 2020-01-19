@@ -1,5 +1,5 @@
 <div class="d-flex w-100 __app-cover">
-  <i class="fa fa-search ml-auto mr-4 mt-4 mb-auto fa-1x"></i>
+  <i class="fa fa-search ml-auto mr-4 mt-4 mb-auto fa-1x __app--search___icon" (click)="showSearchPane()"></i>
 </div>
 
 <div class="d-flex w-100 mt-auto __app-scripture-toolbar">
@@ -65,7 +65,7 @@
   </div>
 </div>
 
-<!-- <div class="d-flex __app-scripture-search-pane"></div> -->
+<app-search-pane *ngIf="_showSearchPane" (closePane)="collapseSearchPane($event)"></app-search-pane>
 
 <div class="d-flex w-100 __app-scriptures-container">
   <span class="d-flex __app-scriptures-book text-uppercase mt-3">

@@ -1,0 +1,14 @@
+.__app-scripture-search-pane {
+  position: fixed;
+  height: 100%;
+  width: 300px;
+  background-color: var(--white);
+  right: 0;
+  top: 0;
+  box-shadow: 0 0 3px 0.5px #adb5bd;
+}
+
+.__app--pane__cancel--icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}

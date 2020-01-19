@@ -24,6 +24,8 @@ export class ReadComponent implements OnInit {
   public passages: Array<any>;
   public focusElementNo: number;
 
+  public _showSearchPane = <boolean>false;
+
   constructor(
     private _scripturesProvider: ScripturesService
   ) { }
@@ -132,5 +134,13 @@ export class ReadComponent implements OnInit {
 
   public togglePlayerState(): void {
     this.playerState = !this.playerState;
+  }
+
+  public collapseSearchPane(e: boolean) {
+    this._showSearchPane = e;
+  }
+
+  public showSearchPane(): void {
+    this._showSearchPane = true;
   }
 }
