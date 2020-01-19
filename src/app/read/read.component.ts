@@ -39,7 +39,8 @@ export class ReadComponent implements OnInit {
   public searchScripture(): void {
     const {book, verse, chapter} = this.scripture;
     if (book !== '' && chapter !== undefined) {
-      this.focusElementNo = verse;
+      this.focusElementNo = typeof verse === 'string' ? parseInt(verse, 10) : verse;
+      console.log({ f: this.focusElementNo });
       this.getPassage(book, chapter);
     }
   }
@@ -105,14 +106,13 @@ export class ReadComponent implements OnInit {
     }
 
     if (key === 'c') {
-      this.scripture.chapter = e.value;
+      this.scripture.chapter = parseInt(e.value);
     }
 
     if (key === 'v') {
-      this.scripture.verse = e.value;
+      this.scripture.verse = parseInt(e.value);
     }
 
-    console.log({ s: this.scripture }, 'typeaheadselect');
     this.searchScripture();
   }
 
