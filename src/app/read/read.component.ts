@@ -40,7 +40,11 @@ export class ReadComponent implements OnInit {
 
   public searchScripture(): void {
     const {book, verse, chapter} = this.scripture;
-    if (book !== '' && chapter !== undefined) {
+    if (
+      book !== '' && book !== undefined && book !== ' ' &&
+      chapter !== undefined &&
+      (typeof chapter === 'string' ? chapter !== ' ' : true)
+      ) {
       this.focusElementNo = typeof verse === 'string' ? parseInt(verse, 10) : verse;
       this.getPassage(book, chapter);
     }
