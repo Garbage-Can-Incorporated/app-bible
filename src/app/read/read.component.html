@@ -8,8 +8,7 @@
       <mat-label>book</mat-label>
       <input 
       matInput 
-      (keyup)="searchScripture()"
-      (mouseout)="testFn($event)"
+      (mouseout)="searchScripture()"
       [(ngModel)]="scripture.book" 
       placeholder="book" 
       [type]="'text'" 
@@ -28,8 +27,7 @@
       <mat-label>chapter</mat-label>
       <input
         matInput
-        (keyup)="searchScripture()"
-        (mouseout)="testFn($event)" 
+        (mouseout)="searchScripture()" 
         [(ngModel)]="scripture.chapter"
         placeholder="chapter"
         [type]="'number'"
@@ -49,8 +47,7 @@
       <mat-label>verse</mat-label>
       <input 
       matInput 
-      (keyup)="searchScripture()"
-      (mouseout)="testFn($event)" 
+      (mouseout)="searchScripture()" 
       [(ngModel)]="scripture.verse" 
       placeholder="verse" 
       [type]="'number'"

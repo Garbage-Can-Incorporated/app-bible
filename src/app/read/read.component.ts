@@ -21,6 +21,8 @@ export class ReadComponent implements OnInit {
   public playerState = <boolean>false;
   public chapterList: number[] = [];
   public verseList: number[] = [];
+  public passage: Array<any>;
+  public focusElementNo: number;
 
   constructor(
     private _scripturesProvider: ScripturesService
@@ -31,17 +33,31 @@ export class ReadComponent implements OnInit {
 
     this.populateChapterList();
     this.populateVerseList();
+    this.searchScripture();
   }
 
   public searchScripture(): void {
     const {book, verse, chapter} = this.scripture;
-
-    console.log({book, verse, chapter}, 'keyup');
+    if (book !== '' && chapter !== undefined) {
+      this.focusElementNo = verse;
+      this.getPassage(book, chapter);
+    }
   }
 
-  public testFn(e): void {
+  private getPassage(b: string, c: number): void {
+    this._scripturesProvider
+      .getPassage(b, c)
+      .subscribe(
+        (data) => {
+          this.passage = data;
+        },
+        (error) => console.log({error})
+      );
+  }
+
+  /* public testFn(e): void {
     console.log({s: this.scripture}, 'mouseleave');
-  }
+  } */
 
   private populateVerseList(): void {
     this._scripturesProvider
@@ -96,7 +112,8 @@ export class ReadComponent implements OnInit {
       this.scripture.verse = e.value;
     }
 
-    console.log({s: this.scripture}, 'typeaheadselect');
+    console.log({ s: this.scripture }, 'typeaheadselect');
+    this.searchScripture();
   }
 
   public showReactionConsole(el: any): void {
