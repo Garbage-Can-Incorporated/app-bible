@@ -21,7 +21,7 @@ export class ReadComponent implements OnInit {
   public playerState = <boolean>false;
   public chapterList: number[] = [];
   public verseList: number[] = [];
-  public passage: Array<any>;
+  public passages: Array<any>;
   public focusElementNo: number;
 
   constructor(
@@ -49,7 +49,7 @@ export class ReadComponent implements OnInit {
       .getPassage(b, c)
       .subscribe(
         (data) => {
-          this.passage = data;
+          this.passages = data;
         },
         (error) => console.log({error})
       );

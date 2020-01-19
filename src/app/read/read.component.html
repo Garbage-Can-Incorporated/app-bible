@@ -73,10 +73,10 @@
     Romans
   </span>
 
-  <div class="d-flex w-100 __app-scriptures-item" (mouseenter)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
-    <div class="text-left w-100 form-inline">
-      <p class="my-0 mr-2 mb-2 font-weight-bold">1</p>
-      <span class="d-flex"> The earth is the Lord's and its fulness thereof... </span>
+  <div *ngFor="let passage of passages; index as i" class="d-flex w-100 __app-scriptures-item mb-2" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
+    <div class="d-flex text-left w-100">
+      <p class="my-0 mr-2 mb-2 font-weight-bold">{{ i + 1 }}</p>
+      <span class="d-flex"> {{ passage }} </span>
     </div>
 
     <div class="d-flex ml-auto my-2 __app--reactions--container" #reactionConsole>
