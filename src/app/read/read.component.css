@@ -79,6 +79,11 @@
   cursor: pointer;
 }
 
+.__app-scriptures-item--focus {
+  font-weight: 700;
+  outline: none;
+}
+
 .__app-scriptures-item:first-of-type {
   margin-top: .4rem;
 }
