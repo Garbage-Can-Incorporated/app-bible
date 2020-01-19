@@ -28,9 +28,9 @@ export class ScripturesService {
         );
       });
     })
-      .pipe(
-          map((v: Array<any>) => v.map((vv) => vv.split(' ').slice(2).join(' ')))
-        );
+      // .pipe(
+      //     map((v: Array<any>) => v.map((vv) => vv.split(' ').slice(2).join(' ')))
+      //   );
   }
 
   public getVerseLength(bookTitle: string = 'genesis', chapNo: number = 1): Observable<number> {

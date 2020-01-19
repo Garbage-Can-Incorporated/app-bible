@@ -52,6 +52,7 @@ export class ReadComponent implements OnInit {
       .subscribe(
         (data) => {
           this.passages = data;
+          console.log({p: this.passages});
         },
         (error) => console.log({error})
       );
