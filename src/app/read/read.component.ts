@@ -117,6 +117,20 @@ export class ReadComponent implements OnInit {
     this.searchScripture();
   }
 
+  public likeVerse(el): void {
+    if (el.classList.contains('far')) {
+      el.classList.replace('far', 'fa');
+      el.classList.add('__red--color');
+      return;
+    }
+
+    if (el.classList.contains('fa')) {
+      el.classList.replace('fa', 'far');
+      el.classList.remove('__red--color');
+      return;
+    }
+  }
+
   public showReactionConsole(el: any): void {
     const children: HTMLCollection[] = el.children;
 

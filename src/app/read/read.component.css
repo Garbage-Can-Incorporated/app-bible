@@ -146,3 +146,7 @@
     max-width: 50%;
   }
 }
+
+.__red--color {
+  color: red;
+}

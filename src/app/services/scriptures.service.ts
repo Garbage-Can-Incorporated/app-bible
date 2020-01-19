@@ -21,13 +21,13 @@ export class ScripturesService {
             .find((cur: any) => {
               return (
                 cur.bookTitle === b.toLowerCase() &&
-                cur.chapterNo === `chapter-${c}`
-                );
+                cur.chapterNo === `chapter-${ c }`
+              );
             })
             .verses
         );
       });
-    })
+    });
       // .pipe(
       //     map((v: Array<any>) => v.map((vv) => vv.split(' ').slice(2).join(' ')))
       //   );
