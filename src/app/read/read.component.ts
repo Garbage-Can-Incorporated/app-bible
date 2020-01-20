@@ -24,6 +24,7 @@ export class ReadComponent implements OnInit {
   public focusElementNo: number;
 
   public _showSearchPane = <boolean>false;
+  public preventOtherVersePlays = <boolean>false;
 
   constructor(
     private _scripturesProvider: ScripturesService,
@@ -38,25 +39,39 @@ export class ReadComponent implements OnInit {
     this.searchScripture();
   }
 
+  public playChapter(icon: any): void {
+    if (icon.classList.contains('fa-pause')) {
+      icon.classList.remove('fa-pause');
+      icon.classList.add('fa-play');
+      icon.classList.remove('__blue--color');
+
+      this._player.pause();
+    } else {
+      icon.classList.remove('fa-play');
+      icon.classList.add('fa-pause');
+    }
+  }
+
   public stopPlay(): void {
     this._player.stop();
   }
 
   private toggleVersePlay (icon, content: string): void {
-  //  if (this._player.isPending) {
-  //     console.log('pending utterance on queue');
-  //     return;
-  //   }
-
     if (icon.classList.contains('fa-pause')) {
       icon.classList.remove('fa-pause');
       icon.classList.add('fa-play');
+
       icon.classList.remove('__blue--color');
+    
       this._player.pause();
+      this.preventOtherVersePlays = false; // tentative
     } else {
       icon.classList.remove('fa-play');
       icon.classList.add('fa-pause');
+
       icon.classList.add('__blue--color');
+      this.preventOtherVersePlays = true;
+
       this._player.play(content)
         .subscribe(
           (data) => {
@@ -65,11 +80,15 @@ export class ReadComponent implements OnInit {
           (error) => {
             console.log(error);
             this.stopPlay();
+
+            this.preventOtherVersePlays = false;
           },
           () => {
             console.log('complete!');
             icon.classList.replace('fa-pause', 'fa-play');
             icon.classList.remove('__blue--color');
+            
+            this.preventOtherVersePlays = false;
           }
         );
     }
@@ -102,10 +121,6 @@ export class ReadComponent implements OnInit {
         (error) => console.log({error})
       );
   }
-
-  /* public testFn(e): void {
-    console.log({s: this.scripture}, 'mouseleave');
-  } */
 
   private populateVerseList(): void {
     this._scripturesProvider

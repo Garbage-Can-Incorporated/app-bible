@@ -81,7 +81,7 @@
       </div>
 
       <div class="d-flex ml-auto my-2 __app--reactions--container" #reactionConsole>
-        <i class="fa fa-play ml-auto mr-3 my-auto d-none" #playIcon (click)="readVerse(i, playIcon)"></i>
+        <i class="fa fa-play ml-auto mr-3 my-auto d-none" #playIcon (click)="readVerse(i, playIcon)" [hidden]="playIcon.classList.contains('fa-play') && preventOtherVersePlays"></i>
         <i class="far fa-bell mr-3 my-auto d-none"></i>
         <i class="far fa-heart mr-3 my-auto d-none" #likeIcon (click)="likeVerse(likeIcon)"></i>
         <i class="far fa-smile-wink mr-3 my-auto d-none"></i>
