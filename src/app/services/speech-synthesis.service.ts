@@ -100,7 +100,12 @@ export class SpeechSynthesisService {
       (cur) => cur.lang === 'en-US' ||
                 cur.voiceURI === 'Google US English' ||
                 cur.name === 'Google US English' ||
-                (cur.name.includes('English') && cur.lang === 'en-US')
+                (
+                  cur.name.includes('English') &&
+                  cur.lang === 'en-US' &&
+                  cur.voiceURI.includes('Microsoft') &&
+                  (cur.voiceURI.includes('David') || cur.voiceURI.includes('Zira'))
+                  )
     );
   }
 }
