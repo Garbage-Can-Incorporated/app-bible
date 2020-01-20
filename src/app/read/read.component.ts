@@ -43,24 +43,39 @@ export class ReadComponent implements OnInit {
   }
 
   private toggleVersePlay (icon, content: string): void {
-   if (this._player.isPending) {
-      return;
-    }
-
-    icon.classList.toggle('fa-play');
-    icon.classList.toggle('fa-pause');
+  //  if (this._player.isPending) {
+  //     console.log('pending utterance on queue');
+  //     return;
+  //   }
 
     if (icon.classList.contains('fa-pause')) {
-      icon.classList.add('__blue--color');
-      this._player.play(content);
-    } else {
+      icon.classList.remove('fa-pause');
+      icon.classList.add('fa-play');
       icon.classList.remove('__blue--color');
       this._player.pause();
+    } else {
+      icon.classList.remove('fa-play');
+      icon.classList.add('fa-pause');
+      icon.classList.add('__blue--color');
+      this._player.play(content)
+        .subscribe(
+          (data) => {
+            console.log(data);
+          },
+          (error) => {
+            console.log(error);
+            this.stopPlay();
+          },
+          () => {
+            console.log('complete!');
+            icon.classList.replace('fa-pause', 'fa-play');
+            icon.classList.remove('__blue--color');
+          }
+        );
     }
   }
 
   public readVerse(i: number, playIcon): void {
-    console.log({i, p: this.passages[i]});
     this.toggleVersePlay(playIcon, this.passages[i]);
   }
 
