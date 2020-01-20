@@ -97,7 +97,7 @@
 
 <div class="d-flex __app-scriptures-player __player-position-left">
   <i class="fa fa-fast-backward mx-auto mt-auto"></i>
-  <i class="fa fa-pause fa-1x mx-auto mt-3 mb-2" [ngClass]="{'fa-play': playerState === false, 'fa-pause': playerState === true}" (click)="togglePlayerState()"></i>
-  <i class="fa fa-stop fa-1x mx-auto my-3" (click)="stopPlay()"></i>
+  <i #playPauseIcon class="fa fa-pause fa-1x mx-auto my-4" [ngClass]="{'fa-play': playerState === false, 'fa-pause': playerState === true}" (click)="togglePlayerState()" (click)="playChapter(playPauseIcon)"></i>
+  <i class="fa fa-stop fa-1x mx-auto mb-4" (click)="stopPlay()"></i>
   <i class="fa fa-fast-forward mb-auto mx-auto"></i>
 </div>
