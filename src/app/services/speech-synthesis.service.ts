@@ -19,7 +19,9 @@ export class SpeechSynthesisService {
       (obs) => {
         if (this.synth.speaking === true) {
           console.log('was speaking!');
+
           this.synth.resume();
+
           obs.next({ status: true, msg: 'Resumed speaking' });
           return;
         }
@@ -43,6 +45,7 @@ export class SpeechSynthesisService {
           };
         } else {
           console.log('voice models depends on the internet');
+
           obs.error({
             status: false,
             msg: 'voice models depends on the internet'

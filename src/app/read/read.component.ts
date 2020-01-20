@@ -39,7 +39,7 @@ export class ReadComponent implements OnInit {
     this.searchScripture();
   }
 
-  public playChapter(icon: any): void {
+  public playChapter(icon: any) {
     if (icon.classList.contains('fa-pause')) {
       icon.classList.remove('fa-pause');
       icon.classList.add('fa-play');
@@ -49,6 +49,21 @@ export class ReadComponent implements OnInit {
     } else {
       icon.classList.remove('fa-play');
       icon.classList.add('fa-pause');
+
+      this._player.PlayChapter(this.passages).subscribe({
+        next(data) {
+          console.log({ data });
+          // scrollIntoView
+        },
+        error(error) {
+          console.log({ error });
+        },
+        complete() {
+          console.log('done!');
+
+          icon.classList.replace('fa-pause', 'fa-play');
+        }
+      });
     }
   }
 
@@ -62,7 +77,7 @@ export class ReadComponent implements OnInit {
       icon.classList.add('fa-play');
 
       icon.classList.remove('__blue--color');
-    
+
       this._player.pause();
       this.preventOtherVersePlays = false; // tentative
     } else {
@@ -87,7 +102,7 @@ export class ReadComponent implements OnInit {
             console.log('complete!');
             icon.classList.replace('fa-pause', 'fa-play');
             icon.classList.remove('__blue--color');
-            
+
             this.preventOtherVersePlays = false;
           }
         );
