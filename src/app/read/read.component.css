@@ -1,3 +1,7 @@
+sup {
+  line-height: normal;
+}
+
 .__app-cover {
   height: var(--cover-height);
   background-clip: border-box;
