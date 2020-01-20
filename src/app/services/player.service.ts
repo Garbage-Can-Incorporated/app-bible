@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Observable } from 'rxjs';
+
 import { SpeechSynthesisService } from './speech-synthesis.service';
 
 @Injectable({
@@ -11,9 +13,9 @@ export class PlayerService {
     private _speechSynth: SpeechSynthesisService
   ) {  }
 
-  public play(content: string): void {
+  public play(content: string): Observable<any> {
     this._speechSynth.__init__();
-    this._speechSynth.play(content);
+    return this._speechSynth.play(content);
   }
 
   public pause(): void {
