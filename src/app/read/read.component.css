@@ -47,7 +47,6 @@ sup {
 }
 
 .__app-scriptures-container {
-  /* height: calc(100% - var(--cover-height) - var(--scripture-toolbar-height)); */
   padding: 0 150px;
 }
 
@@ -165,4 +164,30 @@ sup {
 
 .__blue--color {
   color: #1414fa;
+}
+
+
+@media (max-width: 576px) {
+  .__app--scripture-console mat-form-field:nth-child(n+1) {
+    max-width: 20%;
+  }
+
+  .__app--scripture-console mat-form-field:first-of-type {
+    max-width: 30%;
+  }
+
+  .__app-scriptures-container {
+    padding: 0 20%;
+  }
+
+  .__app--search___icon--pseudo {
+    right: -8px;
+  }
+
+  .__app-scriptures-player {
+    bottom: 10px;
+    left: 7px;
+    width: 40px;
+    height: var(--player-height);
+  }
 }
