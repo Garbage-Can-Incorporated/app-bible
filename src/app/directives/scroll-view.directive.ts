@@ -1,10 +1,24 @@
-import { Directive } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 
 @Directive({
   selector: '[appScrollView]'
 })
-export class ScrollViewDirective {
+export class ScrollViewDirective implements OnChanges {
+  @Input() status = <boolean>false;
+  @Input() exception = <boolean>false;
 
-  constructor() { }
+  constructor(
+    private el: ElementRef
+  ) { }
+
+  ngOnChanges(): void {
+    if (
+      this.status !== undefined &&
+      this.status !== false &&
+      this.exception !== false
+      ) {
+      this.el.nativeElement.scrollIntoView();
+    }
+  }
 
 }

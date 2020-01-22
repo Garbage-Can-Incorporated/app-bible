@@ -40,12 +40,15 @@ export class ReadComponent implements OnInit {
   }
 
   public playChapter(icon: any) {
+    this.preventOtherVersePlays = true;
+
     if (icon.classList.contains('fa-pause')) {
       icon.classList.remove('fa-pause');
       icon.classList.add('fa-play');
       icon.classList.remove('__blue--color');
 
       this._player.pause();
+      this.preventOtherVersePlays = true;
     } else {
       icon.classList.remove('fa-play');
       icon.classList.add('fa-pause');
@@ -54,20 +57,24 @@ export class ReadComponent implements OnInit {
         next(data) {
           console.log({ data });
           // scrollIntoView
+          // this.preventOtherVersePlays = true;
         },
         error(error) {
           console.log({ error });
+          this.preventOtherVersePlays = false;
         },
         complete() {
           console.log('done!');
 
           icon.classList.replace('fa-pause', 'fa-play');
+          this.preventOtherVersePlays = false;
         }
       });
     }
   }
 
   public stopPlay(): void {
+    // this._player.stopSequentialPlay = true;
     this._player.stop();
   }
 
