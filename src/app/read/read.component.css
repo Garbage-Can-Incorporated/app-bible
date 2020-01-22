@@ -11,7 +11,8 @@ sup {
   color: var(--white);
 }
 
-.__app--search___icon {
+.__app--search___icon,
+.__app--search___icon--pseudo {
   cursor: pointer;
 }
 
