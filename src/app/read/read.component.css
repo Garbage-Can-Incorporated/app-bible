@@ -1,5 +1,6 @@
 sup {
   line-height: normal;
+  top: 0!important;
 }
 
 .__app-cover {
