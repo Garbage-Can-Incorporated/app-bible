@@ -21,6 +21,8 @@ export class ReadComponent implements OnInit {
   public chapterList: number[] = [];
   public verseList: number[] = [];
   public passages: Array<any>;
+  public maxChap: number;
+  public maxVerse: number;
   public focusElementNo: number;
 
   public _showSearchPane = <boolean>false;
@@ -33,9 +35,9 @@ export class ReadComponent implements OnInit {
 
   ngOnInit() {
     this.populateBookList();
-
     this.populateChapterList();
     this.populateVerseList();
+
     this.searchScripture();
   }
 
@@ -128,6 +130,8 @@ export class ReadComponent implements OnInit {
       (typeof chapter === 'string' ? chapter !== ' ' : true)
       ) {
       this.focusElementNo = typeof verse === 'string' ? parseInt(verse, 10) : verse;
+
+      this.populateChapterList();
       this.getPassage(book, chapter);
     }
   }
@@ -138,33 +142,36 @@ export class ReadComponent implements OnInit {
       .subscribe(
         (data) => {
           this.passages = data;
-          console.log({p: this.passages});
         },
         (error) => console.log({error})
       );
   }
 
   private populateVerseList(): void {
+    const {book, chapter} = this.scripture;
+
     this._scripturesProvider
-    .getVerseLength()
+    .getVerseLength(book, chapter)
     .subscribe(
       (data) => {
+        this.maxVerse = data;
         this.verseList = this.generateListNumbers(data);
+        console.log(data);
       }
     );
   }
 
   private populateChapterList(): void {
-    this._scripturesProvider
-    .getChapterLength()
-    .subscribe(
+    this._scripturesProvider.getChapterLength(this.scripture.book).subscribe(
       (data: number) => {
+        this.maxChap = data;
         this.chapterList = this.generateListNumbers(data);
+        this.populateVerseList();
       }
     );
   }
 
-  private generateListNumbers(data: any): number[] {
+  private generateListNumbers(data: number): number[] {
     const res: number[] = Array.from({ length: data + 1}, (_, i) => i);
     res.shift();
     return res;
@@ -199,7 +206,7 @@ export class ReadComponent implements OnInit {
     this.searchScripture();
   }
 
-  public likeVerse(el): void {
+  public likeVerse(el: Element): void {
     if (el.classList.contains('far')) {
       el.classList.replace('far', 'fa');
       el.classList.add('__red--color');
