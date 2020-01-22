@@ -33,6 +33,12 @@ sup {
   max-width: 40%;
 }
 
+.__app--search___icon--pseudo {
+  position: absolute;
+  right: 2%;
+  top: 41%;
+}
+
 .__app-scriptures-container,
 .__app-scriptures-container div,
 .__app-scriptures-player,
