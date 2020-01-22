@@ -8,6 +8,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class SearchPaneComponent implements OnInit {
   @Output() closePane = new EventEmitter<boolean>();
 
+  public query: string;
+
   constructor() { }
 
   ngOnInit() {
@@ -15,5 +17,9 @@ export class SearchPaneComponent implements OnInit {
 
   public collapseButton() {
     this.closePane.emit(false);
+  }
+
+  public grabInput(): void {
+    console.log({q: this.query});
   }
 }
