@@ -18,12 +18,14 @@ import { ScripturesService } from './services/scriptures.service';
 import { ResourceHandlerService } from './services/resource-handler.service';
 import {PlayerService } from './services/player.service';
 import { SpeechSynthesisService } from './services/speech-synthesis.service';
+import { ScrollViewDirective } from './directives/scroll-view.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReadComponent,
-    SearchPaneComponent
+    SearchPaneComponent,
+    ScrollViewDirective
   ],
   imports: [
     BrowserModule,
