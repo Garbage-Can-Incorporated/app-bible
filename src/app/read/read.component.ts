@@ -156,7 +156,6 @@ export class ReadComponent implements OnInit {
       (data) => {
         this.maxVerse = data;
         this.verseList = this.generateListNumbers(data);
-        console.log(data);
       }
     );
   }

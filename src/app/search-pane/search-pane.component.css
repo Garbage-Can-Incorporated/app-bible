@@ -25,9 +25,9 @@
   left: -45px;
   background-color: var(--white);
   opacity: 0.7;
+  cursor: pointer;
 }
 
 .__app--pane__cancel--icon {
   font-size: 1rem;
-  cursor: pointer;
 }
