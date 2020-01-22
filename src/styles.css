@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: "Varela Round"!important;
-  src: url("./assets/fonts/varela/varela_round-regular.ttf") format("truetype");
+  src: url("~/assets/fonts/varela/varela_round-regular.ttf") format("truetype");
 }
 
 :root {
-  --cover-height: 25%;
+  --cover-height: 150px;
   --scripture-toolbar-height: 70px;
   --light-grey: #eeebebf6;
   --dark-grey: grey;
@@ -36,7 +36,7 @@ body {
 
 app-root {
   width: inherit;
-  height: inherit;
+  height: fit-content;
 }
 
 .mat-form-field-wrapper {

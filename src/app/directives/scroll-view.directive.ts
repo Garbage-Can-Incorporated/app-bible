@@ -17,8 +17,7 @@ export class ScrollViewDirective implements OnChanges {
       this.status !== false &&
       this.exception !== false
       ) {
-      this.el.nativeElement.scrollIntoView();
+      this.el.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
     }
   }
-
 }
