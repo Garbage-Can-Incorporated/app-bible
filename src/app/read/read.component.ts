@@ -4,6 +4,7 @@ import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
 import { PlayerService } from '../services/player.service';
+
 @Component({
   selector: 'app-read',
   templateUrl: './read.component.html',
@@ -41,7 +42,7 @@ export class ReadComponent implements OnInit {
     this.searchScripture();
   }
 
-  public playChapter(icon: any) {
+  public playChapter(icon: Element) {
     this.preventOtherVersePlays = true;
 
     if (icon.classList.contains('fa-pause')) {
@@ -76,11 +77,10 @@ export class ReadComponent implements OnInit {
   }
 
   public stopPlay(): void {
-    // this._player.stopSequentialPlay = true;
     this._player.stop();
   }
 
-  private toggleVersePlay (icon, content: string): void {
+  private toggleVersePlay (icon: Element, content: string): void {
     if (icon.classList.contains('fa-pause')) {
       icon.classList.remove('fa-pause');
       icon.classList.add('fa-play');
