@@ -65,7 +65,7 @@
       [typeaheadSingleWords]="true">
     </mat-form-field>
 
-  <i class="fa fa-search mx-4 my-auto fa-1x __app--search___icon--pseudo" (click)="showSearchPane()"></i>
+  <i appActionScroll [reveal]="scrolled" [_class]="'invisible'"  class="fa fa-search mx-4 my-auto fa-1x invisible __app--search___icon--pseudo" (click)="showSearchPane()"></i>
   </div>
 </div>
 

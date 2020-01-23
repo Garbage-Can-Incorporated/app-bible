@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 
 import { IScriptures } from '../interfaces/i-scriptures';
 
@@ -10,7 +10,7 @@ import { PlayerService } from '../services/player.service';
   templateUrl: './read.component.html',
   styleUrls: ['./read.component.css']
 })
-export class ReadComponent implements OnInit {
+export class ReadComponent implements OnInit, AfterViewInit {
   private _scripture: IScriptures =  {
     book: 'genesis',
     chapter: 1,
@@ -25,6 +25,7 @@ export class ReadComponent implements OnInit {
   public maxChap: number;
   public maxVerse: number;
   public focusElementNo: number;
+  public scrolled = <boolean>false;
 
   public _showSearchPane = <boolean>false;
   public preventOtherVersePlays = <boolean>false;
@@ -35,11 +36,22 @@ export class ReadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.scrolled = false;
+
     this.populateBookList();
     this.populateChapterList();
     this.populateVerseList();
 
     this.searchScripture();
+  }
+
+  ngAfterViewInit(): void {
+    this.scrolled = false;
+  }
+
+  @HostListener('window:scroll') onWindowScroll (): void {
+    console.log('scrolled!');
+    this.scrolled = true;
   }
 
   public playChapter(icon: Element) {
