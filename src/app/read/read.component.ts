@@ -50,7 +50,6 @@ export class ReadComponent implements OnInit, AfterViewInit {
   }
 
   @HostListener('window:scroll') onWindowScroll (): void {
-    console.log('scrolled!');
     this.scrolled = true;
   }
 

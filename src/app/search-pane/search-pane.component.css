@@ -2,6 +2,12 @@
   outline: none;
 }
 
+.__app--pane__overlay {
+  /* position: absolute; */
+  background-color: #000000;
+  opacity: 0.6;
+}
+
 .__app-scripture-search-pane,
 .__app--scripture__search--pane__body,
 .__app--scripture__search--console,
@@ -34,4 +40,12 @@
 
 .__app--pane__cancel--icon {
   font-size: 1rem;
+}
+
+
+@media (max-width: 374px) {
+  .__app-scripture-search-pane {
+    width: 240px;
+    z-index: 10000;
+  }
 }

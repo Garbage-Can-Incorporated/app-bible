@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-search-pane',
@@ -6,13 +6,22 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./search-pane.component.css']
 })
 export class SearchPaneComponent implements OnInit {
-  @Output() closePane = new EventEmitter<boolean>();
+  @Output() closePane: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public query: string;
 
-  constructor() { }
+  constructor(
+    private el: ElementRef
+  ) { }
 
   ngOnInit() {
+    this.el.nativeElement
+    .children[0]
+    .addEventListener('click', (e) => {
+      console.log({e});
+
+      this.collapseButton();
+    });
   }
 
   public collapseButton() {
