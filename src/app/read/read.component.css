@@ -48,7 +48,7 @@ sup {
 }
 
 .__app-scriptures-container {
-  padding: 0 150px;
+  padding: 0 15%;
 }
 
 .__app-scriptures-book {
@@ -190,5 +190,12 @@ sup {
     left: 7px;
     width: 40px;
     height: var(--player-height);
+  }
+}
+
+
+@media (min-width: 768px) {
+  .__app-scriptures-container {
+    padding: 0 20%;
   }
 }
