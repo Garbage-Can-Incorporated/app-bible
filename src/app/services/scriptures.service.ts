@@ -100,4 +100,8 @@ export class ScripturesService {
         }
       );
   }
+
+  public _getBible(cb: any): void {
+    this.getBible(cb);
+  }
 }
