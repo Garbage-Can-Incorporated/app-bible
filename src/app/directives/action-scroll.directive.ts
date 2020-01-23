@@ -13,13 +13,9 @@ export class ActionScrollDirective implements DoCheck, OnInit {
 
   ngOnInit(): void {
     this.pos = this.getCurrentPos();
-    console.log({pos: this.pos});
   }
 
   ngDoCheck(): void {
-    console.log(
-      {cur: this.getCurrentPos(), pos: this.pos}
-    );
     if (
       this.reveal !== undefined &&
       this._class !== undefined
