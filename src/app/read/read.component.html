@@ -48,7 +48,7 @@
       <mat-label>verse</mat-label>
       <input 
       matInput 
-      (mouseout)="searchScripture()" 
+      (keyup)="searchScripture()" 
       [(ngModel)]="scripture.verse" 
       placeholder="verse" 
       [type]="'number'"
