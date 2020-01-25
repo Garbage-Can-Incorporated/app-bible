@@ -83,16 +83,18 @@ export class ReadComponent implements OnInit, AfterViewInit {
         // this.preventOtherVersePlays = false;
       },
       () => {
-        console.log('done!', this.initial);
+        console.log('done!');
+        console.log('last played => ', {lastPlayed: this.initial});
+
         ++this.initial;
-        console.log('initial - complete block', this.initial);
+        console.log('currently being played', {currentlyPlayed: this.initial});
+
+        if (this.initial === this.passages.length) {
+          this.stopPlay();
+        }
 
         if (this._playerState === true) {
           this.playChapter();
-        }
-
-        if ((this.initial + 1) === this.passages.length) {
-          this.stopPlay();
         }
       }
     );
