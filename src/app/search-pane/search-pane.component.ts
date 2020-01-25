@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, ElementRef } from '@angular/core';
 
+import { SearchScripturesService } from '../services/search-scriptures.service';
+
 @Component({
   selector: 'app-search-pane',
   templateUrl: './search-pane.component.html',
@@ -9,15 +11,17 @@ export class SearchPaneComponent implements OnInit {
   @Output() closePane: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public query: string;
+  public result: any;
 
   constructor(
-    private el: ElementRef
+    private el: ElementRef,
+    private _search: SearchScripturesService
   ) { }
 
   ngOnInit() {
     this.el.nativeElement
     .children[0]
-    .addEventListener('click', (e) => {
+    .addEventListener('click', (e: Event) => {
       console.log({e});
 
       this.collapseButton();
@@ -29,6 +33,8 @@ export class SearchPaneComponent implements OnInit {
   }
 
   public grabInput(): void {
-    console.log({q: this.query});
+    this.result = [];
+    this.result = this._search.search(this.query);
+    console.log(this.result);
   }
 }

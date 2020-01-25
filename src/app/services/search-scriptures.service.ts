@@ -8,19 +8,19 @@ import { ScripturesService } from './scriptures.service';
 })
 export class SearchScripturesService {
   private options: any = {
-    caseSensitive: true,
+    caseSensitive: false,
     shouldSort: true,
     tokenize: true,
     matchAllTokens: true,
-    findAllMatches: true,
+    findAllMatches: false,
     includeScore: true,
     includeMatches: true,
-    threshold: 0.6,
-    location: 0,
+    threshold: 0.0,
+    // location: 0,
     distance: 100,
     maxPatternLength: 100,
-    minMatchCharLength: 1,
-    keys: ['verse']
+    minMatchCharLength: 5,
+    keys: ['verses']
   };
 
   public data: Array<any>;
@@ -28,20 +28,26 @@ export class SearchScripturesService {
 
   constructor(
     private _scripture: ScripturesService
-  ) {}
+  ) {
+    this.__init__();
+  }
 
-  public __init__(cb): void {
+  public __init__(): void {
+    console.log('__init__');
+
     this._scripture
-      ._getBible(
-        (data: Array<any>) => {
-          this.data = data;
+      ._getBible.subscribe(
+        (data: any) => {
+          this.data = data.request;
+
           this.fuse = new Fuse(this.data, this.options);
-          cb();
-        }
+        },
+        (error) => console.log({error})
       );
   }
 
   public search(string: string): any {
+    // console.log(this.data);
     return this.fuse.search(string);
   }
 
