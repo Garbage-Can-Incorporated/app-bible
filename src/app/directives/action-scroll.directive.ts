@@ -25,7 +25,6 @@ export class ActionScrollDirective implements DoCheck, OnInit {
   }
 
   private toggleClassList (icon: Element): void {
-    console.log(this.pos);
     if (this.getCurrentPos() < (this.pos - 30)) {
       icon.classList.remove(this._class);
     } else {
