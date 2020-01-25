@@ -18,7 +18,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
   };
   public scripture: IScriptures = { ...this._scripture };
   public bookList: Array<string> = [];
-  public playerState = <boolean>false;
+  public playerState = <boolean>true;
   public chapterList: number[] = [];
   public verseList: number[] = [];
   public passages: Array<any>;
@@ -29,6 +29,8 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   public _showSearchPane = <boolean>false;
   public preventOtherVersePlays = <boolean>false;
+  private _playerState = <boolean>true;
+  public initial = <number>0;
 
   constructor(
     private _scripturesProvider: ScripturesService,
@@ -53,42 +55,46 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.scrolled = true;
   }
 
-  public playChapter(icon: Element) {
-    this.preventOtherVersePlays = true;
+  public playChapter() {
+    this._playerState = true;
 
-    if (icon.classList.contains('fa-pause')) {
-      icon.classList.remove('fa-pause');
-      icon.classList.add('fa-play');
-      icon.classList.remove('__blue--color');
+    this._player
+    .play(this.passages[this.initial])
+    .subscribe(
+      (data) => {
+        console.log({ data });
+        // scrollIntoView
+        // this.preventOtherVersePlays = true;
+      },
+      (error) => {
+        console.log({ error });
+        // this.preventOtherVersePlays = false;
+      },
+      () => {
+        console.log('done!', this.initial);
+        ++this.initial;
+        console.log('initial - complete block', this.initial);
 
-      this._player.pause();
-      this.preventOtherVersePlays = true;
-    } else {
-      icon.classList.remove('fa-play');
-      icon.classList.add('fa-pause');
-
-      this._player.PlayChapter(this.passages).subscribe({
-        next(data) {
-          console.log({ data });
-          // scrollIntoView
-          // this.preventOtherVersePlays = true;
-        },
-        error(error) {
-          console.log({ error });
-          this.preventOtherVersePlays = false;
-        },
-        complete() {
-          console.log('done!');
-
-          icon.classList.replace('fa-pause', 'fa-play');
-          this.preventOtherVersePlays = false;
+        if (this._playerState === true) {
+          this.playChapter();
         }
-      });
-    }
+
+        if ((this.initial + 1) === this.passages.length) {
+          this.stopPlay();
+        }
+      }
+    );
   }
 
   public stopPlay(): void {
     this._player.stop();
+    this.togglePlayerState();
+    this._playerState = false;
+  }
+
+  public pause(): void {
+    this._player.pause();
+    // this.preventOtherVersePlays = true;
   }
 
   private toggleVersePlay (icon: Element, content: string): void {
