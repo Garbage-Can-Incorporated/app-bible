@@ -101,7 +101,7 @@ export class ScripturesService {
       );
   }
 
-  public _getBible(cb: any): void {
-    this.getBible(cb);
+  public get _getBible(): Observable<any> {
+    return this._resources.fetchResource();
   }
 }
