@@ -55,6 +55,18 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.scrolled = true;
   }
 
+  public previous (): void {
+    this.stopPlay();
+    this.initial -= 2;
+    this.playChapter();
+  }
+
+  public next(): void {
+    this.stopPlay();
+    // ++this.initial;
+    this.playChapter();
+  }
+
   public playChapter() {
     this._playerState = true;
 
