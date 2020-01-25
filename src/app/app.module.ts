@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
@@ -41,7 +42,8 @@ import { ActionScrollDirective } from './directives/action-scroll.directive';
     MatIconModule,
     MatInputModule,
     TypeaheadModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    MatProgressBarModule
   ],
   providers: [
     ScripturesService,
