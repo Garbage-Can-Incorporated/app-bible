@@ -57,6 +57,8 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   public previous (): void {
     this.stopPlay();
+
+    // calling pl 
     this.initial -= 2;
     this.playChapter();
   }
@@ -91,6 +93,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
         if (this.initial === this.passages.length) {
           this.stopPlay();
+          this.initial = 0;
         }
 
         if (this._playerState === true) {
