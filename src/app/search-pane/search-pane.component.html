@@ -11,7 +11,7 @@
         <div class="mdl-textfield mt-2 py-0 mdl-js-textfield mdl-textfield--floating-label">
           <input
           class="mdl-textfield__input" type="textarea" id="search"
-          (mouseout)="grabInput()"
+          (mouseleave)="grabInput()"
           [(ngModel)]="query"
           >
           <label class="mdl-textfield__label" for="search"></label>
