@@ -19,10 +19,10 @@ import { ScripturesService } from './services/scriptures.service';
 import { ResourceHandlerService } from './services/resource-handler.service';
 import { PlayerService } from './services/player.service';
 import { SpeechSynthesisService } from './services/speech-synthesis.service';
-import { ScriptureNavigationService } from './services/scripture-navigation.service';
 
 import { ScrollViewDirective } from './directives/scroll-view.directive';
 import { ActionScrollDirective } from './directives/action-scroll.directive';
+import { ScriptureNavigatorDirective } from './directives/scripture-navigator.directive';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { ActionScrollDirective } from './directives/action-scroll.directive';
     ReadComponent,
     SearchPaneComponent,
     ScrollViewDirective,
-    ActionScrollDirective
+    ActionScrollDirective,
+    ScriptureNavigatorDirective
   ],
   imports: [
     BrowserModule,
@@ -49,8 +50,7 @@ import { ActionScrollDirective } from './directives/action-scroll.directive';
     ScripturesService,
     ResourceHandlerService,
     PlayerService,
-    SpeechSynthesisService,
-    ScriptureNavigationService
+    SpeechSynthesisService
   ],
   bootstrap: [AppComponent]
 })
