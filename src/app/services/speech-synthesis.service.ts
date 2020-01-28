@@ -84,6 +84,7 @@ export class SpeechSynthesisService {
   }
 
   private getVoices(): any[] {
+    console.log({ voicesAvailable: speechSynthesis.getVoices() });
     this.voicesList = speechSynthesis.getVoices();
     return this.voicesList;
   }
