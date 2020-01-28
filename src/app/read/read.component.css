@@ -12,7 +12,10 @@ sup {
 }
 
 .__app--search___icon,
-.__app--search___icon--pseudo {
+.__app--search___icon--pseudo,
+.__app--reactions--container i,
+.__app--navigator,
+.__app-scriptures-player i {
   cursor: pointer;
 }
 
@@ -81,11 +84,6 @@ sup {
   transition: ease-out 1s ease-in 1s;
 }
 
-.__app--reactions--container i,
-.__app-scriptures-player i {
-  cursor: pointer;
-}
-
 .__app-scriptures-item--focus {
   font-weight: 700;
   outline: none;
@@ -103,6 +101,21 @@ sup {
   color: #e2dfdf;
   margin-top: 20%;
   margin-bottom: 20%;
+}
+
+.__app--navigator {
+  position: fixed;
+  top: 45%;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.__app--navigator__left {
+  left: 3%;
+}
+
+.__app--navigator__right {
+  right: 3%;
 }
 
 /* .__app-scriptures-item:hover {
@@ -149,6 +162,26 @@ sup {
   z-index: 1000;
 }
 
+.__app--scriptures__player--button__repeat--active {
+  color: #03b503;
+}
+
+.__app--scriptures__player--button__repeat--inactive:after {
+  content: '1';
+  padding: 3px 5px;
+  position: absolute;
+  bottom: 31%;
+  right: 23%;
+  font-size: 8px;
+  color: white;
+  background-color: purple;
+  border-radius: 50%;
+}
+
+.__app--scriptures__player--button__repeat--inactive {
+  color: rebeccapurple;
+}
+
 /* breakpoints */
 @media (min-width: 678px) {
   .__app--scripture-console mat-form-field:nth-child(n+1) {
@@ -170,6 +203,9 @@ sup {
 
 
 @media (max-width: 576px) {
+  .__app-cover {
+    height: 100px;
+  }
   .__app--scripture-console mat-form-field:nth-child(n+1) {
     max-width: 20%;
   }

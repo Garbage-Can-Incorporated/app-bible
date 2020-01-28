@@ -79,7 +79,7 @@
 
   <div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100">
     <div appScrollView [status]="(i + 1) === focusElementNo" [exception]="(i + 1) > 5" *ngFor="let passage of passages; index as i" class="d-flex w-100 __app-scriptures-item mb-2" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
-      <div class="d-flex text-left w-100" [ngClass]="{'__app-scriptures-item--focus': (i + 1 )=== focusElementNo}">
+      <div class="d-flex text-left w-100" [ngClass]="{'__app-scriptures-item--focus': (i + 1) === focusElementNo}">
         <sup class="my-0 mr-2 mb-2 font-weight-bold">{{ (i + 1) }}</sup>
         <span class="d-flex"> {{ passage }} </span>
       </div>
@@ -99,6 +99,9 @@
   </ng-template>
 </div>
 
+<i class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left"></i>
+<i class="fa fa-angle-right mr-auto __app--navigator __app--navigator__right"></i>
+
 <div class="d-flex __app-scriptures-player __player-position-left">
   <i class="fa fa-fast-backward mx-auto mt-auto" (click)="previous()"></i>
 
@@ -108,5 +111,8 @@
 
   <i class="fa fa-stop fa-1x mx-auto mb-4" (click)="stopPlay()"></i>
 
+  <i class="fa fa-circle-notch mb-4 mx-auto" [ngClass]="repeatAll ? '__app--scriptures__player--button__repeat--active' : '__app--scriptures__player--button__repeat--inactive'" (click)="toggleRepeat()"></i>
+
   <i class="fa fa-fast-forward mb-auto mx-auto" (click)="next()"></i>
+
 </div>

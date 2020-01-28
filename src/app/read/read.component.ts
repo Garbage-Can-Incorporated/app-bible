@@ -18,17 +18,20 @@ export class ReadComponent implements OnInit, AfterViewInit {
   };
   public scripture: IScriptures = { ...this._scripture };
   public bookList: Array<string> = [];
-  public playerState = <boolean>true;
-  public chapterList: number[] = [];
+  public chapterList: number[]  = [];
   public verseList: number[] = [];
   public passages: Array<any>;
   public maxChap: number;
   public maxVerse: number;
+
   public focusElementNo: number;
   public scrolled = <boolean>false;
 
   public _showSearchPane = <boolean>false;
+
   public preventOtherVersePlays = <boolean>false;
+  public repeatAll = <boolean>false;
+  public playerState = <boolean>true;
   private _playerState = <boolean>true;
   public initial = <number>0;
 
@@ -58,14 +61,14 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public previous (): void {
     this.stopPlay();
 
-    // calling pl 
+    // calling play
     this.initial -= 2;
     this.playChapter();
   }
 
   public next(): void {
     this.stopPlay();
-    // ++this.initial;
+    if (this.initial === 0) { ++this.initial; }
     this.playChapter();
   }
 
@@ -83,6 +86,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
       (error) => {
         console.log({ error });
         // this.preventOtherVersePlays = false;
+        this.stopPlay();
       },
       () => {
         console.log('done!');
@@ -94,11 +98,18 @@ export class ReadComponent implements OnInit, AfterViewInit {
         if (this.initial === this.passages.length) {
           this.stopPlay();
           this.initial = 0;
+
+          // repeat all
+          if (this.repeatAll === true) {
+            this.playChapter();
+          }
         }
 
         if (this._playerState === true) {
           this.playChapter();
         }
+
+        this.focusElementNo = this.initial;
       }
     );
   }
@@ -152,12 +163,13 @@ export class ReadComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public readVerse(i: number, playIcon): void {
+  public readVerse(i: number, playIcon: Element): void {
     this.toggleVersePlay(playIcon, this.passages[i]);
   }
 
   public searchScripture(): void {
     const {book, verse, chapter} = this.scripture;
+
     if (
       book !== '' && book !== undefined && book !== ' ' &&
       chapter !== undefined &&
@@ -174,7 +186,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getPassage(b, c)
       .subscribe(
-        (data) => {
+        (data: string[]) => {
           this.passages = data;
         },
         (error) => console.log({error})
@@ -251,6 +263,10 @@ export class ReadComponent implements OnInit, AfterViewInit {
       el.classList.remove('__red--color');
       return;
     }
+  }
+
+  public toggleRepeat(): void {
+    this.repeatAll = !this.repeatAll;
   }
 
   public showReactionConsole(el: any): void {
