@@ -99,8 +99,8 @@
   </ng-template>
 </div>
 
-<i class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left"></i>
-<i class="fa fa-angle-right mr-auto __app--navigator __app--navigator__right"></i>
+<i appScriptureNavigator [direction]="-1" class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left" (click)="previousScripture()"></i>
+<i appScriptureNavigator [direction]="1" class="fa fa-angle-right mr-auto __app--navigator __app--navigator__right" (click)="nextScripture()"></i>
 
 <div class="d-flex __app-scriptures-player __player-position-left">
   <i class="fa fa-fast-backward mx-auto mt-auto" (click)="previous()"></i>
@@ -111,7 +111,10 @@
 
   <i class="fa fa-stop fa-1x mx-auto mb-4" (click)="stopPlay()"></i>
 
-  <i class="fa fa-circle-notch mb-4 mx-auto" [ngClass]="repeatAll ? '__app--scriptures__player--button__repeat--active' : '__app--scriptures__player--button__repeat--inactive'" (click)="toggleRepeat()"></i>
+  <i
+  class="fa fa-circle-notch mb-4 mx-auto"
+  [ngClass]="repeatAll ? '__app--scriptures__player--button__repeat--inactive' : '__app--scriptures__player--button__repeat--active'"
+  (click)="toggleRepeat()"></i>
 
   <i class="fa fa-fast-forward mb-auto mx-auto" (click)="next()"></i>
 
