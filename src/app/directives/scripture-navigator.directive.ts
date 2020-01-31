@@ -24,39 +24,39 @@ export class ScriptureNavigatorDirective implements OnChanges {
   ngOnChanges(change: SimpleChanges): void {
     console.log({ w: this.watch, r: this.resource });
 
-    if (this.resource !== undefined &&
-      <number> this.resource.chapter === 1) {
+    this.coordLeftNavigator();
+    this.coordRightNavigator();
+  }
+  @HostListener('click', ['$event']) onClick(e: Event): void {
+    console.log({ e });
+  }
 
+  private coordLeftNavigator(): void {
+    if (this.resource !== undefined && <number>this.resource.chapter === 1) {
       this.toggleLeftEl(this.el.nativeElement);
       this.toggleRightEl(this.el.nativeElement, false);
-
     } else if (
-             this.resource !== undefined &&
-             <number>this.resource.chapter > 1
-           ) {
+      this.resource !== undefined &&
+      <number>this.resource.chapter > 1
+    ) {
+      this.toggleLeftEl(this.el.nativeElement, false);
+      this.toggleRightEl(this.el.nativeElement, false);
+    }
+  }
 
-             this.toggleLeftEl(this.el.nativeElement, false);
-             this.toggleRightEl(this.el.nativeElement, false);
-
-           }
-
+  private coordRightNavigator (): void {
     if (
       this.resource !== undefined &&
       <number>this.resource.chapter === this.watch.length
     ) {
-
       this.toggleRightEl(this.el.nativeElement);
       this.toggleLeftEl(this.el.nativeElement, false);
-
-      } else if (
-               this.resource !== undefined &&
-               <number>this.resource.chapter < this.watch.length
-             ) {
-                this.toggleRightEl(this.el.nativeElement, false);
-             }
-  }
-  @HostListener('click', ['$event']) onClick(e: Event): void {
-    console.log({ e });
+    } else if (
+      this.resource !== undefined &&
+      <number>this.resource.chapter < this.watch.length
+    ) {
+      this.toggleRightEl(this.el.nativeElement, false);
+    }
   }
 
   private toggleLeftEl(el: Element, rem: boolean = true): void {
