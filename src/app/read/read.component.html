@@ -95,12 +95,15 @@
   </div>
 
   <ng-template #loadingElseBlock class="d-flex w-100">
-    <i class="fa fa-bible fa-spin fa-3x mx-auto __app--preloading__icon"> </i>
+    <i class="fa fa-bible fa-spin fa-3x mx-auto my-auto __app--preloading__icon"> </i>
   </ng-template>
 </div>
 
-<i appScriptureNavigator [direction]="-1" class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left" (click)="previousScripture()"></i>
-<i appScriptureNavigator [direction]="1" class="fa fa-angle-right mr-auto __app--navigator __app--navigator__right" (click)="nextScripture()"></i>
+<!-- paginator - left -->
+<i appScriptureNavigator [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left" (watchOutput)="previousScripture($event)"></i>
+
+<!-- paginator - right -->
+<i appScriptureNavigator [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-right mr-auto __app--navigator __app--navigator__right" (watchOutput)="nextScripture($event)"></i>
 
 <div class="d-flex __app-scriptures-player __player-position-left">
   <i class="fa fa-fast-backward mx-auto mt-auto" (click)="previous()"></i>

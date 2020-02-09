@@ -58,6 +58,16 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.scrolled = true;
   }
 
+  public previousScripture(e: any): void {
+    Object.assign(this.scripture, e);
+    this.searchScripture();
+  }
+
+  public nextScripture(e: any): void {
+    Object.assign(this.scripture, e);
+    this.searchScripture();
+  }
+
   public previous (): void {
     this.stopPlay();
 
@@ -78,11 +88,9 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._player
     .play(this.passages[this.initial])
     .subscribe(
-      (data) => {
-        console.log({ data });
+      (data) => console.log({ data }),
         // scrollIntoView
         // this.preventOtherVersePlays = true;
-      },
       (error) => {
         console.log({ error });
         // this.preventOtherVersePlays = false;
@@ -143,9 +151,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
       this._player.play(content)
         .subscribe(
-          (data) => {
-            console.log(data);
-          },
+          (data) => console.log(data),
           (error) => {
             console.log(error);
             this.stopPlay();
@@ -186,9 +192,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getPassage(b, c)
       .subscribe(
-        (data: string[]) => {
-          this.passages = data;
-        },
+        (data: string[]) => this.passages = data,
         (error) => console.log({error})
       );
   }
@@ -226,12 +230,8 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getBookList()
       .subscribe(
-        (data) => {
-          this.bookList.push(data.toString()/* .charAt(0).toUpperCase() */);
-        },
-        (error) => {
-          console.log(error);
-        }
+        (data) => this.bookList.push(data.toString()/* .charAt(0).toUpperCase() */),
+        (error) => console.log(error)
       );
   }
 
