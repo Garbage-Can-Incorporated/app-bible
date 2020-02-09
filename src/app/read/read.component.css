@@ -53,6 +53,7 @@ sup {
 
 .__app-scriptures-container {
   padding: 0 15%;
+  min-height: calc(100vh - var(--cover-height) - var(--scripture-toolbar-height));
 }
 
 .__app-scriptures-book {
@@ -99,8 +100,6 @@ sup {
 
 .__app--preloading__icon {
   color: #e2dfdf;
-  margin-top: 20%;
-  margin-bottom: 20%;
 }
 
 .__app--navigator {
@@ -216,6 +215,7 @@ sup {
 
   .__app-scriptures-container {
     padding: 0 20%;
+    min-height: calc(100vh - 100px - var(--scripture-toolbar-height));
   }
 
   .__app--search___icon--pseudo {
