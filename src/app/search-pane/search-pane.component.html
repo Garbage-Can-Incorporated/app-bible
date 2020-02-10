@@ -1,16 +1,19 @@
 <div class="d-flex w-100 h-100 __app--pane__overlay"></div>
+
 <div class="d-flex __app-scripture-search-pane">
   <div class="d-flex m-2 __app--pane__action--container" (click)="collapseButton()">
     <i class="fa fa-long-arrow-alt-right m-auto __app--pane__cancel--icon"></i>
   </div>
   <div class="d-flex w-100 __app--scripture__search--pane__body">
     <mat-progress-bar *ngIf="result === undefined" mode="query"></mat-progress-bar>
-    <span class="d-flex mx-auto mt-2 __app--scripture__header">Find in Bible</span>
-    <div class="px-3 mb-auto d-flex w-100 __app--scripture__search--console">
+
+    <span class="d-flex ml-auto mr-4 mt-2 font-weight-bold __app--scripture__header"> <i class="fa fa-search-location mr-2 my-auto"></i> Find in Bible</span>
+    <div class="px-3 mb-2 d-flex w-100 __app--scripture__search--console">
       <div class="w-100 d-flex">
         <div class="mdl-textfield mt-2 py-0 mdl-js-textfield mdl-textfield--floating-label">
           <input
-          class="mdl-textfield__input" type="textarea" id="search"
+          class="mdl-textfield__input" 
+          type="input" id="search" placeholder="search"
           (mouseleave)="grabInput()"
           [(ngModel)]="query"
           >
@@ -19,8 +22,10 @@
       </div>
     </div>
 
-    <div class="d-flex w-100 __app--scripture__search--result px-3 pt-2">
-      {{ result | json }}
+    <span class="d-flex w-100 my-1 ml-3 mr-auto __app--scripture__result--header"> {{ resultsHeaderText }} </span>
+
+    <div class="d-flex w-100 __app--scripture__search--result">
+      <!-- {{ result | json }} -->
       <div class="d-flex w-100 mb-2 __app--scripture__result--item px-3">
         <span class="my-1 mr-auto font-weight-bold __app--scripture__result--item__reference">Genesis 1:1</span>
         <span class="w-100 d-block text-truncate __app--scripture__result--item__passage">In the beginning, God created the heaven and the earth</span>

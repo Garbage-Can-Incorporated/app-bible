@@ -3,7 +3,6 @@
 }
 
 .__app--pane__overlay {
-  /* position: absolute; */
   background-color: #000000;
   opacity: 0.6;
 }
@@ -26,6 +25,10 @@
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.__app--scripture__result--header {
+  font-size: 10.5px;
 }
 
 .__app--scripture__result--item {

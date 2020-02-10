@@ -9,6 +9,7 @@ import { SearchScripturesService } from '../services/search-scriptures.service';
 })
 export class SearchPaneComponent implements OnInit {
   @Output() closePane: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public resultsHeaderText = <string>'No result(s) yet';
 
   public query: string;
   public result: any;
