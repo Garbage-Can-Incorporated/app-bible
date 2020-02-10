@@ -181,6 +181,10 @@ sup {
   color: rebeccapurple;
 }
 
+app-search-pane {
+  z-index: 5000;
+}
+
 /* breakpoints */
 @media (min-width: 678px) {
   .__app--scripture-console mat-form-field:nth-child(n+1) {
