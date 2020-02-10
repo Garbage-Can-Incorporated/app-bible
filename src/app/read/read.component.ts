@@ -50,6 +50,22 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.searchScripture();
   }
 
+  public validateChapter(el: any, e: any): void {
+    if (parseInt(el.value, 10) > this.chapterList.length) {
+      this.scripture.chapter = this.chapterList.length;
+    }
+
+    this.searchScripture();
+  }
+
+  public validateVerse(el: any, e: any): void {
+    if (parseInt(el.value, 10) > this.verseList.length) {
+      this.scripture.verse = this.verseList.length;
+    }
+
+    this.searchScripture();
+  }
+
   ngAfterViewInit(): void {
     this.scrolled = false;
   }
