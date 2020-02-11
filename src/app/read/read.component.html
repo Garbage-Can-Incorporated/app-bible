@@ -104,10 +104,10 @@
 </div>
 
 <!-- paginator - left -->
-<i appScriptureNavigator [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left" (watchOutput)="previousScripture($event)"></i>
+<i appScriptureNavigator *ngIf="passages" [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left" (watchOutput)="previousScripture($event)"></i>
 
 <!-- paginator - right -->
-<i appScriptureNavigator [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-right mr-auto __app--navigator __app--navigator__right" (watchOutput)="nextScripture($event)"></i>
+<i appScriptureNavigator *ngIf="passages" [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-right mr-auto __app--navigator __app--navigator__right" (watchOutput)="nextScripture($event)"></i>
 
 <div class="d-flex __app-scriptures-player __player-position-left">
   <i class="fa fa-fast-backward mx-auto mt-auto" (click)="previous()"></i>
