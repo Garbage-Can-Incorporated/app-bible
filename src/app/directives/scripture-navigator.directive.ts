@@ -38,7 +38,8 @@ export class ScriptureNavigatorDirective implements OnChanges {
 
   private setPreviousChapter(): void {
     if (this.HOList === false) {
-      --this.resource.chapter;
+      this.resource.chapter = JSON.parse(this.resource.chapter.toString());
+      this.resource.chapter -= 1;
     }
 
     this.watchOutput.emit(this.resource);
@@ -46,6 +47,7 @@ export class ScriptureNavigatorDirective implements OnChanges {
 
   private setNextChapter(): void {
     if (this.EOList === false) {
+      this.resource.chapter = JSON.parse(this.resource.chapter.toString());
       this.resource.chapter += 1;
     }
 
@@ -58,7 +60,7 @@ export class ScriptureNavigatorDirective implements OnChanges {
   }
 
   private get HOList(): boolean {
-    return <number>this.resource.chapter === 1
+    return <number>JSON.parse(this.resource.chapter.toString()) === 1
       ? true
       : false;
   }
@@ -74,12 +76,12 @@ export class ScriptureNavigatorDirective implements OnChanges {
   }
 
   private coordLeftNavigator(): void {
-    if (this.resource !== undefined && <number>this.resource.chapter === 1) {
+    if (this.resource !== undefined && <number>JSON.parse(this.resource.chapter.toString()) === 1) {
       this.toggleLeftEl(this.el.nativeElement);
       this.toggleRightEl(this.el.nativeElement, false);
     } else if (
       this.resource !== undefined &&
-      <number>this.resource.chapter > 1
+      <number>JSON.parse(this.resource.chapter.toString()) > 1
     ) {
       this.toggleLeftEl(this.el.nativeElement, false);
       this.toggleRightEl(this.el.nativeElement, false);
@@ -89,13 +91,13 @@ export class ScriptureNavigatorDirective implements OnChanges {
   private coordRightNavigator (): void {
     if (
       this.resource !== undefined &&
-      <number>this.resource.chapter === this.watch.chapterList.length
+      <number>JSON.parse(this.resource.chapter.toString()) === this.watch.chapterList.length
     ) {
       this.toggleRightEl(this.el.nativeElement);
       this.toggleLeftEl(this.el.nativeElement, false);
     } else if (
       this.resource !== undefined &&
-      <number>this.resource.chapter < this.watch.chapterList.length
+      <number>JSON.parse(this.resource.chapter.toString()) < this.watch.chapterList.length
     ) {
       this.toggleRightEl(this.el.nativeElement, false);
     }
