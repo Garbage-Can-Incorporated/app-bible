@@ -227,6 +227,10 @@ app-search-pane {
     right: -8px;
   }
 
+  .__app-scriptures-item {
+    font-size: 12px;
+  }
+
   .__app-scriptures-player {
     bottom: 10px;
     left: 7px;
