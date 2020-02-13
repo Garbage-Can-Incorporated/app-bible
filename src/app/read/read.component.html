@@ -81,6 +81,7 @@
     {{ scripture.book.toUpperCase() }}
   </span>
 
+  <!-- use component -->
   <div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100">
     <div appScrollView [status]="(i + 1) === focusElementNo" [exception]="(i + 1) > 5" *ngFor="let passage of passages; index as i" class="d-flex w-100 __app-scriptures-item mb-2" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
       <div class="d-flex text-left w-100" [ngClass]="{'__app-scriptures-item--focus': (i + 1) === focusElementNo}">
