@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import Fuse from 'fuse.js';
 import { ScripturesService } from './scriptures.service';
+import { Observable } from 'rxjs';
+import { ISearchResults } from '../interfaces/i-search-results';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +14,12 @@ export class SearchScripturesService {
     shouldSort: true,
     tokenize: true,
     matchAllTokens: true,
-    findAllMatches: false,
+    findAllMatches: true,
     includeScore: true,
     includeMatches: true,
     threshold: 0.0,
     // location: 0,
-    distance: 100,
+    // distance: 100,
     maxPatternLength: 100,
     minMatchCharLength: 5,
     keys: ['verses']
@@ -46,9 +48,9 @@ export class SearchScripturesService {
       );
   }
 
-  public search(string: string): any {
+  public search(string: string): Observable<ISearchResults> {
     // console.log(this.data);
-    return this.fuse.search(string);
+    return this.fuse.search(<string>string);
   }
 
   public changeOptions(): any {
