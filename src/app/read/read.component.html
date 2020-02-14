@@ -4,6 +4,21 @@
 
 <div class="d-flex w-100 mt-auto __app-scripture-toolbar">
   <div class="d-flex w-100 mx-auto my-auto __app--scripture-console">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="ml-3 my-auto">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item class="d-flex">
+        <i class="fa fa-cog mr-2 my-auto d-flex"></i>
+        <span>settings</span>
+      </button>
+      <button mat-menu-item class="d-flex">
+        <i class="far fa-bell mr-2 my-auto d-flex"></i>
+        <span>alarm</span>
+      </button>
+    </mat-menu>
+
+
     <mat-form-field class="mr-2 ml-auto" appearance="outline">
       <mat-label>book</mat-label>
       <input 
@@ -69,7 +84,7 @@
       [typeaheadSingleWords]="true">
     </mat-form-field>
 
-  <i appActionScroll [reveal]="scrolled" [_class]="'invisible'"  class="fa fa-search mx-4 my-auto fa-1x invisible __app--search___icon--pseudo" (click)="showSearchPane()"></i>
+    <i appActionScroll [reveal]="scrolled" [_class]="'invisible'"  class="fa fa-search mx-4 my-auto fa-1x invisible __app--search___icon--pseudo" (click)="showSearchPane()"></i>
   </div>
 </div>
 
@@ -91,7 +106,6 @@
 
       <div class="d-flex ml-auto my-2 __app--reactions--container" #reactionConsole>
         <i class="fa fa-play ml-auto mr-3 my-auto d-none" #playIcon (click)="readVerse(i, playIcon)" [hidden]="playIcon.classList.contains('fa-play') && preventOtherVersePlays"></i>
-        <i class="far fa-bell mr-3 my-auto d-none"></i>
         <i class="far fa-heart mr-3 my-auto d-none" #likeIcon (click)="likeVerse(likeIcon)"></i>
         <i class="far fa-smile-wink mr-3 my-auto d-none"></i>
         <i class="fa fa-share-alt mr-3 my-auto d-none"></i>
