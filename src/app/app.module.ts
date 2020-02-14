@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
@@ -46,7 +47,8 @@ import { ScriptureNavigatorDirective } from './directives/scripture-navigator.di
     MatButtonModule,
     TypeaheadModule.forRoot(),
     HttpClientModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatMenuModule
   ],
   providers: [
     ScripturesService,
