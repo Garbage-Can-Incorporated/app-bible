@@ -28,8 +28,6 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public scrolled = <boolean>false;
 
   public _showSearchPane = <boolean>false;
-
-  public preventOtherVersePlays = <boolean>false;
   public repeatAll = <boolean>false;
   public playerState = <boolean>true;
   private _playerState = <boolean>true;
@@ -149,46 +147,6 @@ export class ReadComponent implements OnInit, AfterViewInit {
     // this.preventOtherVersePlays = true;
   }
 
-  private toggleVersePlay (icon: Element, content: string): void {
-    if (icon.classList.contains('fa-pause')) {
-      icon.classList.remove('fa-pause');
-      icon.classList.add('fa-play');
-
-      icon.classList.remove('__blue--color');
-
-      this._player.pause();
-      this.preventOtherVersePlays = false; // tentative
-    } else {
-      icon.classList.remove('fa-play');
-      icon.classList.add('fa-pause');
-
-      icon.classList.add('__blue--color');
-      this.preventOtherVersePlays = true;
-
-      this._player.play(content)
-        .subscribe(
-          (data) => console.log(data),
-          (error) => {
-            console.log(error);
-            this.stopPlay();
-
-            this.preventOtherVersePlays = false;
-          },
-          () => {
-            console.log('complete!');
-            icon.classList.replace('fa-pause', 'fa-play');
-            icon.classList.remove('__blue--color');
-
-            this.preventOtherVersePlays = false;
-          }
-        );
-    }
-  }
-
-  public readVerse(i: number, playIcon: Element): void {
-    this.toggleVersePlay(playIcon, this.passages[i]);
-  }
-
   public searchScripture(): void {
     const {book, verse, chapter} = this.scripture;
 
@@ -267,38 +225,16 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.searchScripture();
   }
 
-  public likeVerse(el: Element): void {
-    if (el.classList.contains('far')) {
-      el.classList.replace('far', 'fa');
-      el.classList.add('__red--color');
-      return;
-    }
-
-    if (el.classList.contains('fa')) {
-      el.classList.replace('fa', 'far');
-      el.classList.remove('__red--color');
-      return;
-    }
-  }
-
   public toggleRepeat(): void {
     this.repeatAll = !this.repeatAll;
   }
 
   public showReactionConsole(el: any): void {
-    const children: HTMLCollection[] = el.children;
-
-    for (let i = 0; i < children.length; i++) {
-      el.children[i].classList.remove('d-none');
-    }
+    el.toggleIconsVisibility();
   }
 
   public hideReactionConsole(el: any): void {
-    const children: HTMLCollection[] = el.children;
-
-    for (let i = 0; i < children.length; i++) {
-      el.children[i].classList.add('d-none');
-    }
+    el.toggleIconsVisibility();
   }
 
   public togglePlayerState(): void {

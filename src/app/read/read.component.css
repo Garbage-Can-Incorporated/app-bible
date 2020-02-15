@@ -82,10 +82,6 @@ sup {
   font-size: 10px;
 }
 
-.__app--reactions--container {
-  transition: ease-out 1s ease-in 1s;
-}
-
 .__app-scriptures-item--focus {
   font-weight: 700;
   outline: none;
@@ -182,10 +178,6 @@ sup {
   color: rebeccapurple;
 }
 
-app-search-pane {
-  z-index: 5000;
-}
-
 /* breakpoints */
 /* small devices for the web */
 @media (min-width: 678px) {
@@ -196,14 +188,6 @@ app-search-pane {
   .__app--scripture-console mat-form-field:first-of-type {
     max-width: 50%;
   }
-}
-
-.__red--color {
-  color: red;
-}
-
-.__blue--color {
-  color: #1414fa;
 }
 
 /* small devices or the web */
