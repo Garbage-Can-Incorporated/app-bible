@@ -1,0 +1,27 @@
+<div class="d-flex ml-auto __app--reactions--container">
+  <i class="fa fa-play ml-auto mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show" #playIcon (click)="readVerse(playIcon)"
+    [hidden]="(playIcon.classList.contains('fa-pause') && playerState === true) === true">
+  </i>
+
+  <i class="far fa-heart mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show" #likeIcon (click)="likeVerse(likeIcon)"></i>
+
+  <i class="far fa-smile-wink mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show"></i>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show">
+    <i class="fa fa-share-alt my-auto d-flex"></i>
+  </button>
+  <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+    <button mat-menu-item class="d-flex">
+      <i class="fab fa-facebook-square mr-2 my-auto d-flex"></i>
+      <span> Facebook </span>
+    </button>
+    <button mat-menu-item class="d-flex">
+      <i class="fab fa-twitter mr-2 my-auto d-flex"></i>
+      <span> Twitter </span>
+    </button>
+    <button mat-menu-item class="d-flex">
+      <i class="fab fa-instagram mr-2 my-auto d-flex"></i>
+      <span> Instagram </span>
+    </button>
+  </mat-menu>
+</div>
