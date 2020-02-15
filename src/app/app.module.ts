@@ -17,6 +17,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { AppComponent } from './app.component';
 import { ReadComponent } from './read/read.component';
 import { SearchPaneComponent } from './search-pane/search-pane.component';
+import { ReactionConsoleComponent } from './reaction-console/reaction-console.component';
+import { ScriptureItemComponent } from './scripture-item/scripture-item.component';
 
 import { ScripturesService } from './services/scriptures.service';
 import { ResourceHandlerService } from './services/resource-handler.service';
@@ -26,6 +28,7 @@ import { SpeechSynthesisService } from './services/speech-synthesis.service';
 import { ScrollViewDirective } from './directives/scroll-view.directive';
 import { ActionScrollDirective } from './directives/action-scroll.directive';
 import { ScriptureNavigatorDirective } from './directives/scripture-navigator.directive';
+import { ToggleReactionsVisibilityDirective } from './directives/toggle-reactions-visibility.directive';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { ScriptureNavigatorDirective } from './directives/scripture-navigator.di
     SearchPaneComponent,
     ScrollViewDirective,
     ActionScrollDirective,
-    ScriptureNavigatorDirective
+    ScriptureNavigatorDirective,
+    ScriptureItemComponent,
+    ReactionConsoleComponent,
+    ToggleReactionsVisibilityDirective
   ],
   imports: [
     BrowserModule,
