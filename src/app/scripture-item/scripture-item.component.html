@@ -1,0 +1,16 @@
+<div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100 __app--scriptures__item--container">
+  <div appScrollView [status]="(i + 1) === focusElementNo" [exception]="(i + 1) > 5"
+    *ngFor="let passage of passages; index as i" class="d-flex w-100 __app-scriptures-item mb-2"
+    (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
+    <div class="d-flex text-left w-100" [ngClass]="{'__app-scriptures-item--focus': (i + 1) === focusElementNo}">
+      <sup class="my-0 mr-2 mb-2 font-weight-bold">{{ (i + 1) }}</sup>
+      <span class="d-flex"> {{ passage }} </span>
+    </div>
+
+    <app-reaction-console [passages]="passages[i]" #reactionConsole class="d-flex"></app-reaction-console>
+  </div>
+</div>
+
+<ng-template #loadingElseBlock class="d-flex w-100">
+  <i class="fa fa-bible fa-spin fa-3x mx-auto my-auto __app--preloading__icon"> </i>
+</ng-template>
