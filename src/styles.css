@@ -49,6 +49,15 @@ app-search-pane {
   display: flex;
   position: fixed;
   top: 0;
+  z-index: 5000;
+}
+
+.__red--color {
+  color: red;
+}
+
+.__blue--color {
+  color: #1414fa;
 }
 
 .mat-form-field-wrapper {
