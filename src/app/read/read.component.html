@@ -90,28 +90,7 @@
 
 <app-search-pane *ngIf="_showSearchPane" (closePane)="collapseSearchPane($event)"></app-search-pane>
 
-<div class="d-flex w-100 __app-scriptures-container">
-  <span class="d-flex __app-scriptures-book text-uppercase mt-3">
-    <p class="my-auto ml-0 mr-2 text-capitalize">The book of</p>
-    {{ scripture.book.toUpperCase() }}
-  </span>
-
-  <!-- use component -->
-  <div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100">
-    <div appScrollView [status]="(i + 1) === focusElementNo" [exception]="(i + 1) > 5" *ngFor="let passage of passages; index as i" class="d-flex w-100 __app-scriptures-item mb-2" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
-      <div class="d-flex text-left w-100" [ngClass]="{'__app-scriptures-item--focus': (i + 1) === focusElementNo}">
-        <sup class="my-0 mr-2 mb-2 font-weight-bold">{{ (i + 1) }}</sup>
-        <span class="d-flex"> {{ passage }} </span>
-      </div>
-
-      <app-reaction-console [passages]="passages[i]" #reactionConsole class="d-flex"></app-reaction-console>
-    </div>
-  </div>
-
-  <ng-template #loadingElseBlock class="d-flex w-100">
-    <i class="fa fa-bible fa-spin fa-3x mx-auto my-auto __app--preloading__icon"> </i>
-  </ng-template>
-</div>
+<app-scripture-container class="d-flex w-100" [book]="scripture.book.toUpperCase()" [passages]="passages" [itemFocus]="focusElementNo"></app-scripture-container>
 
 <!-- paginator - left -->
 <i appScriptureNavigator *ngIf="passages" [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left" (watchOutput)="previousScripture($event)"></i>

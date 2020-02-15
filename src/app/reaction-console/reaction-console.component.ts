@@ -7,7 +7,7 @@ import { PlayerService } from '../services/player.service';
   styleUrls: ['./reaction-console.component.css']
 })
 export class ReactionConsoleComponent implements OnInit {
-  @Input() passages: string;
+  @Input() passage: string;
   public playerState: boolean = <boolean>false;
 
   public show = <boolean> false;
@@ -39,7 +39,7 @@ export class ReactionConsoleComponent implements OnInit {
   public readVerse(playIcon: Element): void {
     console.log(this.playerState);
     // this.playerState = true;
-    this.toggleVersePlay(playIcon, this.passages);
+    this.toggleVersePlay(playIcon, this.passage);
   }
 
   private toggleVersePlay(icon: Element, content: string): void {
