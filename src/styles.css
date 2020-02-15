@@ -52,6 +52,10 @@ app-search-pane {
   z-index: 5000;
 }
 
+app-reaction-console {
+  cursor: pointer;
+}
+
 .__red--color {
   color: red;
 }
