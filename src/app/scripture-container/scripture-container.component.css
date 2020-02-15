@@ -1,0 +1,33 @@
+.__app-scriptures-container,
+.__app-scriptures-container div {
+  flex-direction: column;
+}
+
+.__app-scriptures-container {
+  padding: 0 15%;
+  min-height: calc(100vh - var(--cover-height) - var(--scripture-toolbar-height));
+}
+
+.__app-scriptures-book {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.__app-scriptures-book p {
+  line-height: normal;  
+}
+
+/* small devices for the web */
+@media (max-width: 576px) {
+  .__app-scriptures-container {
+    padding: 0 20%;
+    min-height: calc(100vh - 100px - var(--scripture-toolbar-height));
+  }
+}
+
+/* large device */
+@media (min-width: 768px) {
+  .__app-scriptures-container {
+    padding: 0 20%;
+  }
+}
