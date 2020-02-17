@@ -1,3 +1,10 @@
+sup {
+  line-height: normal;
+  height: fit-content;
+  top: 0!important;
+  position: static;
+}
+
 .__app--scriptures__item--container {
   flex-direction: column;
 }
