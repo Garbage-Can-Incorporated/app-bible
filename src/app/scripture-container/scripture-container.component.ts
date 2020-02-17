@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-scripture-container',
   templateUrl: './scripture-container.component.html',
   styleUrls: ['./scripture-container.component.css']
 })
-export class ScriptureContainerComponent implements OnInit, AfterViewInit {
+export class ScriptureContainerComponent implements OnInit, OnChanges {
   @Input() passages: Array<string>;
-  @Input() itemFocus = <number> 1;
+  @Input() itemFocus: number;
   @Input() book: string;
   public focusElementNo: number;
 
@@ -15,7 +15,13 @@ export class ScriptureContainerComponent implements OnInit, AfterViewInit {
 
   ngOnInit() { }
 
-  ngAfterViewInit(): void {
-    this.focusElementNo = this.itemFocus;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      this.itemFocus !== NaN &&
+      this.itemFocus !== undefined &&
+      this.itemFocus != null
+    ) {
+      this.focusElementNo = this.itemFocus;
+    }
   }
 }
