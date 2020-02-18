@@ -3,7 +3,6 @@ import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
-import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-read',
@@ -28,14 +27,9 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public scrolled = <boolean>false;
 
   public _showSearchPane = <boolean>false;
-  public repeatAll = <boolean>false;
-  public playerState = <boolean>true;
-  private _playerState = <boolean>true;
-  public initial = <number>0;
 
   constructor(
-    private _scripturesProvider: ScripturesService,
-    private _player: PlayerService
+    private _scripturesProvider: ScripturesService
   ) { }
 
   ngOnInit() {
@@ -46,6 +40,14 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.populateVerseList();
 
     this.searchScripture();
+  }
+
+  ngAfterViewInit(): void {
+    this.scrolled = false;
+  }
+
+  @HostListener('window:scroll') onWindowScroll(): void {
+    this.scrolled = true;
   }
 
   public validateChapter(el: any, e: any): void {
@@ -64,14 +66,6 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.searchScripture();
   }
 
-  ngAfterViewInit(): void {
-    this.scrolled = false;
-  }
-
-  @HostListener('window:scroll') onWindowScroll (): void {
-    this.scrolled = true;
-  }
-
   public previousScripture(e: any): void {
     Object.assign(this.scripture, e);
     this.searchScripture();
@@ -80,71 +74,6 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public nextScripture(e: any): void {
     Object.assign(this.scripture, e);
     this.searchScripture();
-  }
-
-  public previous (): void {
-    this.stopPlay();
-
-    // calling play
-    this.initial -= 2;
-    this.playChapter();
-  }
-
-  public next(): void {
-    this.stopPlay();
-    if (this.initial === 0) { ++this.initial; }
-    this.playChapter();
-  }
-
-  public playChapter() {
-    this._playerState = true;
-
-    this._player
-    .play(this.passages[this.initial])
-    .subscribe(
-      (data) => console.log({ data }),
-        // scrollIntoView
-        // this.preventOtherVersePlays = true;
-      (error) => {
-        console.log({ error });
-        // this.preventOtherVersePlays = false;
-        this.stopPlay();
-      },
-      () => {
-        console.log('done!');
-        console.log('last played => ', {lastPlayed: this.initial});
-
-        ++this.initial;
-        console.log('currently being played', {currentlyPlayed: this.initial});
-
-        if (this.initial === this.passages.length) {
-          this.stopPlay();
-          this.initial = 0;
-
-          // repeat all
-          if (this.repeatAll === true) {
-            this.playChapter();
-          }
-        }
-
-        if (this._playerState === true) {
-          this.playChapter();
-        }
-
-        this.focusElementNo = this.initial;
-      }
-    );
-  }
-
-  public stopPlay(): void {
-    this._player.stop();
-    this.togglePlayerState();
-    this._playerState = false;
-  }
-
-  public pause(): void {
-    this._player.pause();
-    // this.preventOtherVersePlays = true;
   }
 
   public searchScripture(): void {
@@ -225,20 +154,12 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.searchScripture();
   }
 
-  public toggleRepeat(): void {
-    this.repeatAll = !this.repeatAll;
-  }
-
   public showReactionConsole(el: any): void {
     el.toggleIconsVisibility();
   }
 
   public hideReactionConsole(el: any): void {
     el.toggleIconsVisibility();
-  }
-
-  public togglePlayerState(): void {
-    this.playerState = !this.playerState;
   }
 
   public collapseSearchPane(e: boolean) {

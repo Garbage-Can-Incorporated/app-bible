@@ -30,6 +30,7 @@ import { ActionScrollDirective } from './directives/action-scroll.directive';
 import { ScriptureNavigatorDirective } from './directives/scripture-navigator.directive';
 import { ToggleReactionsVisibilityDirective } from './directives/toggle-reactions-visibility.directive';
 import { ScriptureContainerComponent } from './scripture-container/scripture-container.component';
+import { ScripturePlayerComponent } from './scripture-player/scripture-player.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ScriptureContainerComponent } from './scripture-container/scripture-con
     ScriptureItemComponent,
     ReactionConsoleComponent,
     ToggleReactionsVisibilityDirective,
-    ScriptureContainerComponent
+    ScriptureContainerComponent,
+    ScripturePlayerComponent
   ],
   imports: [
     BrowserModule,
