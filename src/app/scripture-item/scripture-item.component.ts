@@ -24,7 +24,6 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
       this.itemFocus != null
     ) {
       this.focusElementNo = this.itemFocus;
-      console.log({ i: this.itemFocus });
     }
   }
 
