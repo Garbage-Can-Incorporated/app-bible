@@ -1,7 +1,8 @@
 <div class="d-flex ml-auto __app--reactions--container">
   <i class="fa fa-play ml-auto mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show" #playIcon (click)="readVerse(playIcon)"
-    [hidden]="(playIcon.classList.contains('fa-pause') && playerState === true) === true">
+    >
   </i>
+  <!-- [hidden]="(playIcon.classList.contains('fa-pause') && playerState === true) === true" -->
 
   <i class="far fa-heart mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show" #likeIcon (click)="likeVerse(likeIcon)"></i>
 
