@@ -84,7 +84,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
       chapter !== undefined &&
       (typeof chapter === 'string' ? chapter !== ' ' : true)
       ) {
-      this.focusElementNo = typeof verse === 'string' ? parseInt(verse, 10) : verse;
+      this.focusElementNo = parseInt(verse.toString(), 10);
 
       this.populateChapterList();
       this.getPassage(book, chapter);
@@ -101,7 +101,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
   }
 
   private populateVerseList(): void {
-    const {book, chapter} = this.scripture;
+    const {book, chapter, verse} = this.scripture;
 
     this._scripturesProvider
     .getVerseLength(book, chapter)
@@ -109,6 +109,11 @@ export class ReadComponent implements OnInit, AfterViewInit {
       (data) => {
         this.maxVerse = data;
         this.verseList = this.generateListNumbers(data);
+
+        if (verse > this.verseList.length) {
+          this.scripture.verse = this.verseList.length;
+          this.focusElementNo = parseInt(verse.toString(), 10);
+        }
       }
     );
   }
@@ -133,7 +138,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getBookList()
       .subscribe(
-        (data) => this.bookList.push(data.toString()/* .charAt(0).toUpperCase() */),
+        (data) => this.bookList.push(data.toString()),
         (error) => console.log(error)
       );
   }
@@ -144,11 +149,11 @@ export class ReadComponent implements OnInit, AfterViewInit {
     }
 
     if (key === 'c') {
-      this.scripture.chapter = typeof e.value === 'string' ? parseInt(e.value, 10) : e.value;
+      this.scripture.chapter = parseInt(e.value.toString(), 10);
     }
 
     if (key === 'v') {
-      this.scripture.verse = typeof e.value === 'string' ? parseInt(e.value, 10) : e.value;
+      this.scripture.verse =  parseInt(e.value.toString(), 10);
     }
 
     this.searchScripture();
