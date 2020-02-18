@@ -99,7 +99,7 @@
   color: #03b503;
 }
 
-.__app--scriptures__player--button__repeat--inactive:after {
+.__app--scriptures__player--button__repeat--active:after {
   content: '1';
   padding: 3px 5px;
   position: absolute;
