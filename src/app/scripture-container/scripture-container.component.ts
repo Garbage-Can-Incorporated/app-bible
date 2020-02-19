@@ -15,7 +15,7 @@ export class ScriptureContainerComponent implements OnInit, OnChanges {
   ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log({ changes, focus: this.focusElementNo });
+    console.log({ focus: this.focusElementNo });
     /* if (
       this.itemFocus !== NaN &&
       this.itemFocus !== undefined &&
