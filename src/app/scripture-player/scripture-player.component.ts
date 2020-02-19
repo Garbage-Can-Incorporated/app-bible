@@ -8,9 +8,7 @@ import { PlayerService } from '../services/player.service';
 })
 export class ScripturePlayerComponent implements OnInit, OnChanges {
   @Input() public passages: Array<string>;
-  @Input() public itemFocus: number;
   @Output() public watchFocus: EventEmitter<number> = new EventEmitter();
-  private focusElementNo: number;
   public repeatAll = <boolean>false;
   public playerState = <boolean> false;
   public initial = <number> 0;
@@ -24,7 +22,6 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.passages !== undefined) {
       this.passages = this.passages;
-      this.focusElementNo = this.itemFocus;
     }
   }
 
@@ -36,13 +33,16 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
     this.stopPlay();
 
     // calling play
-    this.initial -= 2;
+    this.initial -= 2; // check
     this.playChapter();
   }
 
   public next(): void {
     this.stopPlay();
-    if (this.initial === 0) { ++this.initial; }
+
+    if (this.initial === 0) { this.initial += 1; }
+    // this.initial += 1;
+
     this.playChapter();
   }
 
@@ -60,27 +60,28 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
         },
         () => {
           console.log('done!');
-          console.log('last played => ', { lastPlayed: this.initial });
+          console.log('last played => ', { lastPlayed: this.initial + 1 });
 
-          ++this.initial;
-          console.log('currently being played', { currentlyPlayed: this.initial });
+          this.initial += 1;
+          console.log('currently being played', { currentlyPlayed: this.initial + 1 });
 
-          if (this.initial === this.passages.length) {
+          // end of list EOL
+          if (this.initial >= this.passages.length) {
             this.stopPlay();
             this.initial = 0;
 
-            // repeat all
+            // repeat all if repeat enabled
             if (this.repeatAll === true) {
               this.playChapter();
             }
           }
 
+          // play next on the list
           if (this.playerState === true) {
             this.playChapter();
           }
 
-          this.focusElementNo = this.initial;
-          this.watchFocus.emit(this.focusElementNo);
+          this.watchFocus.emit(this.initial);
         }
       );
   }

@@ -90,7 +90,9 @@
 
 <app-search-pane *ngIf="_showSearchPane" (closePane)="collapseSearchPane($event)"></app-search-pane>
 
-<app-scripture-container class="d-flex w-100" [book]="scripture.book.toUpperCase()" [passages]="passages" [itemFocus]="focusElementNo"></app-scripture-container>
+<app-scripture-container class="d-flex w-100" [book]="scripture.book.toUpperCase()" [passages]="passages"
+  [focusElementNo]="focusElementNo">
+</app-scripture-container>
 
 <!-- paginator - left -->
 <i appScriptureNavigator *ngIf="passages" [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left" (watchOutput)="previousScripture($event)"></i>
@@ -98,4 +100,4 @@
 <!-- paginator - right -->
 <i appScriptureNavigator *ngIf="passages" [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-right mr-auto __app--navigator __app--navigator__right" (watchOutput)="nextScripture($event)"></i>
 
-<app-scripture-player [passages]="passages" [itemFocus]="focusElementNo" (watchFocus)="focusElementNo = $event"></app-scripture-player>
+<app-scripture-player [passages]="passages" (watchFocus)="keepFocus($event)"></app-scripture-player>

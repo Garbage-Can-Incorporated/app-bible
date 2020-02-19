@@ -7,21 +7,21 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 })
 export class ScriptureContainerComponent implements OnInit, OnChanges {
   @Input() passages: Array<string>;
-  @Input() itemFocus: number;
+  @Input() focusElementNo: number;
   @Input() book: string;
-  public focusElementNo: number;
 
   constructor() { }
 
   ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (
+    console.log({ changes, focus: this.focusElementNo });
+    /* if (
       this.itemFocus !== NaN &&
       this.itemFocus !== undefined &&
       this.itemFocus != null
     ) {
       this.focusElementNo = this.itemFocus;
-    }
+    } */
   }
 }

@@ -50,6 +50,10 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.scrolled = true;
   }
 
+  public keepFocus(no: number): void {
+    console.log({ focus: this.focusElementNo, no });
+  }
+
   public validateChapter(el: any, e: any): void {
     if (parseInt(el.value, 10) > this.chapterList.length) {
       this.scripture.chapter = this.chapterList.length;
