@@ -12,7 +12,7 @@ import { ISearchResults } from '../interfaces/i-search-results';
   styleUrls: ['./search-pane.component.css']
 })
 export class SearchPaneComponent implements OnInit, AfterViewInit {
-  @ViewChild('searchRes') srEl: ElementRef;
+  @ViewChild('searchRes', { static: true }) srEl: ElementRef;
   @Output() closePane: EventEmitter<boolean> = new EventEmitter<boolean>();
   public resultsHeaderText = <string> 'No result(s) yet';
   private totalNoOfResult = <number>0;
