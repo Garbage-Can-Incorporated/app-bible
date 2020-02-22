@@ -10,6 +10,7 @@ import { ScripturesService } from '../services/scriptures.service';
   styleUrls: ['./read.component.css']
 })
 export class ReadComponent implements OnInit, AfterViewInit {
+  @ViewChild('scriptureContainer', { static: true }) scriptureContainer: any;
   private _scripture: IScriptures =  {
     book: 'genesis',
     chapter: 1,
