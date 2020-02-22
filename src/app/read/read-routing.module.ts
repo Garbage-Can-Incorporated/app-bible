@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { ReadComponent } from './read.component';
+
 const routes: Routes = [
   {
-    path: '**',
-    redirectTo: ''
+    path: '',
+    component: ReadComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class ReadRoutingModule {
+
+}
