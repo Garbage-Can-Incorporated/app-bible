@@ -63,7 +63,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
           console.log('last played => ', { lastPlayed: this.initial + 1 });
 
           // end of list EOL
-          if ((this.initial + 1) >= this.passages.length) {
+          if (this.EOPassage) {
             this.stopPlay();
             this.initial = 0;
 
@@ -73,7 +73,6 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
             }
           }
 
-          console.log('before play', this.playerState);
           // play next on the list
           if (this.playerState === true) {
             this.initial += 1;
@@ -99,5 +98,13 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
 
   public togglePlayerState(): void {
     this.playerState = !this.playerState;
+  }
+
+  private get TOPassage(): boolean {
+    return this.initial === 0;
+  }
+
+  private get EOPassage(): boolean {
+    return (this.initial + 1) >= this.passages.length;
   }
 }
