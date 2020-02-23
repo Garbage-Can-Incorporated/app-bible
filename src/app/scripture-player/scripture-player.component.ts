@@ -40,7 +40,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   public next(): void {
     this.stopPlay();
 
-    if (this.initial === 0) { this.initial += 1; }
+    // if (this.initial === 0) { this.initial += 1; }
     // this.initial += 1;
 
     this.playChapter();
@@ -62,11 +62,8 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
           console.log('done!');
           console.log('last played => ', { lastPlayed: this.initial + 1 });
 
-          this.initial += 1;
-          console.log('currently being played', { currentlyPlayed: this.initial + 1 });
-
           // end of list EOL
-          if (this.initial >= this.passages.length) {
+          if ((this.initial + 1) >= this.passages.length) {
             this.stopPlay();
             this.initial = 0;
 
@@ -76,12 +73,15 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
             }
           }
 
+          console.log('before play', this.playerState);
           // play next on the list
           if (this.playerState === true) {
+            this.initial += 1;
+            console.log('currently being played', { currentlyPlayed: this.initial + 1 });
             this.playChapter();
           }
 
-          this.watchFocus.emit(this.initial);
+          this.watchFocus.emit(this.initial + 1);
         }
       );
   }

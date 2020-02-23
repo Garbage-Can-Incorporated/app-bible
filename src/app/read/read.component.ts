@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit, ViewChild } from '@angular/core';
 
 import { IScriptures } from '../interfaces/i-scriptures';
 
@@ -10,7 +10,6 @@ import { ScripturesService } from '../services/scriptures.service';
   styleUrls: ['./read.component.css']
 })
 export class ReadComponent implements OnInit, AfterViewInit {
-  @ViewChild('scriptureContainer', { static: true }) scriptureContainer: any;
   private _scripture: IScriptures =  {
     book: 'genesis',
     chapter: 1,
@@ -52,6 +51,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
   }
 
   public keepFocus(no: number): void {
+    this.focusElementNo = no;
     console.log({ focus: this.focusElementNo, no });
   }
 

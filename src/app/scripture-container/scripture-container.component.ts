@@ -1,27 +1,26 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, AfterContentChecked, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-scripture-container',
   templateUrl: './scripture-container.component.html',
   styleUrls: ['./scripture-container.component.css']
 })
-export class ScriptureContainerComponent implements OnInit, OnChanges {
+export class ScriptureContainerComponent implements OnInit, AfterContentChecked, OnDestroy {
   @Input() passages: Array<string>;
-  @Input() focusElementNo: number;
+  @Input() focusElementNo = <number>1;
   @Input() book: string;
+
+  private st: any;
 
   constructor() { }
 
   ngOnInit() { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log({ focus: this.focusElementNo });
-    /* if (
-      this.itemFocus !== NaN &&
-      this.itemFocus !== undefined &&
-      this.itemFocus != null
-    ) {
-      this.focusElementNo = this.itemFocus;
-    } */
+  ngAfterContentChecked(): void {
+    this.st = setTimeout(() => { }, 1500);
+  }
+
+  ngOnDestroy() {
+    clearTimeout(this.st);
   }
 }

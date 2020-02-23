@@ -4,7 +4,6 @@
     {{ book }}
   </span>
 
-  <!-- use component -->
   <div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100">
     <app-scripture-item *ngFor="let passage of passages; index as i"
       class="d-flex w-100 h-100" [passage]="passage" [i]="i" [focusElementNo]="focusElementNo"
