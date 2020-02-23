@@ -52,6 +52,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   public keepFocus(no: number): void {
     this.focusElementNo = no;
+    this.scripture.verse = no;
     console.log({ focus: this.focusElementNo, no });
   }
 
