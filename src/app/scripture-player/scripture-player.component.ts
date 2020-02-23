@@ -32,18 +32,26 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   public previous(): void {
     this.stopPlay();
 
-    // calling play
-    this.initial -= 2; // check
-    this.playChapter();
+    this.initial -= 1;
+
+    if (this.passageUnderflow) {
+      this.initial = 0;
+    }
+
+    console.log({ _init: this.initial });
+    // this.playChapter();
   }
 
   public next(): void {
     this.stopPlay();
 
-    // if (this.initial === 0) { this.initial += 1; }
-    // this.initial += 1;
+    this.initial += 1;
+    if (this.passageOverflow) {
+      this.initial = 0;
+    }
 
-    this.playChapter();
+    console.log({ init_: this.initial });
+    // this.playChapter();
   }
 
   public playChapter() {
@@ -93,15 +101,18 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
     this._player.stop();
     this.togglePlayerState();
     this.playerState = false;
-    // this._playerState = false;
   }
 
   public togglePlayerState(): void {
     this.playerState = !this.playerState;
   }
 
-  private get TOPassage(): boolean {
-    return this.initial === 0;
+  private get passageUnderflow(): boolean {
+    return this.initial < 0;
+  }
+
+  private get passageOverflow(): boolean {
+    return this.initial >= this.passages.length;
   }
 
   private get EOPassage(): boolean {
