@@ -36,6 +36,8 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   color: var(--dark-grey)!important;
+  /* electron draggable area for framless window */
+  -webkit-app-region: drag;
 }
 
 app-root {
