@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 
 import { IScriptures } from '../interfaces/i-scriptures';
 
