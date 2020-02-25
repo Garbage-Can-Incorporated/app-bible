@@ -4,20 +4,8 @@
 
 <div class="d-flex w-100 mt-auto __app-scripture-toolbar">
   <div class="d-flex w-100 mx-auto my-auto __app--scripture-console">
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="ml-3 my-auto">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item class="d-flex">
-        <i class="fa fa-cog mr-2 my-auto d-flex"></i>
-        <span>settings</span>
-      </button>
-      <button mat-menu-item class="d-flex">
-        <i class="far fa-bell mr-2 my-auto d-flex"></i>
-        <span>alarm</span>
-      </button>
-    </mat-menu>
-
+    <!-- opens dialog -->
+    <i class="fa fa-elipsis-v my-auto ml-3"></i>
 
     <mat-form-field class="mr-2 ml-auto" appearance="outline">
       <mat-label>book</mat-label>
