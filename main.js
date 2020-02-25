@@ -30,7 +30,7 @@ const createWindow = () => {
       .getPrimaryDisplay()
       .size;
 
-  win.setMinimumSize(768, displayHeight - 40);
+  win.setMinimumSize(768, displayHeight - 30);
   win.setMaximumSize(992, displayHeight);
 
   win.loadURL(
