@@ -21,6 +21,7 @@ import { ToggleReactionsVisibilityDirective } from '../directives/toggle-reactio
 import { ScriptureContainerComponent } from '../scripture-container/scripture-container.component';
 import { ScripturePlayerComponent } from '../scripture-player/scripture-player.component';
 import { ReadRoutingModule } from './read-routing.module';
+import { FavoriteDirective } from '../directives/favorite.directive';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ReadRoutingModule } from './read-routing.module';
     ReactionConsoleComponent,
     ToggleReactionsVisibilityDirective,
     ScriptureContainerComponent,
-    ScripturePlayerComponent
+    ScripturePlayerComponent,
+    FavoriteDirective
   ],
   imports: [
     CommonModule,
