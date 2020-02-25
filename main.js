@@ -13,7 +13,6 @@ const createWindow = () => {
     moveable: true,
     resizable: true,
     autoHideMenuBar: true,
-    title: 'goshen',
     titleBarStyle:
       process.platform !== 'darwin' ?
         'hiddenInset' :
