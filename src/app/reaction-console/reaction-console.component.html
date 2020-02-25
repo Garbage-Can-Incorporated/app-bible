@@ -4,7 +4,7 @@
   </i>
   <!-- [hidden]="(playIcon.classList.contains('fa-pause') && playerState === true) === true" -->
 
-  <i class="far fa-heart mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show" #likeIcon (click)="likeVerse(likeIcon)"></i>
+  <i #likeIcon appFavorite class="far fa-heart mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show"></i>
 
   <!-- <i class="far fa-smile-wink mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show"></i> -->
 

@@ -22,20 +22,6 @@ export class ReactionConsoleComponent implements OnInit {
     this.show = !this.show;
   }
 
-  public likeVerse(el: Element): void {
-    if (el.classList.contains('far')) {
-      el.classList.replace('far', 'fa');
-      el.classList.add('__red--color');
-      return;
-    }
-
-    if (el.classList.contains('fa')) {
-      el.classList.replace('fa', 'far');
-      el.classList.remove('__red--color');
-      return;
-    }
-  }
-
   public readVerse(playIcon: Element): void {
     console.log(this.playerState);
     // this.playerState = true;
