@@ -2,6 +2,9 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 
+const ipcFavorite = require('./handlers/ipc-favorite');
+const ipcAlarm = require('./handlers/ipc-alarm');
+
 let win;
 
 const createWindow = () => {
@@ -43,6 +46,13 @@ const createWindow = () => {
 
   // The following is optional and will open the DevTools:
   win.webContents.openDevTools();
+
+  win.once('show', () => {
+    ipcFavorite();
+    ipcAlarm();
+  });
+
+  win.on('window-all-closed', app.quit);
 
   win.on('closed', () => {
     win = null;
