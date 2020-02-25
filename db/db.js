@@ -61,6 +61,7 @@ class DBService {
   * @member
   * @method init
   * @param {Function} cb
+  * @return {Object} db
   */
   init(cb = null) {
     this.db = new Database(
@@ -70,6 +71,7 @@ class DBService {
         console.log({init: '[DB-Service] initialization successful'});
       }
     );
+    return this.db;
   }
 
   /**
