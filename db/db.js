@@ -1,4 +1,11 @@
+const {join} = require('path');
+const {mkdir} = require('fs');
+
+const {app} = require('electron');
+
 const {Database, OPEN_READWRITE, OPEN_READ, OPEN_WRITE} = require('sqlite3');
+
+const userDataPath = app.getPath('userData');
 
 /**
 * Sql DBService
@@ -11,6 +18,7 @@ class DBService {
   */
   constructor(title, mode = 'rw') {
     this.dbName = title;
+    this.path = userDataPath;
     this.setMode(mode);
     return this;
   }
@@ -64,13 +72,13 @@ class DBService {
   * @return {Object} db
   */
   init(cb = null) {
-    this.db = new Database(
-        this.path,
-        this.mode,
-      cb !== null ? cb : () => {
-        console.log({init: '[DB-Service] initialization successful'});
-      }
-    );
+    mkdir(join(userDataPath, this.dbName), (err) => {
+      this.db = new Database(
+          `${join(this.path, this.dbName)}/favourites.db`,
+          this.mode
+      );
+    });
+
     return this.db;
   }
 
