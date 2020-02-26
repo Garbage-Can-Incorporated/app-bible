@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material';
 @Injectable({
   providedIn: 'root'
 })
-export class SnackBarService {
+export class SnackbarService {
   private config: any = {
     verticalPosition: 'bottom',
     horizontalPosition: 'right',

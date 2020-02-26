@@ -8,6 +8,8 @@ import { ScripturesService } from '../services/scriptures.service';
 import { ResourceHandlerService } from '../services/resource-handler.service';
 import { PlayerService } from '../services/player.service';
 import { SpeechSynthesisService } from '../services/speech-synthesis.service';
+import { SnackbarService } from '../services/snackbar.service';
+import { DialogService } from '../services/dialog.service';
 
 import { AppComponent } from '../app.component';
 import { ReadComponent } from './read.component';
@@ -49,7 +51,9 @@ import { FavoriteDirective } from '../directives/favorite.directive';
     ScripturesService,
     ResourceHandlerService,
     PlayerService,
-    SpeechSynthesisService
+    SpeechSynthesisService,
+    SnackbarService,
+    DialogService
   ]
 })
 export class ReadModule { }
