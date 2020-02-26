@@ -14,16 +14,7 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
 
   ngOnInit() { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log({ focus: this.focusElementNo });
-    /* if (
-      this.itemFocus !== NaN &&
-      this.itemFocus !== undefined &&
-      this.itemFocus != null
-    ) {
-      this.focusElementNo = this.itemFocus;
-    } */
-  }
+  ngOnChanges(changes: SimpleChanges): void { }
 
   public showReactionConsole(el: any): void {
     el.toggleIconsVisibility();

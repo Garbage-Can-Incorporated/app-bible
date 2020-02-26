@@ -20,7 +20,7 @@ export class DialogService {
       width = '350px',
       minWidth = '320px',
       maxWidth = 'fit-content'
-    }: DialogConfig
+    }
   ): MatDialogRef<any, any> {
     const dialogRef: MatDialogRef<any, any> = this.dialog.open(comp, {
       height,
