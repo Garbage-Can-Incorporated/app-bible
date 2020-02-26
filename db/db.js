@@ -106,7 +106,7 @@ class DBService {
       return;
     }
 
-    if (mode === 'r') {
+    if (mode === 'w') {
       this._mode = OPEN_WRITE;
       return;
     }
