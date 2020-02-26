@@ -11,6 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxElectronModule } from 'ngx-electron';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [],
@@ -26,7 +28,9 @@ import { NgxElectronModule } from 'ngx-electron';
     MatProgressBarModule,
     MatMenuModule,
     MatDatepickerModule,
-    NgxElectronModule
+    NgxElectronModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   exports: [
     FormsModule,
