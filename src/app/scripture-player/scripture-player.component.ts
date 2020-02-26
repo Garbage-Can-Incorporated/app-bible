@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+
 import { PlayerService } from '../services/player.service';
+import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
   selector: 'app-scripture-player',
@@ -14,7 +16,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   public initial = <number> 0;
 
   constructor(
-    private _player: PlayerService
+    private _snackbar: SnackbarService
   ) { }
 
   ngOnInit() { }
@@ -65,6 +67,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
         (error) => {
           console.log({ error });
           this.stopPlay();
+              Internet isn't available. Please retry when the internet is available
         },
         () => {
           console.log('done!');
