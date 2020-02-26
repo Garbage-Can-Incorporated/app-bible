@@ -67,19 +67,23 @@ class DBService {
 
   /**
   * @member
-  * @method init
+  * @method initconsole
   * @param {Function} cb
   * @return {Object} db
   */
-  init(cb = null) {
+  init() {
     mkdir(join(userDataPath, this.dbName), (err) => {
-      this.db = new Database(
-          `${join(this.path, this.dbName)}/favourites.db`,
-          this.mode
-      );
+      if (err) {
+        console.log(`[MKDIR Error]`, {err});
+      }
     });
 
-    return this.db;
+    const db = new Database(
+        `${join(this.path, this.dbName)}/favourites.db`,
+        this.mode
+    );
+
+    return db;
   }
 
   /**
