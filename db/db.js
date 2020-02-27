@@ -100,15 +100,15 @@ class DBService {
   * @return {Object} db
   */
   init() {
-    mkdir(join(userDataPath, this.dbName), (err) => {
+    const path = join(userDataPath, this.dbName);
+    mkdir(path, {recursive: true}, (err) => {
       if (err) {
         console.log(`[MKDIR Error]`, {err});
       }
     });
 
     const db = new Database(
-        `${join(this.path, this.dbName)}/favourites.db`,
-        this._mode
+        `${path}/${this.dbName}.db`
     );
 
     this.db = db;
