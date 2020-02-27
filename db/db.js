@@ -20,6 +20,31 @@ class DBService {
     this.dbName = title;
     this.path = userDataPath;
     this.setMode(mode);
+    this.db = null;
+    return this;
+  }
+
+  /**
+  * @method createTable
+  * @param {String} tb
+  * @param {Function} cb
+  * @return {Object} db
+  */
+  createTable(tb, cb = null) {
+    console.log({db: this.db});
+
+    this.db.run(
+        tb,
+      cb !== null ? cb :
+      (err) => {
+        if (err) {
+          console.log(`[DBS Error] could not create table`);
+          return;
+        }
+
+        console.log(`[DBS Success] created successfully`);
+      });
+
     return this;
   }
 
@@ -80,9 +105,10 @@ class DBService {
 
     const db = new Database(
         `${join(this.path, this.dbName)}/favourites.db`,
-        this.mode
+        this._mode
     );
 
+    this.db = db;
     return db;
   }
 
@@ -94,11 +120,11 @@ class DBService {
   close(cb = null) {
     this.db.close()
         .on(
-            'error', cb != null ? cb(err) : () =>
+            'error', cb != null ? cb : () =>
               console.log(`[DBS Error] Database could not close successfully`)
         )
         .on(
-            'close', cb != null ? cb() : () =>
+            'close', cb != null ? cb : () =>
               console.log(`[DBS Sucess] Database closed successfully`)
         );
   }

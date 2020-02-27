@@ -25,6 +25,40 @@ ipcMain.once('db-init', (e, dbName) => {
         console.log(`[Success] DB opened`);
         console.log({event});
 
+        db.createTable(
+            `
+            CREATE TABLE IF NOT EXISTS favorites (
+              id VARCHAR PRIMARY KEY UNIQUE NOT NULL,
+              book VARCHAR NOT NULL,
+              chapter INTEGER NOT NULL,
+              verse INTEGER NOT NULL
+            )
+            `,
+            (err) => {
+              if (err) {
+                console.log(
+                    '[Error] ipcFav could not create table', {error: err}
+                );
+
+                event
+                    .sender
+                    .send(
+                        'db-table-creation-status',
+                        {status: false, error: err}
+                    );
+
+                return;
+              }
+
+              console.log('[Error] ipcFav created table sucessfully');
+              event
+                  .sender
+                  .send(
+                      'db-table-creation-status',
+                      {status: true, error: null}
+                  );
+            });
+
         event
             .sender
             .send('db-init-status', {status: true});
