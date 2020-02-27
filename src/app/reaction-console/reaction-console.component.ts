@@ -26,7 +26,11 @@ export class ReactionConsoleComponent implements OnInit, OnChanges {
   }
 
   public readVerse(playIcon: Element): void {
-    console.log(this.playerState);
+    /*
+    * to avoid multiple verse queue and collision,
+    * stop whatever is being played first
+    */
+    this.stopPlay();
     // this.playerState = true;
     this.toggleVersePlay(playIcon, this.passage);
   }
