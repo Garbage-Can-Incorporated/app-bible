@@ -4,6 +4,7 @@ import { ElectronService } from 'ngx-electron';
 import { IScriptures } from '../interfaces/i-scriptures';
 
 import { SnackbarService } from '../services/snackbar.service';
+import { IpcMainResponse } from '../interfaces/ipc-main-response';
 
 @Directive({
   selector: '[appFavorite]'
@@ -50,7 +51,7 @@ export class FavoriteDirective implements OnInit {
   private waitFavAdditionStatus(evt: EventTarget): void {
     this._electron.ipcRenderer.on(
       'fav-item-addition-status',
-      (e, data: { status: boolean, err?: any, message: string }) => {
+      (e, data: IpcMainResponse) => {
         console.log('[DB] verse added to favorites', { e, data });
 
         if (data.status) {
@@ -69,7 +70,7 @@ export class FavoriteDirective implements OnInit {
   private getTableStatus(): void {
     this._electron.ipcRenderer.on(
       'db-table-creation-status',
-      (e: Event, data: { status: boolean, error?: any }) => {
+      (e: Event, data: IpcMainResponse) => {
         console.log('[DB] get Table creation status', { e, data });
           this.tableStatus = data.status;
       }
@@ -79,7 +80,7 @@ export class FavoriteDirective implements OnInit {
   private setDBStatus(): void {
     this._electron.ipcRenderer.on(
       'db-init-status',
-      (e: Event, data: { status: boolean, error?: any }) => {
+      (e: Event, data: IpcMainResponse) => {
         console.log('[DB] get DB init status', { e, data });
 
         this.dbStatus = data.status;
