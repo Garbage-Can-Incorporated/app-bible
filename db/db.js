@@ -34,8 +34,6 @@ class DBService {
   * @return {Object} db
   */
   createTable(tb, cb = null) {
-    console.log({db: this.db});
-
     this.db.run(
         tb,
       cb !== null ? cb :
