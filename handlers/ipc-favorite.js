@@ -1,4 +1,5 @@
 const {ipcMain} = require('electron');
+const raidmaker = require('raidmaker');
 
 const DBS = require('../db/db');
 
@@ -68,7 +69,47 @@ ipcMain.once('db-init', (e, dbName) => {
 
 ipcMain.on('add-fav-item', (e, data) => {
   console.log(`[IPC Main] add-fav-item called successfully`);
-  console.log({e, data});
+  console.log({data});
+
+  db.queryRun(
+      `
+    INSERT INTO favorites (id, book, chapter, verse)
+    VALUES ($id, $book, $chapter, $verse)
+    `,
+      {
+        $id: raidmaker.generate(8, {mode: 'apnr'}),
+        $book: data.scripture.book,
+        $chapter: data.scripture.chapter,
+        $verse: data.scripture.verse,
+      },
+      (err) => {
+        if (err) {
+          console.log('[Error] favorite item insert error', {err});
+
+          e.sender
+              .send(
+                  'fav-item-addition-status',
+                  {
+                    status: false,
+                    message: 'verse could not be added!',
+                    error: err,
+                  }
+              );
+
+          return;
+        }
+
+        e.sender
+            .send(
+                'fav-item-addition-status',
+                {
+                  status: true,
+                  message: 'added to favourites!',
+                  error: null,
+                }
+            );
+      }
+  );
 
   db.close();
 });
