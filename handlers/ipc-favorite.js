@@ -168,6 +168,10 @@ ipcMain.on('remove-fav-item', () => {
   console.log(`[IPC Main] remove-fav-item called successfully`);
 });
 
+ipcMain.on('list-fav-items', () => {
+  console.log(`[IPC Main] remove-fav-item called successfully`);
+});
+
 const setupFavoritesListeners = () => {
   console.log('[IPC] favorite');
 };
