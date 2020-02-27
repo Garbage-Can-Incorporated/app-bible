@@ -3,7 +3,10 @@ const {mkdir} = require('fs');
 
 const {app} = require('electron');
 
-const {Database, OPEN_READWRITE, OPEN_READ, OPEN_WRITE} = require('sqlite3');
+const {
+  Database,
+  OPEN_READWRITE, OPEN_READONLY, OPEN_CREATE,
+} = require('sqlite3');
 
 const userDataPath = app.getPath('userData');
 
@@ -141,12 +144,12 @@ class DBService {
     }
 
     if (mode === 'r') {
-      this._mode = OPEN_READ;
+      this._mode = OPEN_READONLY;
       return;
     }
 
-    if (mode === 'w') {
-      this._mode = OPEN_WRITE;
+    if (mode === 'c') {
+      this._mode = OPEN_CREATE;
       return;
     }
   }
