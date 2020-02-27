@@ -3,13 +3,14 @@ const {ipcMain} = require('electron');
 const DBS = require('../db/db');
 
 let event;
+let db;
 
 ipcMain.once('db-init', (e, dbName) => {
   event = e;
-  console.log({event, dbName});
+  db = new DBS(dbName, 'rw');
 
-  const db = new DBS(dbName, 'rw').init();
-  db
+  const init = db.init();
+  init
       .on('error', (err) => {
         console.log(`[Error] DB could not be opened successfully!`);
 
@@ -19,7 +20,7 @@ ipcMain.once('db-init', (e, dbName) => {
             .send('db-init-status', {status: false, error: err});
       });
 
-  db
+  init
       .on('open', () => {
       // listen to this in renderer process
         console.log(`[Success] DB opened`);
@@ -50,7 +51,7 @@ ipcMain.once('db-init', (e, dbName) => {
                 return;
               }
 
-              console.log('[Error] ipcFav created table sucessfully');
+              console.log('[Success] ipcFav created table sucessfully');
               event
                   .sender
                   .send(
