@@ -1,4 +1,4 @@
-import { Directive, HostListener, OnInit, Input } from '@angular/core';
+import { Directive, HostListener, OnInit, Input, ElementRef, OnChanges } from '@angular/core';
 
 import { ElectronService } from 'ngx-electron';
 import { IScriptures } from '../interfaces/i-scriptures';
@@ -9,14 +9,16 @@ import { IpcMainResponse } from '../interfaces/ipc-main-response';
 @Directive({
   selector: '[appFavorite]'
 })
-export class FavoriteDirective implements OnInit {
+export class FavoriteDirective implements OnInit, OnChanges {
   @Input() scripture: IScriptures;
+  @Input() toggleIcon: boolean;
   private dbStatus: boolean;
   private tableStatus: boolean;
 
   constructor(
     private _electron: ElectronService,
-    private _snackbar: SnackbarService
+    private _snackbar: SnackbarService,
+    private el: ElementRef,
   ) { }
 
   ngOnInit() {
@@ -27,6 +29,12 @@ export class FavoriteDirective implements OnInit {
       this.getTableStatus();
 
       return;
+    }
+  }
+
+  ngOnChanges() {
+    if (this.toggleIcon) {
+      this.addFavIcon(this.el.nativeElement);
     }
   }
 

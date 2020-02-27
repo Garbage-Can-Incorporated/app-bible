@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+
 import { PlayerService } from '../services/player.service';
-import { IScriptures } from '../interfaces/i-scriptures';
 
 @Component({
   selector: 'app-reaction-console',
@@ -9,10 +9,10 @@ import { IScriptures } from '../interfaces/i-scriptures';
 })
 export class ReactionConsoleComponent implements OnInit, OnChanges {
   @Input() passage: string;
-  @Input() resource: IScriptures;
   public playerState: boolean = <boolean>false;
 
   public show = <boolean> false;
+  @Input() favIconActive: boolean;
 
   constructor(
     private _player: PlayerService
@@ -21,7 +21,6 @@ export class ReactionConsoleComponent implements OnInit, OnChanges {
   ngOnInit() { }
 
   ngOnChanges(): void { }
-
   public toggleIconsVisibility(): void {
     this.show = !this.show;
   }
