@@ -10,6 +10,7 @@ import { IScriptures } from '../interfaces/i-scriptures';
 export class FavoriteDirective implements OnInit {
   @Input() scripture: IScriptures;
   private dbStatus: boolean;
+  private tableStatus: boolean;
 
   constructor(
     private _electron: ElectronService
@@ -21,14 +22,8 @@ export class FavoriteDirective implements OnInit {
       console.log(`[message] sending to main process`);
       this._electron.ipcRenderer.send('db-init', 'favorites');
 
-      this._electron.ipcRenderer.on(
-        'db-init-status',
-        (e: Event, data: {status: boolean}) => {
-          console.log({ e, data });
-
-          this.dbStatus = data.status;
-        }
-      );
+      this.setDBStatus();
+      this.getTableStatus();
 
       return;
     }
@@ -44,7 +39,7 @@ export class FavoriteDirective implements OnInit {
   }
 
   public addToFavVerses(): void {
-    if (this.isElectronApp && this.dbStatus) {
+    if (this.isElectronApp && this.dbStatus && this.tableStatus) {
       this._electron.ipcRenderer.send(
         'add-fav-item',
         { scripture: this.scripture }
@@ -53,6 +48,28 @@ export class FavoriteDirective implements OnInit {
     }
 
     // show snackbar
+  }
+
+
+  private getTableStatus(): void {
+    this._electron.ipcRenderer.on(
+      'db-table-creation-status',
+      (e: Event, data: { status: boolean, error?: any }) => {
+        console.log('[DB] get Table creation status', { e, data });
+          this.tableStatus = data.status;
+      }
+    );
+  }
+
+  private setDBStatus(): void {
+    this._electron.ipcRenderer.on(
+      'db-init-status',
+      (e: Event, data: { status: boolean, error?: any }) => {
+        console.log('[DB] get DB init status', { e, data });
+
+        this.dbStatus = data.status;
+      }
+    );
   }
 
   private toggleFavIcon(el: any): void {
