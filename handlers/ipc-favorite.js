@@ -2,29 +2,34 @@ const {ipcMain} = require('electron');
 
 const DBS = require('../db/db');
 
-const db = new DBS('favorites', 'rw');
-
 let event;
 
-ipcMain.on('db-init', (e) => {
+ipcMain.once('db-init', (e, dbName) => {
   event = e;
-});
+  console.log({event, dbName});
 
-const setupFavoritesListeners = (win) => {
-  db.init()
-      .on('error', () => {
-        console.log(`[Error] DB could not be open successfully!`);
+  const db = new DBS(dbName, 'rw').init();
+  db
+      .on('error', (err) => {
+        console.log(`[Error] DB could not be opened successfully!`);
 
         // listen to this in renderer process
         event
             .sender
-            .send('db-init-status', {status: false});
-      })
+            .send('db-init-status', {status: false, error: err});
+      });
+
+  db
       .on('open', () => {
-        // listen to this in renderer process
+      // listen to this in renderer process
+        console.log(`[Success] DB opened`);
+        console.log({event});
+
         event
             .sender
             .send('db-init-status', {status: true});
+      });
+});
 
         ipcMain.on('add-fav-item', () => {
           console.log(`[IPC Main] add-fav-item called successfully`);
