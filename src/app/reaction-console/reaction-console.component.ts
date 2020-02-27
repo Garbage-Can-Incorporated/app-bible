@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { PlayerService } from '../services/player.service';
+import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
   selector: 'app-reaction-console',
@@ -15,7 +16,8 @@ export class ReactionConsoleComponent implements OnInit, OnChanges {
   @Input() favIconActive: boolean;
 
   constructor(
-    private _player: PlayerService
+    private _player: PlayerService,
+    private _snackbar: SnackbarService
   ) { }
 
   ngOnInit() { }
@@ -61,6 +63,11 @@ export class ReactionConsoleComponent implements OnInit, OnChanges {
             icon.classList.remove('__blue--color');
 
             this.playerState = false;
+            this._snackbar
+              .showSnackbar(
+                `
+              Internet isn't available. Please retry when the internet is available
+              `);
           },
           () => {
             console.log('complete!');
