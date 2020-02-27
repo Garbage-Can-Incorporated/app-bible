@@ -3,7 +3,7 @@ const path = require('path');
 const url = require('url');
 
 const ipcFavorite = require('./handlers/ipc-favorite');
-const ipcAlarm = require('./handlers/ipc-alarm');
+// const ipcAlarm = require('./handlers/ipc-alarm');
 
 let win;
 
@@ -49,7 +49,7 @@ const createWindow = () => {
 
   win.once('show', () => {
     ipcFavorite();
-    ipcAlarm();
+    // ipcAlarm();
   });
 
   win.on('window-all-closed', app.quit);
