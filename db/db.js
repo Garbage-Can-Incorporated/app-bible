@@ -50,6 +50,18 @@ class DBService {
   }
 
   /**
+     * @method queryRun
+     * @param {String} query
+     * @param {Object} param
+     * @param {Function} cb
+     * @return {Object} this
+     */
+  queryRun(query, param, cb) {
+    this.db.run(query, param, cb);
+    return this;
+  }
+
+  /**
    * @method queryGet
    * @param {String} query
    * @param {Object} param
