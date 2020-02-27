@@ -16,6 +16,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   public initial = <number> 0;
 
   constructor(
+    private _player: PlayerService,
     private _snackbar: SnackbarService
   ) { }
 
@@ -41,7 +42,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
     }
 
     console.log({ _init: this.initial });
-    // this.playChapter();
+    this.playChapter();
   }
 
   public next(): void {
@@ -53,12 +54,14 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
     }
 
     console.log({ init_: this.initial });
-    // this.playChapter();
+    this.playChapter();
   }
 
   public playChapter() {
     this.playerState = true;
 
+    this.watchFocus.emit(this.initial + 1);
+    console.log({ playInit: this.initial });
     this._player
       .play(this.passages[ this.initial ])
       .subscribe(
@@ -67,11 +70,15 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
         (error) => {
           console.log({ error });
           this.stopPlay();
+          this._snackbar
+            .showSnackbar(
+              `
               Internet isn't available. Please retry when the internet is available
+              `);
         },
         () => {
-          console.log('done!');
-          console.log('last played => ', { lastPlayed: this.initial + 1 });
+          // console.log('done!');
+          // console.log('last played => ', { lastPlayed: this.initial + 1 });
 
           // end of list EOL
           if (this.EOPassage) {
@@ -87,11 +94,10 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
           // play next on the list
           if (this.playerState === true) {
             this.initial += 1;
-            console.log('currently being played', { currentlyPlayed: this.initial + 1 });
+            // console.log('currently being played', { currentlyPlayed: this.initial + 1 });
+            this.watchFocus.emit(this.initial + 1);
             this.playChapter();
           }
-
-          this.watchFocus.emit(this.initial + 1);
         }
       );
   }
@@ -103,7 +109,6 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   public stopPlay(): void {
     this._player.stop();
     this.togglePlayerState();
-    this.playerState = false;
   }
 
   public togglePlayerState(): void {

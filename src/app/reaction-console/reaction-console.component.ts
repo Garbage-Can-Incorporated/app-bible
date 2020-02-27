@@ -1,13 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { PlayerService } from '../services/player.service';
+import { IScriptures } from '../interfaces/i-scriptures';
 
 @Component({
   selector: 'app-reaction-console',
   templateUrl: './reaction-console.component.html',
   styleUrls: ['./reaction-console.component.css']
 })
-export class ReactionConsoleComponent implements OnInit {
+export class ReactionConsoleComponent implements OnInit, OnChanges {
   @Input() passage: string;
+  @Input() resource: IScriptures;
   public playerState: boolean = <boolean>false;
 
   public show = <boolean> false;
@@ -17,6 +19,8 @@ export class ReactionConsoleComponent implements OnInit {
   ) { }
 
   ngOnInit() { }
+
+  ngOnChanges(): void { }
 
   public toggleIconsVisibility(): void {
     this.show = !this.show;
