@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { PlayerService } from '../services/player.service';
 import { SnackbarService } from '../services/snackbar.service';
+import { IScriptures } from '../interfaces/i-scriptures';
 
 @Component({
   selector: 'app-reaction-console',
@@ -10,10 +11,11 @@ import { SnackbarService } from '../services/snackbar.service';
 })
 export class ReactionConsoleComponent implements OnInit, OnChanges {
   @Input() passage: string;
+  @Input() resource: IScriptures;
+  @Input() favIconActive: boolean;
   public playerState: boolean = <boolean>false;
 
   public show = <boolean> false;
-  @Input() favIconActive: boolean;
 
   constructor(
     private _player: PlayerService,
