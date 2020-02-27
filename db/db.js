@@ -89,9 +89,18 @@ class DBService {
   /**
   * @member
   * @method close
+  * @param {Function} cb
   */
-  close() {
-    this.db.close();
+  close(cb = null) {
+    this.db.close()
+        .on(
+            'error', cb != null ? cb(err) : () =>
+              console.log(`[DBS Error] Database could not close successfully`)
+        )
+        .on(
+            'close', cb != null ? cb() : () =>
+              console.log(`[DBS Sucess] Database closed successfully`)
+        );
   }
 
   /**
