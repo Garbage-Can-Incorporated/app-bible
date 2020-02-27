@@ -65,18 +65,25 @@ ipcMain.once('db-init', (e, dbName) => {
       });
 });
 
-        ipcMain.on('add-fav-item', () => {
-          console.log(`[IPC Main] add-fav-item called successfully`);
-        });
+ipcMain.on('add-fav-item', (e, data) => {
+  console.log(`[IPC Main] add-fav-item called successfully`);
+  console.log({e, data});
 
-        ipcMain.on('remove-fav-item', () => {
-          console.log(`[IPC Main] remove-fav-item called successfully`);
-        });
+  db.close();
+});
 
-        ipcMain.on('is-fav-check', () => {
-          console.log(`[IPC Main] remove-fav-item called successfully`);
-        });
-      });
+ipcMain.on('remove-fav-item', () => {
+  console.log(`[IPC Main] remove-fav-item called successfully`);
+  db.close();
+});
+
+ipcMain.on('is-fav-check', () => {
+  console.log(`[IPC Main] remove-fav-item called successfully`);
+  db.close();
+});
+
+const setupFavoritesListeners = () => {
+  console.log('[IPC] favorite');
 };
 
 module.exports = setupFavoritesListeners;
