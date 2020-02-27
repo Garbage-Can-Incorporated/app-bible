@@ -21,7 +21,7 @@ class DBService {
   */
   constructor(title, mode = 'rw') {
     this.dbName = title;
-    this.path = userDataPath;
+    this.userDataPath = userDataPath;
     this.setMode(mode);
     this.db = null;
     return this;
