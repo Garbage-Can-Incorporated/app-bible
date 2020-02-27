@@ -64,12 +64,64 @@ ipcMain.once('db-init', (e, dbName) => {
         event
             .sender
             .send('db-init-status', {status: true});
+
+
+        ipcMain.on('is-fav-check', (e, data) => {
+          console.log(`[IPC Main] is-fav-check called successfully`);
+          console.log({data});
+
+          db.queryGet(
+              `
+              SELECT * FROM favorites 
+              WHERE book = $book AND chapter = $chapter AND verse = $verse
+              `,
+              {
+                $book: data.book,
+                $chapter: data.chapter,
+                $verse: data.verse,
+              },
+              (err, row) => {
+                if (err) {
+                  console.log('[Error] favorite item insert error', {err});
+
+                  e.sender
+                      .send(
+                          'is-fav-checked',
+                          {
+                            status: false,
+                            message: 'an error occured',
+                            error: err,
+                          }
+                      );
+
+                  return;
+                }
+
+                console.log({err, row});
+
+                if (row) {
+                  e.sender
+                      .send(
+                          'is-fav-checked',
+                          {
+                            status: true,
+                            message: 'Success!',
+                            row,
+                          }
+                      );
+
+                  return;
+                } else {
+                  console.log(`[DB] is fav check returned empty`);
+                }
+              }
+          );
+        });
       });
 });
 
 ipcMain.on('add-fav-item', (e, data) => {
   console.log(`[IPC Main] add-fav-item called successfully`);
-  console.log({data});
 
   db.queryRun(
       `
@@ -110,18 +162,10 @@ ipcMain.on('add-fav-item', (e, data) => {
             );
       }
   );
-
-  db.close();
 });
 
 ipcMain.on('remove-fav-item', () => {
   console.log(`[IPC Main] remove-fav-item called successfully`);
-  db.close();
-});
-
-ipcMain.on('is-fav-check', () => {
-  console.log(`[IPC Main] remove-fav-item called successfully`);
-  db.close();
 });
 
 const setupFavoritesListeners = () => {
