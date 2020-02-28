@@ -12,7 +12,7 @@ export class ActionScrollDirective implements DoCheck, OnInit {
   constructor(private el: ElementRef) { }
 
   ngOnInit(): void {
-    this.pos = this.getCurrentPos();
+    this.pos = this.getCurrentPos;
   }
 
   ngDoCheck(): void {
@@ -25,14 +25,15 @@ export class ActionScrollDirective implements DoCheck, OnInit {
   }
 
   private toggleClassList (icon: Element): void {
-    if (this.getCurrentPos() < (this.pos - 30)) {
+    // remove 'invisible' class
+    if (Math.floor(this.getCurrentPos) <= Math.floor(this.pos - 55)) {
       icon.classList.remove(this._class);
     } else {
       icon.classList.add(this._class);
     }
   }
 
-  private getCurrentPos(): number {
+  private get getCurrentPos(): number {
     return this.el.nativeElement.getBoundingClientRect().top;
   }
 }
