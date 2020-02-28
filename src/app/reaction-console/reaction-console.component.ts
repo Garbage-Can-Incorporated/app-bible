@@ -25,6 +25,7 @@ export class ReactionConsoleComponent implements OnInit, OnChanges {
   ngOnInit() { }
 
   ngOnChanges(): void { }
+
   public toggleIconsVisibility(): void {
     this.show = !this.show;
   }
@@ -60,7 +61,9 @@ export class ReactionConsoleComponent implements OnInit, OnChanges {
           (data) => console.log(data),
           (error) => {
             console.log(error);
+
             this.stopPlay();
+
             icon.classList.replace('fa-pause', 'fa-play');
             icon.classList.remove('__blue--color');
 

@@ -33,11 +33,10 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
   private isFavorite(): void {
     if (this._electron.isElectronApp) {
       this._electron.ipcRenderer.send('is-fav-check', this.resource);
+
       this._electron.ipcRenderer.on(
         'is-fav-checked',
         (e: Event, data: IpcMainResponse) => {
-          console.log(e, data);
-
           if (data.status) {
             this.favIconActive = true;
           } else {
