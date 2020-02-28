@@ -5,6 +5,8 @@ const DBS = require('../db/db');
 
 let event;
 let db;
+let dbInit = false;
+let tableInit = false;
 
 ipcMain.once('db-init', (e, dbName) => {
   event = e;
@@ -14,6 +16,8 @@ ipcMain.once('db-init', (e, dbName) => {
   init
       .on('error', (err) => {
         console.log(`[Error] DB could not be opened successfully!`);
+
+        dbInit = false;
 
         // listen to this in renderer process
         event
@@ -26,6 +30,8 @@ ipcMain.once('db-init', (e, dbName) => {
       // listen to this in renderer process
         console.log(`[Success] DB opened`);
         console.log({event});
+
+        dbInit = true;
 
         db.createTable(
             `
@@ -42,6 +48,8 @@ ipcMain.once('db-init', (e, dbName) => {
                     '[Error] ipcFav could not create table', {error: err}
                 );
 
+                tableInit = false;
+
                 event
                     .sender
                     .send(
@@ -53,6 +61,8 @@ ipcMain.once('db-init', (e, dbName) => {
               }
 
               console.log('[Success] ipcFav created table sucessfully');
+              tableInit = true;
+
               event
                   .sender
                   .send(
@@ -64,59 +74,6 @@ ipcMain.once('db-init', (e, dbName) => {
         event
             .sender
             .send('db-init-status', {status: true});
-
-
-        ipcMain.on('is-fav-check', (e, data) => {
-          console.log(`[IPC Main] is-fav-check called successfully`);
-          console.log({data});
-
-          db.queryGet(
-              `
-              SELECT * FROM favorites 
-              WHERE book = $book AND chapter = $chapter AND verse = $verse
-              `,
-              {
-                $book: data.book,
-                $chapter: data.chapter,
-                $verse: data.verse,
-              },
-              (err, row) => {
-                if (err) {
-                  console.log('[Error] favorite item insert error', {err});
-
-                  e.sender
-                      .send(
-                          'is-fav-checked',
-                          {
-                            status: false,
-                            message: 'an error occured',
-                            error: err,
-                          }
-                      );
-
-                  return;
-                }
-
-                console.log({err, row});
-
-                if (row) {
-                  e.sender
-                      .send(
-                          'is-fav-checked',
-                          {
-                            status: true,
-                            message: 'Success!',
-                            row,
-                          }
-                      );
-
-                  return;
-                } else {
-                  console.log(`[DB] is fav check returned empty`);
-                }
-              }
-          );
-        });
       });
 });
 
@@ -164,6 +121,67 @@ ipcMain.on('add-fav-item', (e, data) => {
   );
 });
 
+
+ipcMain.on('is-fav-check', (e, data) => {
+  console.log(`[IPC Main] is-fav-check called successfully`);
+  console.log({data});
+
+  db.queryGet(
+      `
+              SELECT * FROM favorites 
+              WHERE book = $book AND chapter = $chapter AND verse = $verse
+              `,
+      {
+        $book: data.book,
+        $chapter: data.chapter,
+        $verse: data.verse,
+      },
+      (err, row) => {
+        if (err) {
+          console.log('[Error] favorite item check error', {err});
+
+          e.sender
+              .send(
+                  'is-fav-checked',
+                  {
+                    status: false,
+                    message: 'an error occured!',
+                    error: err,
+                  }
+              );
+
+          return;
+        }
+
+        console.log({err, row});
+
+        if (row) {
+          e.sender
+              .send(
+                  'is-fav-checked',
+                  {
+                    status: true,
+                    message: 'Success! item is a favorite',
+                    row,
+                  }
+              );
+
+          return;
+        } else {
+          console.log(`[DB] is fav check returned empty`);
+          e.sender
+              .send(
+                  'is-fav-checked',
+                  {
+                    status: false,
+                    message: 'Item is not added as a favorite',
+                  }
+              );
+        }
+      }
+  );
+});
+
 ipcMain.on('remove-fav-item', () => {
   console.log(`[IPC Main] remove-fav-item called successfully`);
 });
@@ -171,6 +189,11 @@ ipcMain.on('remove-fav-item', () => {
 ipcMain.on('list-fav-items', () => {
   console.log(`[IPC Main] remove-fav-item called successfully`);
 });
+
+ipcMain.on(
+    'is-created', (e) =>
+      e.sender.send('db-table-created', {dbInit, tableInit})
+);
 
 const setupFavoritesListeners = () => {
   console.log('[IPC] favorite');

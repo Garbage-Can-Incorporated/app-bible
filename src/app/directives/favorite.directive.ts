@@ -1,9 +1,10 @@
 import { Directive, HostListener, OnInit, Input, ElementRef, OnChanges } from '@angular/core';
 
 import { ElectronService } from 'ngx-electron';
-import { IScriptures } from '../interfaces/i-scriptures';
-
 import { SnackbarService } from '../services/snackbar.service';
+import { DbIpcService } from '../services/db-ipc.service';
+
+import { IScriptures } from '../interfaces/i-scriptures';
 import { IpcMainResponse } from '../interfaces/ipc-main-response';
 
 @Directive({
@@ -19,11 +20,16 @@ export class FavoriteDirective implements OnInit, OnChanges {
     private _electron: ElectronService,
     private _snackbar: SnackbarService,
     private el: ElementRef,
+    private _dbIPC: DbIpcService
   ) { }
 
   ngOnInit() {
+    console.log('[init] favorite directive');
+
     if (this.isElectronApp) {
-      this._electron.ipcRenderer.send('db-init', 'favorites');
+      this._dbIPC.createDB('favorites');
+      this._dbIPC
+        .isDBCreated();
 
       this.setDBStatus();
       this.getTableStatus();
@@ -36,14 +42,34 @@ export class FavoriteDirective implements OnInit, OnChanges {
     if (this.toggleIcon) {
       this.addFavIcon(this.el.nativeElement);
     }
+
+    if (this.isElectronApp) {
+      this._dbIPC
+        .isConnected()
+        .subscribe(
+          (data: {dbInit: boolean, tableInit: boolean}) => {
+            this.dbStatus = data.dbInit;
+            this.tableStatus = data.tableInit;
+          }
+        );
+    }
   }
 
   @HostListener('click', [ '$event' ])
   onClick(e: Event): void {
-    this.addToFavVerses(e.target);
+    console.log({ t: this.toggleIcon, dbStatus: this.dbStatus, tableStatus: this.tableStatus });
+    if (this.toggleIcon) {
+      // remove from fav db
+    } else {
+      this.addToFavVerse(e.target);
+    }
   }
 
-  public addToFavVerses(e: EventTarget): void {
+  private removeFavVerse(): void {
+
+  }
+
+  private addToFavVerse(e: EventTarget): void {
     if (this.isElectronApp && this.dbStatus && this.tableStatus) {
       this._electron.ipcRenderer.send(
         'add-fav-item',
@@ -60,8 +86,6 @@ export class FavoriteDirective implements OnInit, OnChanges {
     this._electron.ipcRenderer.on(
       'fav-item-addition-status',
       (e, data: IpcMainResponse) => {
-        console.log('[DB] verse added to favorites', { e, data });
-
         if (data.status) {
           this.addFavIcon(evt);
         } else {
@@ -76,24 +100,23 @@ export class FavoriteDirective implements OnInit, OnChanges {
 
 
   private getTableStatus(): void {
-    this._electron.ipcRenderer.on(
-      'db-table-creation-status',
-      (e: Event, data: IpcMainResponse) => {
-        console.log('[DB] get Table creation status', { e, data });
-          this.tableStatus = data.status;
-      }
-    );
+    this._dbIPC
+      .getTableStatus()
+      .asObservable()
+      .subscribe(
+        (data) => this.dbStatus = data.status,
+        (error) => console.log(`[Error] DB init failed: ${ error }`)
+      );
   }
 
   private setDBStatus(): void {
-    this._electron.ipcRenderer.on(
-      'db-init-status',
-      (e: Event, data: IpcMainResponse) => {
-        console.log('[DB] get DB init status', { e, data });
-
-        this.dbStatus = data.status;
-      }
-    );
+    this._dbIPC
+      .getDBStatus()
+      .asObservable()
+      .subscribe(
+        (data) => this.dbStatus = data.status,
+        (error) => console.log(`[Error] DB init failed: ${error}`)
+      );
   }
 
   private addFavIcon(el: any): void {
