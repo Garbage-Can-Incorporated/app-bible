@@ -10,6 +10,7 @@ import { PlayerService } from '../services/player.service';
 import { SpeechSynthesisService } from '../services/speech-synthesis.service';
 import { SnackbarService } from '../services/snackbar.service';
 import { DialogService } from '../services/dialog.service';
+import { DbIpcService } from '../services/db-ipc.service';
 
 import { AppComponent } from '../app.component';
 import { ReadComponent } from './read.component';
@@ -53,7 +54,8 @@ import { FavoriteDirective } from '../directives/favorite.directive';
     PlayerService,
     SpeechSynthesisService,
     SnackbarService,
-    DialogService
+    DialogService,
+    DbIpcService
   ]
 })
 export class ReadModule { }
