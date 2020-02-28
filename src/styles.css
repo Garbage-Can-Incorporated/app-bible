@@ -38,6 +38,10 @@ body {
   color: var(--dark-grey)!important;
 }
 
+.container-after-titlebar {
+  overflow-x: hidden!important;
+}
+
 app-root {
   width: inherit;
   height: fit-content;
