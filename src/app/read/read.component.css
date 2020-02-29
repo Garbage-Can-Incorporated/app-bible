@@ -14,6 +14,7 @@
 }
 
 .__app-scripture-toolbar {
+  flex-direction: column;
   height: var(--scripture-toolbar-height);
   background-color: var(--white);
   opacity: .9;

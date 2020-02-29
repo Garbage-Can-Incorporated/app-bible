@@ -36,6 +36,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public scrolled = <boolean>false;
 
   public _showSearchPane = <boolean>false;
+  public showProgressbar = <boolean> false;
 
   constructor(
     private _scripturesProvider: ScripturesService
@@ -114,7 +115,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
   }
 
   public searchScripture(): void {
-    console.log({ s: this.scripture });
+    this.showProgressbar = true;
     const {book, verse, chapter} = this.scripture;
 
     if (
@@ -133,7 +134,10 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getPassage(b, c)
       .subscribe(
-        (data: string[]) => this.passages = data,
+        (data: string[]) => {
+          this.passages = data;
+          this.showProgressbar = false;
+        },
         (error) => console.log({error})
       );
   }
