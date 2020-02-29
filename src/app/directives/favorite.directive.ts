@@ -41,6 +41,8 @@ export class FavoriteDirective implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.toggleIcon) {
       this.addFavIcon(this.el.nativeElement);
+    } else {
+      this.removeFavIcon(this.el.nativeElement);
     }
 
     if (this.isElectronApp) {
@@ -60,13 +62,41 @@ export class FavoriteDirective implements OnInit, OnChanges {
     console.log({ t: this.toggleIcon, dbStatus: this.dbStatus, tableStatus: this.tableStatus });
     if (this.toggleIcon) {
       // remove from fav db
+      console.log('unlike');
+      this.removeFavVerse(e.target);
     } else {
       this.addToFavVerse(e.target);
     }
   }
 
-  private removeFavVerse(): void {
+  private removeFavVerse(e: EventTarget): void {
+    if (this.isElectronApp && this.dbStatus && this.tableStatus) {
+      this._electron.ipcRenderer.send(
+        'remove-fav-item',
+        { scripture: this.scripture }
+      );
 
+      this.waitFavRemovalStatus(e);
+
+      return;
+    }
+  }
+
+  private waitFavRemovalStatus(evt: EventTarget): void {
+    this._electron.ipcRenderer.on(
+      'fav-item-removal-status',
+      (e, data: IpcMainResponse) => {
+        if (data.status) {
+          this.addFavIcon(evt);
+        } else {
+          this.removeFavIcon(evt);
+        }
+
+        // remove snackbar
+        this._snackbar
+          .showSnackbar(data.message);
+      }
+    );
   }
 
   private addToFavVerse(e: EventTarget): void {
@@ -92,6 +122,7 @@ export class FavoriteDirective implements OnInit, OnChanges {
           this.removeFavIcon(evt);
         }
 
+        // remove snackbar
         this._snackbar
           .showSnackbar(data.message);
       }

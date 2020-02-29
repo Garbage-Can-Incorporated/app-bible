@@ -128,9 +128,9 @@ ipcMain.on('is-fav-check', (e, data) => {
 
   db.queryGet(
       `
-              SELECT * FROM favorites 
-              WHERE book = $book AND chapter = $chapter AND verse = $verse
-              `,
+        SELECT * FROM favorites
+        WHERE book = $book AND chapter = $chapter AND verse = $verse
+      `,
       {
         $book: data.book,
         $chapter: data.chapter,
@@ -182,12 +182,64 @@ ipcMain.on('is-fav-check', (e, data) => {
   );
 });
 
-ipcMain.on('remove-fav-item', () => {
+ipcMain.on('remove-fav-item', (e, data) => {
   console.log(`[IPC Main] remove-fav-item called successfully`);
+  db.queryGet(
+      `
+    DELETE FROM favorites
+    WHERE book = $book AND chapter = $chapter AND verse = $verse
+    `,
+      {
+        $book: data.scripture.book,
+        $chapter: data.scripture.chapter,
+        $verse: data.scripture.verse,
+      },
+      (err, row) => {
+        if (err) {
+          console.log('[Error] an error occured deleting favorite item', {err});
+
+          e.sender
+              .send(
+                  'fav-item-removal-status',
+                  {
+                    status: false,
+                    message: 'an error occured!',
+                    error: err,
+                  }
+              );
+
+          return;
+        }
+
+        console.log({err, row});
+        if (row) {
+          e.sender
+              .send(
+                  'fav-item-removal-status',
+                  {
+                    status: true,
+                    message: 'Success! Removed from favorites',
+                    row,
+                  }
+              );
+
+          return;
+        }
+
+        e.sender
+            .send(
+                'fav-item-removal-status',
+                {
+                  status: false,
+                  message: 'operation returned empty',
+                }
+            );
+      }
+  );
 });
 
 ipcMain.on('list-fav-items', () => {
-  console.log(`[IPC Main] remove-fav-item called successfully`);
+  console.log(`[IPC Main] list-fav-items called successfully`);
 });
 
 ipcMain.on(
