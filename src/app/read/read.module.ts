@@ -23,6 +23,8 @@ import { ScriptureContainerComponent } from '../scripture-container/scripture-co
 import { ScripturePlayerComponent } from '../scripture-player/scripture-player.component';
 import { ReadRoutingModule } from './read-routing.module';
 import { FavoriteDirective } from '../directives/favorite.directive';
+import { TwitterShareDirective } from '../directives/twitter-share.directive';
+import { RendererBwService } from '../services/renderer-bw.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { FavoriteDirective } from '../directives/favorite.directive';
     ToggleReactionsVisibilityDirective,
     ScriptureContainerComponent,
     ScripturePlayerComponent,
-    FavoriteDirective
+    FavoriteDirective,
+    TwitterShareDirective
   ],
   imports: [
     CommonModule,
@@ -52,7 +55,8 @@ import { FavoriteDirective } from '../directives/favorite.directive';
     SpeechSynthesisService,
     SnackbarService,
     DialogService,
-    DbIpcService
+    DbIpcService,
+    RendererBwService
   ]
 })
 export class ReadModule { }
