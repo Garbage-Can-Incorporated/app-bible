@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxElectronModule } from 'ngx-electron';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -30,7 +31,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDatepickerModule,
     NgxElectronModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatAutocompleteModule
   ],
   exports: [
     FormsModule,
