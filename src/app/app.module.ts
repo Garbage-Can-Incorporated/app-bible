@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-
 import { AppComponent } from './app.component';
 import { ReadModule } from './read/read.module';
 

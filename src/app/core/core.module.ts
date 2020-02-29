@@ -35,6 +35,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatAutocompleteModule
   ],
   exports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -44,7 +45,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     HttpClientModule,
     MatProgressBarModule,
     MatMenuModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    NgxElectronModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatAutocompleteModule
   ]
 })
 export class CoreModule { }
