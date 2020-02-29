@@ -16,16 +16,17 @@ export class ScripturesService {
   public getPassage(b: string, c: number): Observable<any> {
     return new Observable((obs) => {
       this.getBible((book: any): void => {
-        obs.next(
-          book
-            .find((cur: any) => {
-              return (
-                cur.bookTitle === b.toLowerCase() &&
-                cur.chapterNo === `chapter-${ c }`
-              );
-            })
-            .verses
-        );
+        const passage = book
+          .find((cur: any) => {
+            return (
+              cur.bookTitle === b.toLowerCase() &&
+              cur.chapterNo === `chapter-${ c }`
+            );
+          });
+
+        if (passage !== undefined) {
+          obs.next(passage.verses);
+        }
       });
     });
       // .pipe(
@@ -36,18 +37,20 @@ export class ScripturesService {
   public getVerseLength(bookTitle: string = 'genesis', chapNo: number = 1): Observable<number> {
     return new Observable((obs) => {
       this.getBible((book: any): void => {
-        obs.next(
-          book
-            .find((cur: any) => {
-              return (
-                cur.bookTitle === bookTitle.toLowerCase() &&
-                cur.chapterNo === `chapter-${chapNo}`
-                );
-            })
-            .verses
+        const passage = book
+          .find((cur: any) => {
+            return (
+              cur.bookTitle === bookTitle.toLowerCase() &&
+              cur.chapterNo === `chapter-${ chapNo }`
+            );
+          });
+
+        if (passage !== undefined) {
+          obs.next(
+            passage.verses.length
             // .filter((cur: any) => cur !== undefined)
-            .length
-        );
+          );
+        }
       });
     });
   }
