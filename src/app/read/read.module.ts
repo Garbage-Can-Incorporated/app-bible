@@ -25,6 +25,7 @@ import { ReadRoutingModule } from './read-routing.module';
 import { FavoriteDirective } from '../directives/favorite.directive';
 import { TwitterShareDirective } from '../directives/twitter-share.directive';
 import { RendererBwService } from '../services/renderer-bw.service';
+import { MoreDirective } from '../directives/more.directive';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { RendererBwService } from '../services/renderer-bw.service';
     ScriptureContainerComponent,
     ScripturePlayerComponent,
     FavoriteDirective,
-    TwitterShareDirective
+    TwitterShareDirective,
+    MoreDirective
   ],
   imports: [
     CommonModule,
