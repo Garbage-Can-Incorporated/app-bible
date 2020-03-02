@@ -25,7 +25,6 @@ export class RendererBwService {
     }
   ): Promise<void> {
     this.bw = new this._electron.remote.BrowserWindow(windowConfig);
-    console.log('I was clicked');
 
     return this.bw
       .loadURL(

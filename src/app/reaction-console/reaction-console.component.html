@@ -2,7 +2,6 @@
   <i class="fa fa-play ml-auto mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show" #playIcon (click)="readVerse(playIcon)"
     >
   </i>
-  <!-- [hidden]="(playIcon.classList.contains('fa-pause') && playerState === true) === true" -->
 
   <i #likeIcon appFavorite [scripture]="resource" [toggleIcon]="favIconActive" class="far fa-heart mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show"></i>
 
@@ -12,10 +11,6 @@
     <i class="fa fa-share-alt my-auto d-flex"></i>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item class="d-flex">
-      <i class="fab fa-facebook-square mr-2 my-auto d-flex"></i>
-      <span> Facebook </span>
-    </button>
     <button mat-menu-item class="d-flex" appTwitterShare [text]="passage">
       <i class="fab fa-twitter mr-2 my-auto d-flex"></i>
       <span> Twitter </span>
