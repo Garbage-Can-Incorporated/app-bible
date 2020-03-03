@@ -51,7 +51,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     NgxElectronModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTabsModule
   ]
 })
 export class CoreModule { }
