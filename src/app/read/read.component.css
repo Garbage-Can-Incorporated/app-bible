@@ -13,6 +13,10 @@
   cursor: pointer;
 }
 
+[appMore] {
+  cursor: pointer;
+}
+
 .__app-scripture-toolbar {
   flex-direction: column;
   height: var(--scripture-toolbar-height);
