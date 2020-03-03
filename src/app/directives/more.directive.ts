@@ -1,5 +1,6 @@
 import { Directive, HostListener } from '@angular/core';
 import { DialogService } from '../services/dialog.service';
+import { MoreComponent } from '../more/more.component';
 
 @Directive({
   selector: '[appMore]'
@@ -13,5 +14,8 @@ export class MoreDirective {
   @HostListener('click', [ '$event' ])
   onClick(e: Event): void {
     console.log({ e });
+
+    this._dialog
+      .openDialog({}, MoreComponent);
   }
 }
