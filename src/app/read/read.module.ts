@@ -13,6 +13,8 @@ import { DbIpcService } from '../services/db-ipc.service';
 import { AppComponent } from '../app.component';
 import { ReadComponent } from './read.component';
 import { SearchPaneComponent } from '../search-pane/search-pane.component';
+import { MoreComponent } from '../more/more.component';
+
 import { ScrollViewDirective } from '../directives/scroll-view.directive';
 import { ActionScrollDirective } from '../directives/action-scroll.directive';
 import { ScriptureNavigatorDirective } from '../directives/scripture-navigator.directive';
@@ -42,7 +44,8 @@ import { MoreDirective } from '../directives/more.directive';
     ScripturePlayerComponent,
     FavoriteDirective,
     TwitterShareDirective,
-    MoreDirective
+    MoreDirective,
+    MoreComponent
   ],
   imports: [
     CommonModule,
@@ -59,6 +62,9 @@ import { MoreDirective } from '../directives/more.directive';
     DialogService,
     DbIpcService,
     RendererBwService
+  ],
+  entryComponents: [
+    MoreComponent
   ]
 })
 export class ReadModule { }
