@@ -13,9 +13,14 @@ export class MoreDirective {
 
   @HostListener('click', [ '$event' ])
   onClick(e: Event): void {
-    console.log({ e });
-
     this._dialog
-      .openDialog({}, MoreComponent);
+      .openDialog(
+        {},
+        MoreComponent,
+        {
+          minHeight: null, maxHeight: null,
+          maxWidth: '80%', width: '80%'
+        }
+      );
   }
 }
