@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
+import { DialogConfig } from '../interfaces/dialog-config';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,16 +24,23 @@ export class DialogService {
       maxWidth = 'fit-content'
     }
   ): MatDialogRef<any, any> {
-    const dialogRef: MatDialogRef<any, any> = this.dialog.open(comp, {
+    const config: DialogConfig = {
+      data,
+      hasBackdrop,
       height,
       minHeight,
       maxHeight,
       width,
       minWidth,
-      maxWidth,
-      hasBackdrop,
-      data
-    });
+      maxWidth
+    };
+
+    const dialogRef: MatDialogRef<any, any> = this
+      .dialog
+      .open(
+        comp,
+        config
+      );
 
     return dialogRef;
   }
