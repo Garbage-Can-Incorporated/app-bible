@@ -15,6 +15,11 @@
 
 [appMore] {
   cursor: pointer;
+  width: 20px;
+}
+
+[appMore]:before {
+  margin: 0 auto;
 }
 
 .__app-scripture-toolbar {
