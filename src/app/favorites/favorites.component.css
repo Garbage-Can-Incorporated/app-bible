@@ -1,0 +1,16 @@
+.__app--favorites-container {
+  box-shadow: 0 0 3px .5px grey;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.__app-favorites-item {
+  min-height: 60px;
+  font-size: 13px;
+}
+
+.__app-favorites-item:hover {
+  background-color: #e4e4e49c;
+  cursor: pointer;
+  border-radius: 5px;
+}
