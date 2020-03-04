@@ -29,40 +29,18 @@ export class DbIpcService {
     return this.dbInitSubject;
   }
 
-  public getDBStatus(): Subject<any> {
-    this._electron.ipcRenderer.on(
-      'db-init-status',
-      (e: Event, data: IpcMainResponse) => {
-        this.dbInitStatusSubject.next(data);
-      }
-    );
-
-    return this.dbInitStatusSubject;
-  }
-
-  public getTableStatus(): Subject<any> {
-    this._electron.ipcRenderer.on(
-      'fav-table-creation-status',
-      (e: Event, data: IpcMainResponse) => {
-        this.tableInitSubject.next(data);
-      }
-    );
-
-    return this.tableInitSubject;
-  }
-
-  public isConnected(): Subject<any> {
+  public isConnected(name: string): Subject<any> {
     this._electron.ipcRenderer
-      .on('fav-table-created', (e, data) => {
+      .on(`${name}-db-table-created`, (e, data) => {
         this.isConnectedSubject.next(data);
       });
 
     return this.isConnectedSubject;
   }
 
-  public isDBCreated(): void {
+  public isDBCreated(name: string): void {
     this._electron.ipcRenderer
-      .send('is-created');
+      .send(`is-${name}-created`);
   }
 
   public get subjects(): {[prop: string]: Subject<any>} {
