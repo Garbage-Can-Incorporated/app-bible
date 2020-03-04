@@ -3,38 +3,28 @@ const raidmaker = require('raidmaker');
 
 const DBS = require('../db/db');
 
-let event;
-let db;
 let dbInit = false;
 let tableInit = false;
 
-ipcMain.once('db-init', (e, dbName) => {
-  event = e;
-  db = new DBS(dbName, 'rw');
+// const event = e;
+const db = new DBS('favorites', 'rw');
 
-  const init = db.init();
-  init
-      .on('error', (err) => {
-        console.log(`[Error] DB could not be opened successfully!`);
+const init = db.init();
+init
+    .on('error', (err) => {
+      console.log(`[Error] DB could not be opened successfully!`);
 
-        dbInit = false;
+      dbInit = false;
+    });
 
-        // listen to this in renderer process
-        event
-            .sender
-            .send('db-init-status', {status: false, error: err});
-      });
-
-  init
-      .on('open', () => {
+init
+    .on('open', () => {
       // listen to this in renderer process
-        console.log(`[Success] DB opened`);
-        console.log({event});
+      console.log(`[Success] DB opened`);
+      dbInit = true;
 
-        dbInit = true;
-
-        db.createTable(
-            `
+      db.createTable(
+          `
             CREATE TABLE IF NOT EXISTS favorites (
               id VARCHAR PRIMARY KEY UNIQUE NOT NULL,
               book VARCHAR NOT NULL,
@@ -42,40 +32,20 @@ ipcMain.once('db-init', (e, dbName) => {
               verse INTEGER NOT NULL
             )
             `,
-            (err) => {
-              if (err) {
-                console.log(
-                    '[Error] ipcFav could not create table', {error: err}
-                );
+          (err) => {
+            if (err) {
+              console.log(
+                  '[Error] ipcFav could not create table', {error: err}
+              );
 
-                tableInit = false;
+              tableInit = false;
+              return;
+            }
 
-                event
-                    .sender
-                    .send(
-                        'fav-table-creation-status',
-                        {status: false, error: err}
-                    );
-
-                return;
-              }
-
-              console.log('[Success] ipcFav created table sucessfully');
-              tableInit = true;
-
-              event
-                  .sender
-                  .send(
-                      'fav-table-creation-status',
-                      {status: true, error: null}
-                  );
-            });
-
-        event
-            .sender
-            .send('db-init-status', {status: true});
-      });
-});
+            console.log('[Success] ipcFav created table sucessfully');
+            tableInit = true;
+          });
+    });
 
 ipcMain.on('add-fav-item', (e, data) => {
   console.log(`[IPC Main] add-fav-item called successfully`);
@@ -240,11 +210,17 @@ ipcMain.on('remove-fav-item', (e, data) => {
 
 ipcMain.on('list-fav-items', () => {
   console.log(`[IPC Main] list-fav-items called successfully`);
+  db.queryAll(
+      `SELECT * FROM favorites`,
+      (error, data) => {
+        console.log({error, data});
+      }
+  );
 });
 
 ipcMain.on(
-    'is-created', (e) =>
-      e.sender.send('fav-table-created', {dbInit, tableInit})
+    'is-favorites-created', (e) =>
+      e.sender.send('favorites-db-table-created', {dbInit, tableInit})
 );
 
 const setupFavoritesListeners = () => {
