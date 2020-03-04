@@ -1,4 +1,4 @@
-import { Directive, HostListener, OnInit, Input, ElementRef, OnChanges } from '@angular/core';
+import { Directive, HostListener, OnInit, Input, ElementRef, OnChanges, OnDestroy } from '@angular/core';
 
 import { ElectronService } from 'ngx-electron';
 import { SnackbarService } from '../services/snackbar.service';
@@ -10,7 +10,7 @@ import { IpcMainResponse } from '../interfaces/ipc-main-response';
 @Directive({
   selector: '[appFavorite]'
 })
-export class FavoriteDirective implements OnInit, OnChanges {
+export class FavoriteDirective implements OnInit, OnDestroy, OnChanges {
   @Input() scripture: IScriptures;
   @Input() toggleIcon: boolean;
   private dbStatus: boolean;
@@ -30,6 +30,10 @@ export class FavoriteDirective implements OnInit, OnChanges {
 
       return;
     }
+  }
+
+  ngOnDestroy() {
+    this._dbIPC.subjects.isConnectedSubject.unsubscribe();
   }
 
   ngOnChanges() {
