@@ -15,7 +15,7 @@ export class DbIpcService {
   private tableInitSubject: Subject<any>;
 
   constructor(
-    private _electron: ElectronService
+    private _electron?: ElectronService
   ) {
     this.dbInitSubject = new Subject<any>();
     this.dbInitStatusSubject = new Subject<any>();
