@@ -25,12 +25,8 @@ export class FavoriteDirective implements OnInit, OnChanges {
 
   ngOnInit() {
     if (this.isElectronApp) {
-      this._dbIPC.createDB('favorites');
       this._dbIPC
-        .isDBCreated();
-
-      this.setDBStatus();
-      this.getTableStatus();
+        .isDBCreated('favorites');
 
       return;
     }
@@ -45,7 +41,7 @@ export class FavoriteDirective implements OnInit, OnChanges {
 
     if (this.isElectronApp) {
       this._dbIPC
-        .isConnected()
+        .isConnected('favorites')
         .subscribe(
           (data: {dbInit: boolean, tableInit: boolean}) => {
             this.dbStatus = data.dbInit;
@@ -123,27 +119,6 @@ export class FavoriteDirective implements OnInit, OnChanges {
           .showSnackbar(data.message);
       }
     );
-  }
-
-
-  private getTableStatus(): void {
-    this._dbIPC
-      .getTableStatus()
-      .asObservable()
-      .subscribe(
-        (data) => this.dbStatus = data.status,
-        (error) => console.log(`[Error] DB init failed: ${ error }`)
-      );
-  }
-
-  private setDBStatus(): void {
-    this._dbIPC
-      .getDBStatus()
-      .asObservable()
-      .subscribe(
-        (data) => this.dbStatus = data.status,
-        (error) => console.log(`[Error] DB init failed: ${error}`)
-      );
   }
 
   private addFavIcon(el: any): void {
