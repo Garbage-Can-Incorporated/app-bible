@@ -42,7 +42,7 @@ export class DbIpcService {
 
   public getTableStatus(): Subject<any> {
     this._electron.ipcRenderer.on(
-      'db-table-creation-status',
+      'fav-table-creation-status',
       (e: Event, data: IpcMainResponse) => {
         this.tableInitSubject.next(data);
       }
@@ -53,7 +53,7 @@ export class DbIpcService {
 
   public isConnected(): Subject<any> {
     this._electron.ipcRenderer
-      .on('db-table-created', (e, data) => {
+      .on('fav-table-created', (e, data) => {
         this.isConnectedSubject.next(data);
       });
 

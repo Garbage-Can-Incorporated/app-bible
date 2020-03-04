@@ -53,7 +53,7 @@ ipcMain.once('db-init', (e, dbName) => {
                 event
                     .sender
                     .send(
-                        'db-table-creation-status',
+                        'fav-table-creation-status',
                         {status: false, error: err}
                     );
 
@@ -66,7 +66,7 @@ ipcMain.once('db-init', (e, dbName) => {
               event
                   .sender
                   .send(
-                      'db-table-creation-status',
+                      'fav-table-creation-status',
                       {status: true, error: null}
                   );
             });
@@ -244,7 +244,7 @@ ipcMain.on('list-fav-items', () => {
 
 ipcMain.on(
     'is-created', (e) =>
-      e.sender.send('db-table-created', {dbInit, tableInit})
+      e.sender.send('fav-table-created', {dbInit, tableInit})
 );
 
 const setupFavoritesListeners = () => {
