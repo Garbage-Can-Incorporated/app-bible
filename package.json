@@ -11,7 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:electron": "ng build --base-href ./ --prod --aot --optimization --watch",
-    "start:electron": "electron ."
+    "start:electron": "electron . --enable-speech-dispatcher"
   },
   "private": true,
   "dependencies": {
