@@ -47,7 +47,7 @@ const createWindow = () => {
   // The following is optional and will open the DevTools:
   win.webContents.openDevTools();
 
-  win.once('show', () => {
+  win.once('ready-to-show', () => {
     ipcFavorite();
     // ipcAlarm();
   });
