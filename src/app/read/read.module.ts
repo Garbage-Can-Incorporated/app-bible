@@ -28,6 +28,7 @@ import { FavoriteDirective } from '../directives/favorite.directive';
 import { TwitterShareDirective } from '../directives/twitter-share.directive';
 import { RendererBwService } from '../services/renderer-bw.service';
 import { MoreDirective } from '../directives/more.directive';
+import { FavoritesComponent } from '../favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { MoreDirective } from '../directives/more.directive';
     FavoriteDirective,
     TwitterShareDirective,
     MoreDirective,
-    MoreComponent
+    MoreComponent,
+    FavoritesComponent
   ],
   imports: [
     CommonModule,
