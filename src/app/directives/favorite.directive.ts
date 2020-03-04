@@ -24,8 +24,6 @@ export class FavoriteDirective implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    console.log('[init] favorite directive');
-
     if (this.isElectronApp) {
       this._dbIPC.createDB('favorites');
       this._dbIPC
@@ -59,10 +57,8 @@ export class FavoriteDirective implements OnInit, OnChanges {
 
   @HostListener('click', [ '$event' ])
   onClick(e: Event): void {
-    console.log({ t: this.toggleIcon, dbStatus: this.dbStatus, tableStatus: this.tableStatus });
     if (this.toggleIcon) {
       // remove from fav db
-      console.log('unlike');
       this.removeFavVerse(e.target);
     } else {
       this.addToFavVerse(e.target);
