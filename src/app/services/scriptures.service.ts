@@ -9,6 +9,7 @@ import { ResourceHandlerService } from './resource-handler.service';
   providedIn: 'root'
 })
 export class ScripturesService {
+  private resource: any;
   constructor(
     private _resources: ResourceHandlerService
   ) { }
@@ -73,18 +74,12 @@ export class ScripturesService {
 
   public getBookList(): Observable<any> {
     return new Observable((obs) => {
-      this._resources.fetchResource()
-      .subscribe(
-        (data) => {
-          data.request
-            .forEach(
-              (cur: any) => obs.next(cur.bookTitle)
-            );
-        },
-        (error) => {
-          obs.error(error);
-        }
-      );
+      this.getBible((data: any) => {
+        data
+          .forEach(
+            (cur: any) => obs.next(cur.bookTitle)
+          );
+      });
     })
     .pipe(
       distinct()
@@ -92,16 +87,21 @@ export class ScripturesService {
   }
 
   private getBible(cb: any): void {
-    this._resources.fetchResource()
-      .subscribe(
-        (data) => {
-          cb(data.request);
-        },
-        (error) => {
-          console.log({error});
-          cb(error);
-        }
-      );
+    if (this.resource !== undefined) {
+      cb(this.resource);
+    } else {
+      this._resources.fetchResource()
+        .subscribe(
+          (data) => {
+            this.resource = data.request;
+            cb(data.request);
+          },
+          (error) => {
+            console.log({ error });
+            cb(error);
+          }
+        );
+    }
   }
 
   public get _getBible(): Observable<any> {
