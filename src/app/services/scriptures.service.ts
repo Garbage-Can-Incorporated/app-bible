@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { distinct, map } from 'rxjs/operators';
+import { distinct } from 'rxjs/operators';
 
 import { ResourceHandlerService } from './resource-handler.service';
 
