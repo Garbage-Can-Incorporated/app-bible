@@ -208,12 +208,30 @@ ipcMain.on('remove-fav-item', (e, data) => {
   );
 });
 
-ipcMain.on('list-fav-items', () => {
+ipcMain.on('list-fav-items', (e) => {
   console.log(`[IPC Main] list-fav-items called successfully`);
   db.queryAll(
       `SELECT * FROM favorites`,
+      {},
       (error, data) => {
         console.log({error, data});
+        if (error) {
+          e.sender.send(
+              'favorite-items-listed',
+              {data, error, message: 'Could not complete operation'}
+          );
+          return;
+        }
+
+        if (!data) {
+          e.sender.send(
+              'favorite-items-listed',
+              {data: [], message: 'There are no items, probably'}
+          );
+          return;
+        }
+
+        e.sender.send('favorite-items-listed', data);
       }
   );
 });
