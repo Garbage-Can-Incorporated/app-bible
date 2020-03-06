@@ -31,6 +31,7 @@ import { MoreDirective } from '../directives/more.directive';
 import { FavoritesComponent } from '../favorites/favorites.component';
 import { DeleteFavoriteDirective } from '../directives/delete-favorite.directive';
 import { ShowFavoriteDetailDirective } from '../directives/show-favorite-detail.directive';
+import { FavoriteDetailComponent } from '../favorite-detail/favorite-detail.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ShowFavoriteDetailDirective } from '../directives/show-favorite-detail.
     MoreComponent,
     FavoritesComponent,
     DeleteFavoriteDirective,
-    ShowFavoriteDetailDirective
+    ShowFavoriteDetailDirective,
+    FavoriteDetailComponent
   ],
   imports: [
     CommonModule,
