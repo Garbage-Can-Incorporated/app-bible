@@ -83,7 +83,6 @@ export class FavoritesComponent implements OnInit, OnChanges, OnDestroy {
     this._dbIPC.isConnected('favorites')
     .subscribe(
       (data) => {
-        console.log({ data });
         this.dbStatus = data.dbInit;
         this.tbStatus = data.tableInit;
       },

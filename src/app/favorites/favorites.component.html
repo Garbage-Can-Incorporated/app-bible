@@ -1,9 +1,8 @@
 <div class="d-flex __app--favorites-container m-auto p-2">
-  <div *ngIf="items.length >= 1" class="d-flex-w-100 row px-0 mx-0">
-    <!--  -->
-    <div *ngFor="let item of items" class="col-sm-6 col-md-4 p-0">
+  <div *ngIf="items.length >= 1" class="d-flex w-100 row px-0 mx-0">
+    <div *ngFor="let item of items" class="col-sm-12 col-md-6 col-lg-4 p-0">
       <div class="d-flex w-100 p-2 __app-favorites-item">
-        <span class="ml-4 mr-auto my-auto font-weight-bold">{{ item }}</span>
+        <span class="ml-4 mr-auto my-auto font-weight-bold text-truncate">{{ item }}</span>
         <i class="fa fa-trash mx-3 my-auto"></i>
       </div>
     </div>
