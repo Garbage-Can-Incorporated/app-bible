@@ -30,6 +30,7 @@ import { RendererBwService } from '../services/renderer-bw.service';
 import { MoreDirective } from '../directives/more.directive';
 import { FavoritesComponent } from '../favorites/favorites.component';
 import { DeleteFavoriteDirective } from '../directives/delete-favorite.directive';
+import { ShowFavoriteDetailDirective } from '../directives/show-favorite-detail.directive';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { DeleteFavoriteDirective } from '../directives/delete-favorite.directive
     MoreDirective,
     MoreComponent,
     FavoritesComponent,
-    DeleteFavoriteDirective
+    DeleteFavoriteDirective,
+    ShowFavoriteDetailDirective
   ],
   imports: [
     CommonModule,
