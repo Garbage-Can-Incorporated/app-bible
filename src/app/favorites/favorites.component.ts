@@ -15,6 +15,7 @@ import { IScriptures } from '../interfaces/i-scriptures';
 })
 export class FavoritesComponent implements OnInit, OnChanges, OnDestroy {
   public items: Array<string> = [];
+  public dbResult: Array<any> = [];
   private dbStatus: any;
   private tbStatus: any;
 
@@ -59,6 +60,8 @@ export class FavoritesComponent implements OnInit, OnChanges, OnDestroy {
         .on(
           'favorite-items-listed',
           (e, data: Array<IScriptures>) => {
+            this.dbResult = data;
+
             data
               .forEach((cur: IScriptures) => {
                 this
