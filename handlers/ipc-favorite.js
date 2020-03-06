@@ -160,7 +160,7 @@ ipcMain.on('remove-fav-item', (e, data) => {
     WHERE book = $book AND chapter = $chapter AND verse = $verse
     `,
       {
-        $book: data.scripture.book,
+        $book: data.scripture.book.toLowerCase(),
         $chapter: data.scripture.chapter,
         $verse: data.scripture.verse,
       },
