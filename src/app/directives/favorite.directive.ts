@@ -33,7 +33,7 @@ export class FavoriteDirective implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy() {
-    this._dbIPC.subjects.isConnectedSubject.unsubscribe();
+    // this._dbIPC.subjects.isConnectedSubject.unsubscribe();
   }
 
   ngOnChanges() {
