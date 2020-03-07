@@ -14,8 +14,8 @@ export class DeleteFavoriteDirective {
   ) { }
 
   @HostListener('click', [ '$event' ])
-  onClick(e) {
-    console.log({ e });
+  onClick(e: Event) {
+    e.stopPropagation();
     this.removeItem(e.target);
   }
 
@@ -39,7 +39,7 @@ export class DeleteFavoriteDirective {
           console.log({ data });
 
           if (data.status) {
-            el.remove();
+            el.parentNode.parentNode.remove();
           }
     });
   }
