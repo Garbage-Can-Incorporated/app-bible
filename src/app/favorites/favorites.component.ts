@@ -34,7 +34,7 @@ export class FavoritesComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    if (this._electron.isElectronApp) {
+    /* if (this._electron.isElectronApp) {
       this._dbIPC
         .isConnected('favorites')
         .subscribe(
@@ -45,7 +45,7 @@ export class FavoritesComponent implements OnInit, OnChanges, OnDestroy {
       );
 
       this.retrieveFavList();
-    }
+    } */
   }
 
   ngOnDestroy() {
@@ -89,7 +89,7 @@ export class FavoritesComponent implements OnInit, OnChanges, OnDestroy {
         this.dbStatus = data.dbInit;
         this.tbStatus = data.tableInit;
       },
-      (error) => console.log(`[Error] db connection error`)
+      (error) => console.log(`[Error] db connection error`, {error})
     );
   }
 }
