@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-favorite-detail',
@@ -7,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FavoriteDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data,
+  ) { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() { }
 }
