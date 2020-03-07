@@ -57,7 +57,7 @@ ipcMain.on('add-fav-item', (e, data) => {
     `,
       {
         $id: raidmaker.generate(8, {mode: 'apnr'}),
-        $book: data.scripture.book,
+        $book: data.scripture.book.toLowerCase(),
         $chapter: data.scripture.chapter,
         $verse: data.scripture.verse,
       },
