@@ -182,26 +182,13 @@ ipcMain.on('remove-fav-item', (e, data) => {
         }
 
         console.log({err, row});
-        if (row) {
-          e.sender
-              .send(
-                  'fav-item-removal-status',
-                  {
-                    status: true,
-                    message: 'Success! Removed from favorites',
-                    row,
-                  }
-              );
-
-          return;
-        }
-
         e.sender
             .send(
                 'fav-item-removal-status',
                 {
-                  status: false,
-                  message: 'operation returned empty',
+                  status: true,
+                  message: 'Success! Removed from favorites',
+                  row,
                 }
             );
       }
