@@ -20,7 +20,7 @@ export class ShowFavoriteDetailDirective {
     this._dialog.openDialog(
       {data: this.data},
       FavoriteDetailComponent,
-      {height: 'fit-content', width: 'fit-content'}
+      {height: 'fit-content', width: '35%'}
     );
   }
 }
