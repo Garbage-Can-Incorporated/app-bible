@@ -72,7 +72,8 @@ import { FavoriteDetailComponent } from '../favorite-detail/favorite-detail.comp
     RendererBwService
   ],
   entryComponents: [
-    MoreComponent
+    MoreComponent,
+    FavoriteDetailComponent
   ]
 })
 export class ReadModule { }
