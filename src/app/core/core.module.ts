@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxElectronModule } from 'ngx-electron';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -29,7 +28,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     HttpClientModule,
     MatProgressBarModule,
     MatMenuModule,
-    MatDatepickerModule,
     NgxElectronModule,
     MatDialogModule,
     MatSnackBarModule,
@@ -47,7 +45,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     HttpClientModule,
     MatProgressBarModule,
     MatMenuModule,
-    MatDatepickerModule,
     NgxElectronModule,
     MatDialogModule,
     MatSnackBarModule,
