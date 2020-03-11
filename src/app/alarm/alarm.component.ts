@@ -11,5 +11,4 @@ export class AlarmComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
