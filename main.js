@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, Tray, Menu} = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -9,8 +9,25 @@ let win;
 
 const createWindow = () => {
   const {screen} = require('electron');
+  let iconPath;
+
+  if (process.platform === 'win32') {
+    iconPath = path
+        .join(__dirname, '/src/assets/ico/favicon32x32.ico');
+  }
+
+  if (process.platform === 'linux') {
+    iconPath = path
+        .join(__dirname, '/src/assets/imgs/icon512x512.png');
+  }
+
+  if (process.platform === 'darwin') {
+    iconPath = path
+        .join(__dirname, '/src/assets/icns/favicon32x32.icns');
+  }
 
   win = new BrowserWindow({
+    icon: iconPath,
     frame: false,
     center: true,
     moveable: true,
