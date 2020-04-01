@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { DialogService } from '../services/dialog.service';
+
+import { TimeComponent } from '../time/time.component';
+
 @Component({
   selector: 'app-alarm',
   templateUrl: './alarm.component.html',
@@ -7,8 +11,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlarmComponent implements OnInit {
 
-        { height: 'fit-content', disableClose: true }
+  constructor(
+    private _dialog: DialogService
+  ) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  public openAddDialog(): void {
+    const dialog = this._dialog
+      .openDialog(
+        {},
+        TimeComponent,
+        { height: 'fit-content', disableClose: true }
+      );
+
+    dialog.afterClosed()
+      .subscribe(
+        (data) => {
+          console.log({ data });
+        }
+      );
   }
 }
