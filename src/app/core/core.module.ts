@@ -16,6 +16,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [],
@@ -36,7 +37,8 @@ import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
     MatAutocompleteModule,
     MatTabsModule,
     MaterialTimePickerModule,
-    MatCardModule
+    MatCardModule,
+    MatSlideToggleModule
   ],
   exports: [
     CommonModule,
@@ -55,7 +57,8 @@ import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
     MatAutocompleteModule,
     MatTabsModule,
     MaterialTimePickerModule,
-    MatCardModule
+    MatCardModule,
+    MatSlideToggleModule
   ]
 })
 export class CoreModule { }
