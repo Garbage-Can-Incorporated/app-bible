@@ -7,4 +7,5 @@ export interface DialogConfig {
   width?: string;
   minWidth?: string;
   maxWidth?: string;
+  disableClose?: boolean;
 }

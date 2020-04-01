@@ -21,7 +21,8 @@ export class DialogService {
       maxHeight = '80%',
       width = '350px',
       minWidth = '320px',
-      maxWidth = 'fit-content'
+      maxWidth = 'fit-content',
+      disableClose = false,
     }
   ): MatDialogRef<any, any> {
     const config: DialogConfig = {
@@ -32,7 +33,7 @@ export class DialogService {
       maxHeight,
       width,
       minWidth,
-      maxWidth
+      maxWidth, disableClose,
     };
 
     const dialogRef: MatDialogRef<any, any> = this

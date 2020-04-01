@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlarmComponent implements OnInit {
 
-  constructor() { }
+        { height: 'fit-content', disableClose: true }
 
   ngOnInit() {
   }
