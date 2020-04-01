@@ -14,7 +14,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTabsModule } from '@angular/material/tabs';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatCardModule } from '@angular/material/card';
+import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 
 @NgModule({
   declarations: [],
@@ -34,7 +35,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatSnackBarModule,
     MatAutocompleteModule,
     MatTabsModule,
-    NgxMaterialTimepickerModule
+    MaterialTimePickerModule,
+    MatCardModule
   ],
   exports: [
     CommonModule,
@@ -52,7 +54,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatSnackBarModule,
     MatAutocompleteModule,
     MatTabsModule,
-    NgxMaterialTimepickerModule
+    MaterialTimePickerModule,
+    MatCardModule
   ]
 })
 export class CoreModule { }
