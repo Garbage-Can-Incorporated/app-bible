@@ -1,1 +1,3 @@
-<p>time works!</p>
+<w-time class="h-100"  [color]="'primary'" submitLabel="Ok" revertLabel="Cancel" [userTime]="defaultTime" 
+(onRevert)="onRevert()" (userTimeChange)="onSubmit($event)">
+</w-time>
