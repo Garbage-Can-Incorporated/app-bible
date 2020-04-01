@@ -26,6 +26,21 @@ const createWindow = () => {
     },
   });
 
+  const tray = new Tray(iconPath);
+  tray.setTitle(`Ev'ryWord`);
+  tray.setToolTip(`Ev'ryWord`);
+  const trayMenu = Menu.buildFromTemplate([
+    {
+      type: 'normal',
+      role: 'click',
+      label: 'quit',
+      click: (mt, win, _) => {
+        win.close();
+      },
+    },
+  ]);
+  tray.setContextMenu(trayMenu);
+
   const {
     // width: displayWidth,
     height: displayHeight,
@@ -56,6 +71,7 @@ const createWindow = () => {
 
   win.on('closed', () => {
     win = null;
+    tray.destroy();
   });
 };
 
