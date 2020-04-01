@@ -10,6 +10,7 @@ import { TimeComponent } from '../time/time.component';
   styleUrls: ['./alarm.component.css']
 })
 export class AlarmComponent implements OnInit {
+  public setTime: any;
 
   constructor(
     private _dialog: DialogService
@@ -29,6 +30,9 @@ export class AlarmComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log({ data });
+          if (data) {
+            this.setTime = new Date(new Date().setHours(data.hour, data.minute)).toJSON();
+          }
         }
       );
   }
