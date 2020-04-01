@@ -14,7 +14,6 @@ export class TimeComponent implements OnInit {
   };
 
   public defaultTime: any = { ...this._defaultTime };
-  public setTime: any;
 
   constructor(
     private _dialogRef: MatDialogRef<TimeComponent>
@@ -23,10 +22,10 @@ export class TimeComponent implements OnInit {
   ngOnInit() { }
 
   public onSubmit(time: any): void {
-    this.setTime = time;
+    this._dialogRef.close(time);
   }
 
   public onRevert(): void {
-    this._dialogRef.close(this.setTime);
+    this._dialogRef.close();
   }
 }
