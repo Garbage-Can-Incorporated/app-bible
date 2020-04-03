@@ -34,6 +34,7 @@ import { ShowFavoriteDetailDirective } from '../directives/show-favorite-detail.
 import { FavoriteDetailComponent } from '../favorite-detail/favorite-detail.component';
 import { AlarmComponent } from '../alarm/alarm.component';
 import { TimeComponent } from '../time/time.component';
+import { AlarmItemControlDirective } from '../alarm-item-control.directive';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { TimeComponent } from '../time/time.component';
     ShowFavoriteDetailDirective,
     FavoriteDetailComponent,
     AlarmComponent,
-    TimeComponent
+    TimeComponent,
+    AlarmItemControlDirective
   ],
   imports: [
     CommonModule,
