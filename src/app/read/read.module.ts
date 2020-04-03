@@ -9,6 +9,7 @@ import { SpeechSynthesisService } from '../services/speech-synthesis.service';
 import { SnackbarService } from '../services/snackbar.service';
 import { DialogService } from '../services/dialog.service';
 import { DbIpcService } from '../services/db-ipc.service';
+import { AlarmIpcService } from '../services/alarm-ipc.service';
 
 import { AppComponent } from '../app.component';
 import { ReadComponent } from './read.component';
@@ -75,7 +76,7 @@ import { AlarmItemControlDirective } from '../alarm-item-control.directive';
     SnackbarService,
     DialogService,
     DbIpcService,
-    RendererBwService
+    RendererBwService, AlarmIpcService
   ],
   entryComponents: [
     MoreComponent,
