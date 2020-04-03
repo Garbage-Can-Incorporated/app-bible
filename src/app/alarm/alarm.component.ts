@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { DialogService } from '../services/dialog.service';
 
@@ -17,6 +17,30 @@ export class AlarmComponent implements OnInit {
   ) { }
 
   ngOnInit() { }
+
+  public expandCollapse(el: any, days): void {
+    const children = el.children[0].children;
+    const elClassList = el.classList;
+
+    elClassList
+        .toggle('__app-alarm--item__container--background');
+
+    Array.from(children).forEach((cur: Element, i: number) => {
+      if (i !== 0) {
+        // hiding items
+        if (cur.classList.contains('d-flex')) {
+          cur.classList.replace('d-flex', 'd-none');
+          days.classList.replace('d-none', 'd-flex');
+          days.nextSibling.classList.replace('d-none', 'd-flex');
+        } else {
+          // unhiding items
+          cur.classList.replace('d-none', 'd-flex');
+          days.classList.replace('d-flex', 'd-none');
+          days.nextSibling.classList.replace('d-flex', 'd-none');
+        }
+      }
+    });
+  }
 
   public openAddDialog(): void {
     const dialog = this._dialog

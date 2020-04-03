@@ -3,3 +3,42 @@
   bottom: 15%;
   right: 15%;
 }
+
+.__app-alarm--item,
+.__app-alarm--controls {
+  flex-direction: column;
+}
+
+.__app-alarm--item__container {
+  min-height: fit-content;
+  max-height: 200px;
+}
+
+.__app-alarm--item__container--background {
+  background-color: #f7f7f7;
+}
+
+.__app-alarm--item__container:last-child {
+  margin-bottom: 5em;
+}
+
+.__app-alarm--value__toggle--button__container {
+  flex-direction: row-reverse;
+}
+
+.__app-alarm--value {
+  font-size: 35px;
+  line-height: normal;
+}
+
+.__app-alarm--value__color--blue {
+  color: steelblue;
+}
+
+.__app-alarm--value__color--grey {
+  color: grey;
+}
+
+i {
+  font-size: 1.3em;
+}
