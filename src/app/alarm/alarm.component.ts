@@ -4,6 +4,8 @@ import { DialogService } from '../services/dialog.service';
 
 import { TimeComponent } from '../time/time.component';
 
+import { AlarmIpcService } from '../services/alarm-ipc.service';
+
 @Component({
   selector: 'app-alarm',
   templateUrl: './alarm.component.html',
@@ -11,12 +13,18 @@ import { TimeComponent } from '../time/time.component';
 })
 export class AlarmComponent implements OnInit {
   public setTime: any;
+  public alarms: any[];
 
   constructor(
-    private _dialog: DialogService
+    private _dialog: DialogService,
+    private _alarmIpc: AlarmIpcService
   ) { }
 
+  ngOnInit() {
+    this._alarmIpc.getAlarms();
+    this._alarmIpc.alarmAdditionSuccess();
     this.setupListeners();
+  }
 
   public expandCollapse(el: any, days): void {
     const children = el.children[0].children;
@@ -55,9 +63,22 @@ export class AlarmComponent implements OnInit {
         (data) => {
           console.log({ data });
           if (data) {
-            this.setTime = new Date(new Date().setHours(data.hour, data.minute)).toJSON();
+            this.setTime = new Date(
+              new Date().setHours(data.hour, data.minute)
+            ).toJSON();
+
+            this._alarmIpc.submitAlarm({
+              time: new Date(this.setTime).getTime(),
+              status: true,
+              repeat: false,
+              days: [],
+              label: ''
+            });
           }
         }
+      );
+  }
+
   private setupListeners(): void {
     this._alarmIpc.getSubjects()
       .allAlarmsSubject.subscribe(
