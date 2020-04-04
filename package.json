@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:electron": "ng build --base-href ./ --prod --optimization --build-optimizer --watch",
+    "build:electron": "ng build --base-href ./ --prod --optimization --build-optimizer --source-map --watch",
     "start:electron": "electron . --enable-speech-dispatcher"
   },
   "private": true,
