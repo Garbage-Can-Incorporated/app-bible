@@ -42,3 +42,12 @@
 i {
   font-size: 1.3em;
 }
+
+.__app-alarm--empty {
+  flex-direction: column;
+  position: fixed;
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+}
