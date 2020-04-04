@@ -42,6 +42,13 @@
   </div>
 </div>
 
+<ng-template #elseBlock class="d-flex w-100">
+  <div class="d-flex __app-alarm--value__color--grey __app-alarm--empty">
+    <i class="fa fa-bell mt-auto mx-auto"></i>
+    <span class="mt-2 mb-auto mx-auto">No alarm added yet!</span>
+  </div>
+</ng-template>
+
 <button mat-mini-fab color="warn" class="__app-alarm-add-btn" (click)="openAddDialog()">
   <i class="fa fa-plus"></i>
 </button>
