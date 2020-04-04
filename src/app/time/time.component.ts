@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-time',
@@ -16,10 +16,21 @@ export class TimeComponent implements OnInit {
   public defaultTime: any = { ...this._defaultTime };
 
   constructor(
-    private _dialogRef: MatDialogRef<TimeComponent>
+    private _dialogRef: MatDialogRef<TimeComponent>,
+    @Inject(MAT_DIALOG_DATA) private data,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log({data: this.data});
+
+    if (
+      this.data.hasOwnProperty('hour') &&
+      this.data.hasOwnProperty('minute')
+    ) {
+      this.defaultTime.hour = this.data.hour;
+      this.defaultTime.minute = this.data.minute;
+    }
+  }
 
   public onSubmit(time: any): void {
     this._dialogRef.close(time);
