@@ -16,7 +16,7 @@ export class AlarmComponent implements OnInit {
     private _dialog: DialogService
   ) { }
 
-  ngOnInit() { }
+    this.setupListeners();
 
   public expandCollapse(el: any, days): void {
     const children = el.children[0].children;
@@ -58,6 +58,26 @@ export class AlarmComponent implements OnInit {
             this.setTime = new Date(new Date().setHours(data.hour, data.minute)).toJSON();
           }
         }
+  private setupListeners(): void {
+    this._alarmIpc.getSubjects()
+      .allAlarmsSubject.subscribe(
+        (data) => {
+          this.alarms = [
+            ...(this.alarms !== undefined ? this.alarms : []),
+            ...data,
+          ];
+          console.log({ alarms: this.alarms });
+        },
+        (error) => console.log({ error })
+      );
+
+    this._alarmIpc.getSubjects()
+      .addAlarmSubject.subscribe(
+        (data) => {
+          // show toast or snackbar
+          console.log('[Success] Alarm Added!');
+        },
+        (error) => console.log({ error })
       );
   }
 }
