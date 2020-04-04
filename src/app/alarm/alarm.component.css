@@ -39,6 +39,13 @@
   color: grey;
 }
 
+.__app-alarm--value, /* alarm time */
+.__app-alarm--controls div span, /* label */
+.__app-alarm--alternate__controls span, /* repeated days */
+.__app-alarm--alternate__controls i /* icon */ {
+  cursor: pointer;
+}
+
 i {
   font-size: 1.3em;
 }
