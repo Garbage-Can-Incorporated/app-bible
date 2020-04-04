@@ -26,6 +26,33 @@ export class AlarmComponent implements OnInit {
     this.setupListeners();
   }
 
+  public openAlarmTimeDialog(time: Date, e: Event, i: number): void {
+    e.stopImmediatePropagation();
+
+    const dialog = this._dialog
+      .openDialog(
+        {
+          hour: new Date(time).getHours(),
+          minute: new Date(time).getMinutes(),
+        },
+        TimeComponent,
+        { height: 'fit-content', disableClose: true }
+    );
+
+    dialog.afterClosed()
+      .subscribe(
+        (data) => {
+          if (data) {
+            this.setTime = new Date(
+              new Date().setHours(data.hour, data.minute)
+            ).toJSON();
+
+            this.alarms[ i ].time = new Date(this.setTime).getTime();
+          }
+        }
+      );
+  }
+
   public expandCollapse(el: any, days): void {
     const children = el.children[0].children;
     const elClassList = el.classList;
@@ -61,7 +88,6 @@ export class AlarmComponent implements OnInit {
     dialog.afterClosed()
       .subscribe(
         (data) => {
-          console.log({ data });
           if (data) {
             this.setTime = new Date(
               new Date().setHours(data.hour, data.minute)
