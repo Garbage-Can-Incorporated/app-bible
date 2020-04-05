@@ -46,6 +46,12 @@
   cursor: pointer;
 }
 
+.__app-alarm--controls,
+.__app-alarm--alternate__controls,
+.__app-alarm--delete__controls {
+  font-size: 13px;
+}
+
 i {
   font-size: 1.3em;
 }
