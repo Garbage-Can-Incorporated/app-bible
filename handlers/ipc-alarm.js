@@ -24,13 +24,13 @@ const alarmStore = new Store({
   cwd,
 });
 
-/* alarmStore.onDidChange('alarms', (data, _) => {
+alarmStore.onDidChange('alarms', (data, _) => {
   if (addAlarmEvent !== undefined && addAlarmEvent !== null) {
     addAlarmEvent.sender.send('all-alarms', data);
   } else {
     console.log(`[Error] add alarm event is undefined or null`);
   }
-}); */
+});
 
 ipcMain.on('add-alarm', (e, data) => {
   addAlarmEvent = e;
