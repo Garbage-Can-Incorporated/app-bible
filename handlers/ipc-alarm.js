@@ -2,8 +2,9 @@ const {mkdir} = require('fs');
 const {join} = require('path');
 
 const {ipcMain, app} = require('electron');
-const Store = require('electron-store');
+const raidmaker = require('raidmaker');
 
+const Store = require('electron-store');
 const schema = require('../schemas/alarm.json');
 
 const userDataPath = app.getPath('userData');
@@ -25,7 +26,7 @@ const alarmStore = new Store({
 
 alarmStore.onDidChange('alarms', (data, _) => {
   if (addAlarmEvent !== undefined && addAlarmEvent !== null) {
-    addAlarmEvent.sender.send('alarms', data);
+    addAlarmEvent.sender.send('all-alarms', data);
   } else {
     console.log(`[Error] add alarm event is undefined or null`);
   }
@@ -34,6 +35,7 @@ alarmStore.onDidChange('alarms', (data, _) => {
 ipcMain.on('add-alarm', (e, data) => {
   addAlarmEvent = e;
 
+  data.id = raidmaker.generate(8, {mode: 'apnr'});
   let alarms = alarmStore.get('alarms');
 
   if (alarms === undefined || alarms === null) {
