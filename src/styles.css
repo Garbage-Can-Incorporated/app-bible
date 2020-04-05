@@ -60,6 +60,10 @@ app-reaction-console {
   cursor: pointer;
 }
 
+mat-dialog-container.mat-dialog-container {
+  background-color: inherit;
+}
+
 .__red--color {
   color: red;
 }
@@ -72,8 +76,14 @@ app-reaction-console {
   padding-bottom: 0!important;
 }
 
+.__app-dialog--default__background {
+  background-color: #ffffff;
+  color: #ffffff;
+}
+
 .__app-label__background--black {
-  background-color: #000000;
+  background-color: #444444;
+  color: #00b5ff;
 }
 
 .__grey {
