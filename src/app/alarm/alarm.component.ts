@@ -28,6 +28,13 @@ export class AlarmComponent implements OnInit {
     this.setupListeners();
   }
 
+  public statusChange(data: any, i: number): void {
+    this.alarms[ i ].status = data.checked;
+
+    this._alarmIpc
+      .editAlarmProp({ i, status: this.alarms[ i ].status });
+  }
+
   public setLabel(label: string, i: number): void {
     const dialog = this._dialog
       .openDialog(
@@ -41,6 +48,8 @@ export class AlarmComponent implements OnInit {
         (data) => {
           if (data) {
             this.alarms[ i ].label = data.label;
+            this._alarmIpc
+              .editAlarmProp({ i, label: this.alarms[ i ].label });
           }
         }
       );
@@ -68,6 +77,8 @@ export class AlarmComponent implements OnInit {
             ).toJSON();
 
             this.alarms[ i ].time = new Date(this.setTime).getTime();
+            this._alarmIpc
+              .editAlarmProp({ i, time: this.alarms[ i ].time });
           }
         }
       );

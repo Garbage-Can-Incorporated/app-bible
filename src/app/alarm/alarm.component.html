@@ -5,7 +5,9 @@
       (click)="expandCollapse(el, altDays)" #el>
       <div class="d-flex w-100 mb-3 __app-alarm--item">
         <div class="d-flex w-100 my-auto __app-alarm--value__toggle--button__container">
-          <mat-slide-toggle #slider class="ml-auto mr-3 my-auto" [color]="'primary'" [checked]="alarm.status" (click)="$event.stopImmediatePropagation()">
+          <mat-slide-toggle #slider class="ml-auto mr-3 my-auto" [color]="'primary'" [checked]="alarm.status" 
+            (click)="$event.stopImmediatePropagation()"
+            (change)="statusChange($event, i)">
           </mat-slide-toggle>
 
           <span app-alarm-item-control [slider]="slider" class="d-flex font-weight-bold my-auto __app-alarm--value"
