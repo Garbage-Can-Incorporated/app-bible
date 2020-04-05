@@ -14,3 +14,10 @@
   cursor: pointer;
   border-radius: 5px;
 }
+
+.__app-alarm--empty {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  right: 0;
+}

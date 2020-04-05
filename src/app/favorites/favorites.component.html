@@ -1,5 +1,5 @@
 <div class="d-flex __app--favorites-container m-auto p-2">
-  <div *ngIf="items.length >= 1" class="d-flex w-100 row px-0 mx-0">
+  <div *ngIf="items.length >= 1; else emptyBlock" class="d-flex w-100 row px-0 mx-0">
     <div *ngFor="let item of items; index as i" class="col-sm-12 col-md-6 col-lg-4 p-0">
       <div appShowFavoriteDetail [data]="item" class="d-flex w-100 p-2 __app-favorites-item">
         <span class="ml-4 mr-auto my-auto font-weight-bold text-truncate">{{ item }}</span>
@@ -7,4 +7,11 @@
       </div>
     </div>
   </div>
+
+  <ng-template #emptyBlock class="d-flex w-100">
+    <div class="d-flex w-100 __app-alarm--empty">
+      <i class="fa fa-bell ml-auto my-auto mr-2"></i>
+      <span class="my-auto mr-auto">No favorite verse yet...</span>
+    </div>
+  </ng-template>
 </div>
