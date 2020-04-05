@@ -16,12 +16,12 @@ export class TimeComponent implements OnInit {
   public defaultTime: any = { ...this._defaultTime };
 
   constructor(
-    private _dialogRef: MatDialogRef<TimeComponent>,
+    private dialogRef: MatDialogRef<TimeComponent>,
     @Inject(MAT_DIALOG_DATA) private data,
   ) { }
 
   ngOnInit() {
-    console.log({data: this.data});
+    this.dialogRef.addPanelClass('__app-dialog--default__background');
 
     if (
       this.data.hasOwnProperty('hour') &&
@@ -33,10 +33,10 @@ export class TimeComponent implements OnInit {
   }
 
   public onSubmit(time: any): void {
-    this._dialogRef.close(time);
+    this.dialogRef.close(time);
   }
 
   public onRevert(): void {
-    this._dialogRef.close();
+    this.dialogRef.close();
   }
 }
