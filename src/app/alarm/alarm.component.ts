@@ -131,6 +131,8 @@ export class AlarmComponent implements OnInit {
               days: [],
               label: ''
             });
+
+            this._alarmIpc.getAlarms();
           }
         }
       );
