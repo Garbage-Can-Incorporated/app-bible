@@ -32,6 +32,13 @@ export class AlarmComponent implements OnInit {
     this.setupListeners();
   }
 
+  public repeatChange(data: any, i: number): void {
+    this.alarms[ i ].repeat = data.checked;
+
+    this._alarmIpc
+      .editAlarmProp({ i, repeat: this.alarms[ i ].repeat });
+  }
+
   public statusChange(data: any, i: number): void {
     this.alarms[ i ].status = data.checked;
 
