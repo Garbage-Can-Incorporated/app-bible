@@ -1,1 +1,10 @@
-<p>label works!</p>
+<mat-form-field class="w-100" appearance="outline">
+  <mat-label>Label</mat-label>
+  <input matInput
+    [(ngModel)]="data.label" placeholder="verse" [type]="'text'">
+</mat-form-field>
+
+<div class="d-flex w-100" mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" class="ml-auto">Exit</button>
+  <button mat-button class="ml-1" cdkFocusInitial (click)="onSubmit()">Set</button>
+</div>
