@@ -52,6 +52,10 @@
   font-size: 13px;
 }
 
+.__app-alarm--tag__icon {
+  transform: rotate(135deg);
+}
+
 i {
   font-size: 1.3em;
 }

@@ -22,7 +22,7 @@
         <div class="d-flex w-100 my-2 mb-3 __app-alarm--controls" (click)="$event.stopImmediatePropagation()">
           <mat-checkbox class="mt-auto" [color]="'primary'" [checked]="alarm.repeat">Repeat</mat-checkbox>
           <div class="d-flex w-100">
-            <i class="fa fa-tag my-auto"></i>
+            <i class="fa fa-tag my-auto __app-alarm--tag__icon"></i>
             <span class="ml-2 my-auto"
             (click)="setLabel(alarm.label, i)">
             {{ alarm.label === '' ? 'Label' : alarm.label }}
