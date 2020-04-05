@@ -32,11 +32,9 @@ alarmStore.onDidChange('alarms', (data, _) => {
 });
 
 ipcMain.on('add-alarm', (e, data) => {
-  console.log({data});
   addAlarmEvent = e;
 
   let alarms = alarmStore.get('alarms');
-  console.log({alarms});
 
   if (alarms === undefined || alarms === null) {
     alarms = [];
@@ -54,6 +52,18 @@ ipcMain.on('get-all-alarms', (e, data) => {
   const alarms = alarmStore.get('alarms');
 
   e.sender.send('all-alarms', alarms);
+});
+
+ipcMain.on('edit-alarm-prop', (e, data) => {
+  const prop = Object.getOwnPropertyNames(data)
+      .find((cur) => (cur !== 'i') ? cur : null);
+
+  const alarms = alarmStore.get('alarms');
+  alarms[data.i][prop] = data[prop];
+  alarmStore.set(`alarms`, alarms);
+
+  e.sender
+      .send('edit-alarm-prop-success', {message: 'Success!'});
 });
 
 const setupAlarmListeners = () => {
