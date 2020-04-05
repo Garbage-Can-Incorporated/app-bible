@@ -5,6 +5,7 @@ import { DialogService } from '../services/dialog.service';
 import { TimeComponent } from '../time/time.component';
 
 import { AlarmIpcService } from '../services/alarm-ipc.service';
+import { LabelComponent } from '../label/label.component';
 
 @Component({
   selector: 'app-alarm',
@@ -24,6 +25,24 @@ export class AlarmComponent implements OnInit {
     this._alarmIpc.getAlarms();
     this._alarmIpc.alarmAdditionSuccess();
     this.setupListeners();
+  }
+
+  public setLabel(label: string, i: number): void {
+    const dialog = this._dialog
+      .openDialog(
+        {label: label === '' ? '' : label},
+        LabelComponent,
+        { height: 'fit-content', disableClose: true }
+      );
+
+    dialog.afterClosed()
+      .subscribe(
+        (data) => {
+          if (data) {
+            this.alarms[ i ].label = data.label;
+          }
+        }
+      );
   }
 
   public openAlarmTimeDialog(time: Date, e: Event, i: number): void {
