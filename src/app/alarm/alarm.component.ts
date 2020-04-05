@@ -24,6 +24,7 @@ export class AlarmComponent implements OnInit {
   ngOnInit() {
     this._alarmIpc.getAlarms();
     this._alarmIpc.alarmAdditionSuccess();
+    this._alarmIpc.editComplete();
     this.setupListeners();
   }
 
@@ -125,6 +126,14 @@ export class AlarmComponent implements OnInit {
   }
 
   private setupListeners(): void {
+    this._alarmIpc.getSubjects()
+      .editAlarmSubject.subscribe(
+        (data) => {
+          console.log('[Notif] Edit successful');
+        },
+        (error) => console.log({ error })
+      );
+
     this._alarmIpc.getSubjects()
       .allAlarmsSubject.subscribe(
         (data) => {
