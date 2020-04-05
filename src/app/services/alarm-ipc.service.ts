@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
 import { Subject } from 'rxjs';
+
+import { ElectronService } from 'ngx-electron';
+
+import { IAlarmDetail } from '../interfaces/i-alarm-detail';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlarmIpcService {
-  private allAlarmsSubject: Subject<any> = new Subject();
-  private addAlarmSubject: Subject<any> = new Subject();
-  private editAlarmSubject: Subject<any> = new Subject();
+  private allAlarmsSubject: Subject<Array<IAlarmDetail>> = new Subject();
+  private addAlarmSubject: Subject<Array<IAlarmDetail>> = new Subject();
+  private editAlarmSubject: Subject<{message: string}> = new Subject();
 
   constructor(
     private _electron?: ElectronService,
@@ -29,7 +32,7 @@ export class AlarmIpcService {
       });
   }
 
-  public submitAlarm(alarm: any): void {
+  public submitAlarm(alarm: IAlarmDetail): void {
     this._electron.ipcRenderer
       .send('add-alarm', alarm);
   }
