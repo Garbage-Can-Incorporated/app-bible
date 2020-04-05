@@ -8,10 +8,26 @@ import { Subject } from 'rxjs';
 export class AlarmIpcService {
   private allAlarmsSubject: Subject<any> = new Subject();
   private addAlarmSubject: Subject<any> = new Subject();
+  private editAlarmSubject: Subject<any> = new Subject();
 
   constructor(
     private _electron?: ElectronService,
   ) { }
+
+  public editAlarmProp(data: {i: number, [key: string]: any}): void {
+    this._electron.ipcRenderer
+      .send(
+        'edit-alarm-prop',
+        data,
+      );
+  }
+
+  public editComplete(): void {
+    this._electron.ipcRenderer
+      .on('edit-alarm-prop-success', (e, data) => {
+        this.editAlarmSubject.next(data);
+      });
+  }
 
   public submitAlarm(alarm: any): void {
     this._electron.ipcRenderer
@@ -36,8 +52,9 @@ export class AlarmIpcService {
 
   public getSubjects(): { [ key in string ]: Subject<any> } {
     return {
-      'addAlarmSubject': this.addAlarmSubject,
-      'allAlarmsSubject': this.allAlarmsSubject,
+      addAlarmSubject: this.addAlarmSubject,
+      allAlarmsSubject: this.allAlarmsSubject,
+      editAlarmSubject: this.editAlarmSubject
     };
   }
 }
