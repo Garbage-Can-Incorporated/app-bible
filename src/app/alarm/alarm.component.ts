@@ -146,13 +146,22 @@ export class AlarmComponent implements OnInit {
       );
 
     this._alarmIpc.getSubjects()
+      .addAlarmSubject.subscribe(
+        (data) => {
+          // show toast or snackbar
+          console.log('[Success] Alarm Added!');
+        },
+        (error) => console.log({ error })
+      );
+
+    this._alarmIpc.getSubjects()
       .allAlarmsSubject.subscribe(
         (data) => {
           this.alarms = [
             ...(this.alarms !== undefined ? this.alarms : []),
             ...data,
           ];
-.alarms = [ ...this.fi
+
           this.trimAlarmItem(this.alarms);
         },
         (error) => console.log({ error })
