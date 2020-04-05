@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { DialogService } from '../services/dialog.service';
+import { AlarmIpcService } from '../services/alarm-ipc.service';
 
 import { TimeComponent } from '../time/time.component';
-
-import { AlarmIpcService } from '../services/alarm-ipc.service';
 import { LabelComponent } from '../label/label.component';
+
+import { IAlarmDetail } from '../interfaces/i-alarm-detail';
 
 @Component({
   selector: 'app-alarm',
@@ -13,8 +14,10 @@ import { LabelComponent } from '../label/label.component';
   styleUrls: ['./alarm.component.css']
 })
 export class AlarmComponent implements OnInit {
-  public setTime: any;
-  public alarms: any[];
+  public setTime: string;
+  public alarms: Array<IAlarmDetail>;
+  private filteredAlarms: Array<IAlarmDetail> = [];
+  private i = <number>0;
 
   constructor(
     private _dialog: DialogService,
@@ -25,6 +28,7 @@ export class AlarmComponent implements OnInit {
     this._alarmIpc.getAlarms();
     this._alarmIpc.alarmAdditionSuccess();
     this._alarmIpc.editComplete();
+
     this.setupListeners();
   }
 
