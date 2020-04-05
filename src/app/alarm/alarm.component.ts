@@ -152,18 +152,46 @@ export class AlarmComponent implements OnInit {
             ...(this.alarms !== undefined ? this.alarms : []),
             ...data,
           ];
-          console.log({ alarms: this.alarms });
+.alarms = [ ...this.fi
+          this.trimAlarmItem(this.alarms);
         },
         (error) => console.log({ error })
       );
+  }
 
-    this._alarmIpc.getSubjects()
-      .addAlarmSubject.subscribe(
-        (data) => {
-          // show toast or snackbar
-          console.log('[Success] Alarm Added!');
-        },
-        (error) => console.log({ error })
-      );
+  public trimAlarmItem(alarms: IAlarmDetail[]): void {
+    const cur = alarms[ this.i ];
+
+    const alarmExists = (hosts: IAlarmDetail[], client: IAlarmDetail) => {
+      // find current alarm item: client in filtered array: hosts
+      const existingAlarm = hosts.find((host: IAlarmDetail) => {
+        if (host.id === client.id) {
+          return host;
+        }
+      });
+
+      return existingAlarm ?
+        { existence: true } : { existence: false };
+    };
+
+    if (cur !== undefined) {
+      const doesExist = alarmExists(this.filteredAlarms, cur);
+
+      if (doesExist.existence === false) {
+        this.filteredAlarms.push(cur);
+      }
+      // ignore existing item
+    }
+
+    this.i++;
+    if (this.i < this.alarms.length) {
+      this.trimAlarmItem(alarms);
+    }
+
+    if (this.i >= this.alarms.length) {
+      this.i = 0;
+    }
+
+    this.alarms = [ ...this.filteredAlarms ];
   }
 }
