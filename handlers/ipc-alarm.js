@@ -1,43 +1,63 @@
-const {ipcMain} = require('electron');
+const {mkdir} = require('fs');
+const {join} = require('path');
 
-const DBS = require('../db/db');
+const {ipcMain, app} = require('electron');
+const Store = require('electron-store');
 
-const db = new DBS('alarm', 'rw');
+const schema = require('../schemas/alarm.json');
 
-let event;
+const userDataPath = app.getPath('userData');
+const alarmsPath = join(userDataPath, 'alarms');
+let addAlarmEvent;
 
-ipcMain.on('db-init', (e) => {
-  event = e;
+mkdir(alarmsPath, {recursive: true}, (err) => {
+  if (err) {
+    console.log(`[MKDIR Error]`, {err});
+  }
 });
 
-const setupAlarmListeners = (win) => {
-  db.init()
-      .on('error', () => {
-        console.log(`[Error] DB could not be open successfully!`);
+const cwd = alarmsPath;
+const alarmStore = new Store({
+  schema,
+  name: 'alarms',
+  cwd,
+});
 
-        // listen to this in renderer process
-        event
-            .sender
-            .send('db-init-status', {status: false});
-      })
-      .on('open', () => {
-      // listen to this in renderer process
-        event
-            .sender
-            .send('db-init-status', {status: true});
+alarmStore.onDidChange('alarms', (data, _) => {
+  if (addAlarmEvent !== undefined && addAlarmEvent !== null) {
+    addAlarmEvent.sender.send('alarms', data);
+  } else {
+    console.log(`[Error] add alarm event is undefined or null`);
+  }
+});
 
-        ipcMain.on('add-fav-item', () => {
-          console.log(`[IPC Main] add-fav-item called successfully`);
-        });
+ipcMain.on('add-alarm', (e, data) => {
+  console.log({data});
+  addAlarmEvent = e;
 
-        ipcMain.on('remove-fav-item', () => {
-          console.log(`[IPC Main] remove-fav-item called successfully`);
-        });
+  let alarms = alarmStore.get('alarms');
+  console.log({alarms});
 
-        ipcMain.on('is-fav-check', () => {
-          console.log(`[IPC Main] remove-fav-item called successfully`);
-        });
-      });
+  if (alarms === undefined || alarms === null) {
+    alarms = [];
+    alarms.push(data);
+  } else {
+    alarms.push(data);
+  }
+
+  alarmStore.set('alarms', alarms);
+
+  addAlarmEvent.sender.send('add-alarm-success', alarms);
+});
+
+ipcMain.on('get-all-alarms', (e, data) => {
+  const alarms = alarmStore.get('alarms');
+
+  e.sender.send('all-alarms', alarms);
+});
+
+const setupAlarmListeners = () => {
+  console.log('[Alarm] listener started');
 };
 
 module.exports = setupAlarmListeners;
