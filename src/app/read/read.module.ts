@@ -37,6 +37,7 @@ import { AlarmComponent } from '../alarm/alarm.component';
 import { TimeComponent } from '../time/time.component';
 import { AlarmItemControlDirective } from '../alarm-item-control.directive';
 import { LabelComponent } from '../label/label.component';
+import { RepeatDaysComponent } from '../repeat-days/repeat-days.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { LabelComponent } from '../label/label.component';
     AlarmComponent,
     TimeComponent,
     AlarmItemControlDirective,
-    LabelComponent
+    LabelComponent,
+    RepeatDaysComponent
   ],
   imports: [
     CommonModule,
