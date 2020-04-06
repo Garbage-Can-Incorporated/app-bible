@@ -70,7 +70,7 @@ ipcMain.on('edit-alarm-prop', (e, data) => {
 
 ipcMain.on('add-repeat-day', (e, data) => {
   const alarms = alarmStore.get('alarms');
-  alarms[data.i].repeat.push(data.day);
+  alarms[data.i].days.push(data.day);
   alarmStore.set(`alarms`, alarms);
 
   e.sender
@@ -79,6 +79,21 @@ ipcMain.on('add-repeat-day', (e, data) => {
           {message: 'Success!', op: 'add'}
       );
 });
+
+ipcMain.on('remove-repeat-day', (e, data) => {
+  const alarms = alarmStore.get('alarms');
+  const alarmItem = alarms[data.i];
+  alarmItem.days = alarmItem.days
+      .filter((cur) => cur !== data.day);
+  alarmStore.set(`alarms`, alarms);
+
+  e.sender
+      .send(
+          'repeat-day-response',
+          {message: 'Success!', op: 'remove'}
+      );
+});
+
 const setupAlarmListeners = () => {
   console.log('[Alarm] listener started');
 };
