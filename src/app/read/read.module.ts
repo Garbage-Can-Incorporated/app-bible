@@ -35,7 +35,7 @@ import { ShowFavoriteDetailDirective } from '../directives/show-favorite-detail.
 import { FavoriteDetailComponent } from '../favorite-detail/favorite-detail.component';
 import { AlarmComponent } from '../alarm/alarm.component';
 import { TimeComponent } from '../time/time.component';
-import { AlarmItemControlDirective } from '../alarm-item-control.directive';
+import { AlarmItemControlDirective } from '../directives/alarm-item-control.directive';
 import { LabelComponent } from '../label/label.component';
 import { RepeatDaysComponent } from '../repeat-days/repeat-days.component';
 
