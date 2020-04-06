@@ -68,6 +68,17 @@ ipcMain.on('edit-alarm-prop', (e, data) => {
       .send('edit-alarm-prop-success', {message: 'Success!'});
 });
 
+ipcMain.on('add-repeat-day', (e, data) => {
+  const alarms = alarmStore.get('alarms');
+  alarms[data.i].repeat.push(data.day);
+  alarmStore.set(`alarms`, alarms);
+
+  e.sender
+      .send(
+          'repeat-day-response',
+          {message: 'Success!', op: 'add'}
+      );
+});
 const setupAlarmListeners = () => {
   console.log('[Alarm] listener started');
 };
