@@ -11,15 +11,10 @@
 
 .__app-alarm--item__container {
   min-height: fit-content;
-  max-height: 200px;
 }
 
 .__app-alarm--item__container--background {
   background-color: #f7f7f7;
-}
-
-.__app-alarm--item__container:last-child {
-  margin-bottom: 5em;
 }
 
 .__app-alarm--value__toggle--button__container {
@@ -67,4 +62,11 @@ i {
   left: 25%;
   right: 25%;
   bottom: 25%;
+}
+
+/* breakpoint  */
+@media (max-width: 768px) {
+  .__app-alarm--item__container:last-child {
+    margin-bottom: 5em;
+  }
 }
