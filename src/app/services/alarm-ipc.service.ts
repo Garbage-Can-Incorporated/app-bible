@@ -11,11 +11,35 @@ import { IAlarmDetail } from '../interfaces/i-alarm-detail';
 export class AlarmIpcService {
   private allAlarmsSubject: Subject<Array<IAlarmDetail>> = new Subject();
   private addAlarmSubject: Subject<Array<IAlarmDetail>> = new Subject();
-  private editAlarmSubject: Subject<{message: string}> = new Subject();
+  private editAlarmSubject: Subject<{ message: string }> = new Subject();
+  private repeatDayRespSubject: Subject<{ message: string }> = new Subject();
 
   constructor(
     private _electron?: ElectronService,
   ) { }
+
+  repeatDayChanged(): void {
+    this._electron.ipcRenderer
+      .on('repeat-day-response', (e, data) => {
+        this.repeatDayRespSubject.next(data);
+      });
+  }
+
+  public removeRepeatDay(data: { i: number, day: number }): void {
+    this._electron.ipcRenderer
+      .send(
+        'remove-repeat-day',
+        data,
+      );
+  }
+
+  public addRepeatDay(data: { i: number, day: number }): void  {
+    this._electron.ipcRenderer
+      .send(
+        'add-repeat-day',
+        data,
+      );
+  }
 
   public editAlarmProp(data: {i: number, [key: string]: any}): void {
     this._electron.ipcRenderer
@@ -57,7 +81,8 @@ export class AlarmIpcService {
     return {
       addAlarmSubject: this.addAlarmSubject,
       allAlarmsSubject: this.allAlarmsSubject,
-      editAlarmSubject: this.editAlarmSubject
+      editAlarmSubject: this.editAlarmSubject,
+      repeatDayRespSubject: this.repeatDayRespSubject
     };
   }
 }
