@@ -32,6 +32,18 @@ export class AlarmComponent implements OnInit {
     this.setupListeners();
   }
 
+  public repeatDaySelected(i: number, data: {status: boolean, day: number}): void {
+    if (data.status) {
+      // add
+      this._alarmIpc
+        .addRepeatDay({ i, day: data.day });
+    } else {
+      // remove
+      this._alarmIpc
+        .removeRepeatDay({ i, day: data.day });
+    }
+  }
+
   public repeatChange(data: any, i: number): void {
     this.alarms[ i ].repeat = data.checked;
 
