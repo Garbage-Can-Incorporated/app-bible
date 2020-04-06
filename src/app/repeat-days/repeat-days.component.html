@@ -2,6 +2,9 @@
   <div *ngFor="let day of days; index as i" 
     class="d-flex __app-repeat__day-item my-auto mx-auto" 
     (click)="chooseDay(i, $event)"
+    [ngClass]="{
+      '__app-repeat__day-item--selected': repeatDays.includes(i)
+    }"
   >
     {{ day }}
   </div>

@@ -9,6 +9,7 @@ export class RepeatDaysComponent implements OnInit {
   @Output() public selectedDay: EventEmitter<{ status: boolean, day: number }> = new EventEmitter();
 
   public days: Array<string> = [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ];
+  @Input() public repeatDays: Array<number> = [];
 
   constructor() { }
 

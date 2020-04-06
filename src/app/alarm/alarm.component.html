@@ -22,7 +22,9 @@
         <div class="d-flex w-100 my-2 mb-3 __app-alarm--controls" (click)="$event.stopImmediatePropagation()">
           <mat-checkbox #repeat class="mt-auto" [color]="'primary'" [checked]="alarm.repeat" (change)="repeatChange(repeat, i)">Repeat</mat-checkbox>
 
-          <app-repeat-days *ngIf="repeat.checked" class="d-flex w-100 mt-2 mb-3" (selectedDay)="repeatDaySelected(i, $event)"></app-repeat-days>
+          <app-repeat-days *ngIf="repeat.checked" class="d-flex w-100 mt-2 mb-3" 
+            (selectedDay)="repeatDaySelected(i, $event)"
+            [repeatDays]="alarm.days"></app-repeat-days>
 
           <div class="d-flex w-100">
             <i class="fa fa-tag my-auto __app-alarm--tag__icon"></i>
