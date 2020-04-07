@@ -1,6 +1,7 @@
 .__app-alarm-add-btn {
   position: fixed;
   right: 15%;
+  z-index: 1000;
 }
 
 .__app-alarm--item,
