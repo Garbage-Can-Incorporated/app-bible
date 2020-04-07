@@ -44,7 +44,7 @@
       </div>
 
       <div class="d-none w-100 mb-3 __app-alarm--alternate__controls" #altDays>
-        <span class="my-auto">Repeated Days</span>
+        <span class="my-auto">{{ alarm.days | repeatDays:alarm.time }}</span>
         <i class="fa fa-chevron-down my-auto ml-auto mr-3"></i>
       </div>
       <mat-divider class="d-none mr-3"></mat-divider>
