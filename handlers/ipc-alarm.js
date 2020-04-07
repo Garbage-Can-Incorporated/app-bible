@@ -62,6 +62,17 @@ ipcMain.on('edit-alarm-prop', (e, data) => {
 
   const alarms = alarmStore.get('alarms');
   alarms[data.i][prop] = data[prop];
+
+  if (prop === 'repeat') {
+    if (data.repeat === false) {
+      alarms[data.i]._days = alarms[data.i].days;
+      alarms[data.i].days = [];
+    } else {
+      alarms[data.i].days = alarms[data.i]._days || [];
+      alarms[data.i]._days = [];
+    }
+  }
+
   alarmStore.set(`alarms`, alarms);
 
   e.sender
