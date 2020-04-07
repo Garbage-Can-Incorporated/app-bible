@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DialogService } from '../services/dialog.service';
 import { AlarmIpcService } from '../services/alarm-ipc.service';
+import { SnackbarService } from '../services/snackbar.service';
 
 import { TimeComponent } from '../time/time.component';
 import { LabelComponent } from '../label/label.component';
@@ -21,7 +22,8 @@ export class AlarmComponent implements OnInit {
 
   constructor(
     private _dialog: DialogService,
-    private _alarmIpc: AlarmIpcService
+    private _alarmIpc: AlarmIpcService,
+    private _snackbar: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -30,6 +32,12 @@ export class AlarmComponent implements OnInit {
     this._alarmIpc.editComplete();
 
     this.setupListeners();
+  }
+
+  public deleteAlarm(i: number, e: Event): void {
+    e.stopImmediatePropagation();
+    this._alarmIpc
+        .deleteAlarm({ i });
   }
 
   public repeatDaySelected(i: number, data: {status: boolean, day: number}): void {
@@ -162,6 +170,24 @@ export class AlarmComponent implements OnInit {
   }
 
   private setupListeners(): void {
+    this._alarmIpc.getSubjects()
+      .deleteAlarmSubject.subscribe(
+        (data) => {
+          // show snackbar
+          this._alarmIpc.getAlarms();
+          this._snackbar.showSnackbar('Alarm deleted!');
+        },
+        (error) => console.log({ error })
+    );
+
+    this._alarmIpc.getSubjects()
+      .repeatDayRespSubject.subscribe(
+        (data) => {
+          this._alarmIpc.getAlarms();
+        },
+        (error) => console.log({ error })
+      );
+
     this._alarmIpc.getSubjects()
       .editAlarmSubject.subscribe(
         (data) => {

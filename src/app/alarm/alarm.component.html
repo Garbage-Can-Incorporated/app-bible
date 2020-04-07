@@ -37,8 +37,8 @@
 
         <mat-divider class="d-flex mr-3"></mat-divider>
         <div class="d-flex w-100 my-3 __app-alarm--delete__controls">
-          <i class="far fa-trash-alt my-auto"></i>
-          <span class="ml-2">Delete</span>
+          <i class="far fa-trash-alt my-auto" (click)="deleteAlarm(i, $event)"></i>
+          <span class="ml-2" (click)="deleteAlarm(i, $event)">Delete</span>
           <i class="fa fa-chevron-up ml-auto mr-3 my-auto" #icon></i>
         </div>
       </div>

@@ -13,12 +13,23 @@ export class AlarmIpcService {
   private addAlarmSubject: Subject<Array<IAlarmDetail>> = new Subject();
   private editAlarmSubject: Subject<{ message: string }> = new Subject();
   private repeatDayRespSubject: Subject<{ message: string }> = new Subject();
+  private deleteAlarmSubject: Subject<{ message: string }> = new Subject();
 
   constructor(
     private _electron?: ElectronService,
   ) { }
 
-  repeatDayChanged(): void {
+  public deleteAlarm(data: {i: number}): void {
+    this._electron.ipcRenderer
+      .send('delete-alarm', data);
+
+    this._electron.ipcRenderer
+      .on('delete-alarm-success', (_, _data) => {
+        this.deleteAlarmSubject.next(_data);
+      });
+  }
+
+  public repeatDayChanged(): void {
     this._electron.ipcRenderer
       .on('repeat-day-response', (e, data) => {
         this.repeatDayRespSubject.next(data);
@@ -82,7 +93,8 @@ export class AlarmIpcService {
       addAlarmSubject: this.addAlarmSubject,
       allAlarmsSubject: this.allAlarmsSubject,
       editAlarmSubject: this.editAlarmSubject,
-      repeatDayRespSubject: this.repeatDayRespSubject
+      repeatDayRespSubject: this.repeatDayRespSubject,
+      deleteAlarmSubject: this.deleteAlarmSubject
     };
   }
 }

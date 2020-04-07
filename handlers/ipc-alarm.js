@@ -105,6 +105,20 @@ ipcMain.on('remove-repeat-day', (e, data) => {
       );
 });
 
+ipcMain.on('delete-alarm', (e, data) => {
+  let alarms = alarmStore.get('alarms');
+
+  alarms = alarms.filter((_, i) => i !== data.i);
+
+  alarmStore.set('alarms', alarms);
+
+  e.sender
+      .send(
+          'delete-alarm-success',
+          {message: 'Success!'}
+      );
+});
+
 const setupAlarmListeners = () => {
   console.log('[Alarm] listener started');
 };
