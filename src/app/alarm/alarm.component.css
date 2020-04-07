@@ -36,6 +36,8 @@
 
 .__app-alarm--value, /* alarm time */
 .__app-alarm--controls div span, /* label */
+.__app-alarm--delete__controls span, /* delete icon and text */
+.__app-alarm--delete__controls i, /* delete icon and text */
 .__app-alarm--alternate__controls span, /* repeated days */
 .__app-alarm--alternate__controls i /* icon */ {
   cursor: pointer;
