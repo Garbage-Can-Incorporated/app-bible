@@ -34,6 +34,9 @@ alarmStore.onDidChange('alarms', (data, _) => {
 
 ipcMain.on('add-alarm', (e, data) => {
   addAlarmEvent = e;
+  data.rang = false;
+  data.snooze = false;
+  data.snoozeTime = 10000;
 
   data.id = raidmaker.generate(8, {mode: 'apnr'});
   let alarms = alarmStore.get('alarms');
