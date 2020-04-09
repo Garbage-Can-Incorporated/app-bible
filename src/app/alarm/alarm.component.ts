@@ -55,8 +55,17 @@ export class AlarmComponent implements OnInit {
   public repeatChange(data: any, i: number): void {
     this.alarms[ i ].repeat = data.checked;
 
+    if (data.checked) {
+      this.alarms[ i ].days = this.alarms[ i ]._days;
+      this.alarms[ i ]._days = [];
+    } else if (data.checked === false) {
+      this.alarms[ i ]._days = this.alarms[ i ].days;
+      this.alarms[ i ].days = [];
+    }
+
     this._alarmIpc
       .editAlarmProp({ i, repeat: this.alarms[ i ].repeat });
+    this.alarms = [ ...this.alarms ];
   }
 
   public statusChange(data: any, i: number): void {
