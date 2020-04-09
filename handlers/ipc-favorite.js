@@ -102,7 +102,7 @@ ipcMain.on('is-fav-check', (e, data) => {
         WHERE book = $book AND chapter = $chapter AND verse = $verse
       `,
       {
-        $book: data.book,
+        $book: data.book.toLowerCase(),
         $chapter: data.chapter,
         $verse: data.verse,
       },
