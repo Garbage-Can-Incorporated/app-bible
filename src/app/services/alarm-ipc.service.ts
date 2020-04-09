@@ -19,14 +19,16 @@ export class AlarmIpcService {
     private _electron?: ElectronService,
   ) { }
 
-  public deleteAlarm(data: {i: number}): void {
-    this._electron.ipcRenderer
-      .send('delete-alarm', data);
-
+  public listenDltResp(): void {
     this._electron.ipcRenderer
       .on('delete-alarm-success', (_, _data) => {
         this.deleteAlarmSubject.next(_data);
       });
+  }
+
+  public deleteAlarm(data: {i: number}): void {
+    this._electron.ipcRenderer
+      .send('delete-alarm', data);
   }
 
   public repeatDayChanged(): void {

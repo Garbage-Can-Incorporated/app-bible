@@ -35,9 +35,23 @@ export class AlarmComponent implements OnInit {
   }
 
   public deleteAlarm(i: number, e: Event): void {
-    e.stopImmediatePropagation();
+    e.stopPropagation();
+
     this._alarmIpc
-        .deleteAlarm({ i });
+      .deleteAlarm({ i });
+
+    this.alarms = [
+      ...(
+      this.alarms
+        .filter((_, _i) => {
+          if (i !== _i) {
+            return _;
+          }
+        }).filter((cur) => cur !== undefined)
+      )
+    ];
+
+    console.log({ alarmsLeft: this.alarms });
   }
 
   public repeatDaySelected(i: number, data: {status: boolean, day: number}): void {
@@ -193,11 +207,12 @@ export class AlarmComponent implements OnInit {
   }
 
   private setupListeners(): void {
+    this._alarmIpc.listenDltResp();
     this._alarmIpc.getSubjects()
       .deleteAlarmSubject.subscribe(
         (data) => {
           // show snackbar
-          this._alarmIpc.getAlarms();
+          // this._alarmIpc.getAlarms();
           this._snackbar.showSnackbar('Alarm deleted!');
         },
         (error) => console.log({ error })
