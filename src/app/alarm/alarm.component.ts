@@ -42,14 +42,28 @@ export class AlarmComponent implements OnInit {
 
   public repeatDaySelected(i: number, data: {status: boolean, day: number}): void {
     if (data.status) {
-      // add
+      // push unto days array - for change sake
+      this.alarms[ i ].days.push(data.day);
+      this.alarms[ i ].days = [ ...this.alarms[ i ].days ];
+
       this._alarmIpc
         .addRepeatDay({ i, day: data.day });
     } else {
       // remove
+      this.alarms[ i ].days = [
+        ...(
+          this.alarms[ i ].days
+            .filter((cur, _i) => {
+              if (cur !== data.day) { return cur; }
+            }).filter((cur) => cur !== undefined)
+        )
+      ];
+
       this._alarmIpc
         .removeRepeatDay({ i, day: data.day });
     }
+
+    this.alarms = [ ...this.alarms ];
   }
 
   public repeatChange(data: any, i: number): void {
