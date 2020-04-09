@@ -1,10 +1,10 @@
 const {app} = require('electron');
 const AutoLaunch = require('auto-launch');
 
-const init = require('./alarm-handler');
+const init = require('./handlers/alarm-handler');
 
 const alarmAutoLaunch = new AutoLaunch({
-  name: 'EvryWord-alarm',
+  name: 'EvryWord',
   isHidden: true,
 });
 

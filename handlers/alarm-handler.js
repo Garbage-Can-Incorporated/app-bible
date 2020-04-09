@@ -115,7 +115,9 @@ const alarmRinger = () => {
   }, 1000);
 };
 
-alarmRinger();
+if (filteredAlarms) {
+  alarmRinger();
+}
 
 // initialization
 init = () => {
