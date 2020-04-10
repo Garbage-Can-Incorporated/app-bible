@@ -23,7 +23,7 @@ export class SearchScripturesService {
     this._electron.ipcRenderer
       .on(
         'search-result',
-        (_, data: { result: any, status: boolean }) => {
+        (_, data: ISearchResults) => {
         this.searchSubject.next(data);
       });
   }
