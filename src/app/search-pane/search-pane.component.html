@@ -8,21 +8,23 @@
   <div class="d-flex w-100 __app--scripture__search--pane__body">
     <mat-progress-bar *ngIf="showSpinnerNMock" mode="query"></mat-progress-bar>
 
-    <span class="d-flex ml-auto mr-4 mt-5 mb-2 font-weight-bold __app--scripture__header">
-      <i class="fa fa-search-location mr-2 my-auto"></i> Find in Bible </span>
+    <span class="d-flex ml-auto mr-4 mt-5 font-weight-bold __app--scripture__header">
+      <i class="fa fa-search-location mr-2 my-auto"></i>
+      Find in Bible
+    </span>
 
-    <div class="px-3 mb-2 d-flex w-100 __app--scripture__search--console">
-      <div class="w-100 d-flex __app--scripture__search--console__container">
-        <div class="d-flex w-100 mdl-textfield mt-2 py-0 mdl-js-textfield mdl-textfield--floating-label">
+    <div class="mb-2 d-flex w-100 __app--scripture__search--console">
+      <div class="w-100 d-flex my-auto __app--scripture__search--console__container">
+        <div class="d-flex w-100 py-0 px-2">
           <input
-          #queryInput
-          class="mdl-textfield__input" 
-          type="input" id="search" placeholder="search"
-          [(ngModel)]="query"
+            #queryInput
+            class="mdl-textfield__input w-100" 
+            type="input" id="search" placeholder="search"
+            [(ngModel)]="query"
           >
         </div>
 
-        <button mat-raised-button class="ml-2 my-auto px-0" (click)="grabInput(queryInput)"> <i class="fa fa-search"></i> </button>
+        <button mat-raised-button class="ml-auto mr-3 my-auto px-0" (click)="grabInput(queryInput)"> <i class="fa fa-search"></i> </button>
       </div>
     </div>
 
@@ -39,3 +41,5 @@
     </div>
   </div>
 </div>
+
+<!-- result === null render an icon and No verse found -->
