@@ -5,8 +5,8 @@ export interface ISearchResults {
     chapterNo: string;
     version: string;
   };
-  matches: Array<{
-    value: string;
-    arrayIndex: number;
+  output: Array<{
+    value?: string;
+    arrayIndex?: number;
   }>;
 }
