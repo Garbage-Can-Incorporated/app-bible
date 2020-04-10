@@ -9,7 +9,7 @@ ipcMain.on('search', (e, data) => {
 
   // receive response
   sp.on('message', (data) => {
-    // asyc results from fuse-subject, would send a few times
+    // async results from fuse-subject, would send a few times
     // console.log({searchResult: data});
     if (data.status) {
       e.sender.send('search-result', data.result);

@@ -24,7 +24,7 @@ export class SearchScripturesService {
       .on(
         'search-result',
         (_, data: { result: any, status: boolean }) => {
-        this.searchSubject.next(data.result);
+        this.searchSubject.next(data);
       });
   }
 
