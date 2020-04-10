@@ -27,6 +27,10 @@
   overflow-x: hidden;
 }
 
+.__app--scripture__search--pane__body {
+  margin-top: 1.8rem;
+}
+
 .__app--scripture__search--console__container {
   flex-direction: row;
 }
@@ -86,7 +90,7 @@
   height: 30px;
   box-shadow: 0 0 5px 0px var(--dark-red);
   position: fixed;
-  top: 45%;
+  top: 50%;
   right: 300px;
   background-color: var(--white);
   cursor: pointer;
