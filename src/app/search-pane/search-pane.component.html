@@ -8,14 +8,14 @@
   <div class="d-flex w-100 __app--scripture__search--pane__body">
     <mat-progress-bar *ngIf="showSpinnerNMock" mode="query"></mat-progress-bar>
 
-    <span class="d-flex ml-auto mr-4 mt-5 font-weight-bold __app--scripture__header">
+    <span class="d-flex ml-auto mr-4 mt-2 font-weight-bold __app--scripture__header">
       <i class="fa fa-search-location mr-2 my-auto"></i>
       Find in Bible
     </span>
 
     <div class="mb-2 d-flex w-100 __app--scripture__search--console">
       <div class="w-100 d-flex my-auto __app--scripture__search--console__container">
-        <div class="d-flex w-100 py-0 px-2">
+        <div class="d-flex w-100 my-2 py-0 px-2">
           <input
             #queryInput
             class="mdl-textfield__input w-100" 
@@ -41,5 +41,3 @@
     </div>
   </div>
 </div>
-
-<!-- result === null render an icon and No verse found -->
