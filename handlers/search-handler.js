@@ -34,7 +34,7 @@ const getResource = (cb) => {
             return;
           }
 
-          resource = data;
+          resource = JSON.parse(data);
           cb(resource.request);
         });
   }
@@ -47,8 +47,13 @@ getResource((data) => {
     fuse.search(_data.query);
 
     fuse.subscribe(
-        (data) => {
-          process.send({result: data, status: true});
+        (result) => {
+          if (result) {
+            process.send({result, status: true});
+          } else {
+          // nothing was found
+            process.send({result: null, status: true});
+          }
         },
         (error) => {
           console.log({error});

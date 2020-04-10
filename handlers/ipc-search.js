@@ -1,7 +1,7 @@
 const {ipcMain} = require('electron');
 const childProcess = require('child_process');
 
-const sp = childProcess.fork('./search-handler.js');
+const sp = childProcess.fork('./handlers/search-handler.js');
 
 ipcMain.on('search', (e, data) => {
   // speak to forked process;
@@ -10,9 +10,9 @@ ipcMain.on('search', (e, data) => {
   // receive response
   sp.on('message', (data) => {
     // asyc results from fuse-subject, would send a few times
-    console.log({searchResult: data});
+    // console.log({searchResult: data});
     if (data.status) {
-      e.sender.send('search-result', data);
+      e.sender.send('search-result', data.result);
     }
   });
 });
