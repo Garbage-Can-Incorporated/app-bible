@@ -1,59 +1,34 @@
 import { Injectable } from '@angular/core';
 
-import Fuse from 'fuse.js';
-import { ScripturesService } from './scriptures.service';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+
+import { ElectronService } from 'ngx-electron';
+
 import { ISearchResults } from '../interfaces/i-search-results';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchScripturesService {
-  private options: any = {
-    caseSensitive: false,
-    shouldSort: true,
-    tokenize: true,
-    matchAllTokens: true,
-    findAllMatches: true,
-    includeScore: true,
-    includeMatches: true,
-    threshold: 0.0,
-    // location: 0,
-    // distance: 100,
-    maxPatternLength: 100,
-    minMatchCharLength: 5,
-    keys: ['verses']
-  };
-
-  public data: Array<any>;
-  public fuse: any;
+  private searchSubject: Subject<ISearchResults> = new Subject();
 
   constructor(
-    private _scripture: ScripturesService
-  ) {
-    this.__init__();
+    private _electron?: ElectronService
+  ) { }
+
+  public search(string: string): void {
+    this._electron.ipcRenderer
+      .send('search', {query: string});
+
+    this._electron.ipcRenderer
+      .on(
+        'search-result',
+        (_, data: { result: any, status: boolean }) => {
+        this.searchSubject.next(data.result);
+      });
   }
 
-  public __init__(): void {
-    console.log('__init__');
-
-    this._scripture
-      ._getBible.subscribe(
-        (data: any) => {
-          this.data = data.request;
-
-          this.fuse = new Fuse(this.data, this.options);
-        },
-        (error) => console.log({error})
-      );
-  }
-
-  public search(string: string): Observable<ISearchResults> {
-    // console.log(this.data);
-    return this.fuse.search(<string>string);
-  }
-
-  public changeOptions(): any {
-    return this.options;
+  public get subject(): Subject<ISearchResults> {
+    return this.searchSubject;
   }
 }
