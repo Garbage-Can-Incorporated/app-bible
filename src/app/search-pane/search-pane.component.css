@@ -18,7 +18,7 @@
 .__app-scripture-search-pane {
   position: fixed;
   height: 100%;
-  width: 300px;
+  width: 320px;
   background-color: var(--white);
   right: 0;
   top: 0;
