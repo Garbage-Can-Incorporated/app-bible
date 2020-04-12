@@ -16,16 +16,18 @@ export class SearchScripturesService {
     private _electron?: ElectronService
   ) { }
 
-  public search(string: string): void {
-    this._electron.ipcRenderer
-      .send('search', {query: string});
-
+  public listenResult(): void {
     this._electron.ipcRenderer
       .on(
         'search-result',
         (_, data: ISearchResults) => {
-        this.searchSubject.next(data);
-      });
+          this.searchSubject.next(data);
+        });
+  }
+
+  public search(string: string): void {
+    this._electron.ipcRenderer
+      .send('search', {query: string});
   }
 
   public get subject(): Subject<ISearchResults> {
