@@ -3,8 +3,11 @@ import {
   ViewChild, AfterViewInit, Renderer2,
 } from '@angular/core';
 
-import { SearchScripturesService } from '../services/search-scriptures.service';
+import { Subscription } from 'rxjs';
+
 import { ISearchResults } from '../interfaces/i-search-results';
+
+import { SearchScripturesService } from '../services/search-scriptures.service';
 
 @Component({
   selector: 'app-search-pane',
@@ -12,16 +15,17 @@ import { ISearchResults } from '../interfaces/i-search-results';
   styleUrls: ['./search-pane.component.css']
 })
 export class SearchPaneComponent implements OnInit, AfterViewInit {
-  @ViewChild('searchRes', { static: true }) srEl: ElementRef;
+  @ViewChild('searchRes', { static: false }) srEl: ElementRef;
   @Output() closePane: EventEmitter<boolean> = new EventEmitter<boolean>();
   public resultsHeaderText = <string> 'No result(s) yet';
   private totalNoOfResult = <number>0;
 
   public query: string;
-  public result = <object>{};
+  public result: any;
   private searchResultContainer: any;
   public showSpinnerNMock = <boolean> false;
   public mockLength: Array<number> = Array.from({ length: 10 }, (_, i) => i * 1);
+  private subscription: Subscription;
 
   constructor(
     private el: ElementRef,
@@ -33,6 +37,8 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
       .nativeElement
       .children[ 0 ]
       .addEventListener('click', (e: Event) => this.collapseButton());
+
+    this._search.listenResult();
   }
 
   ngAfterViewInit(): void {
@@ -44,26 +50,38 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
   }
 
   public grabInput(el: HTMLInputElement): void {
-    el.value = '';
+    if (el.value === '') { return; }
+
+    this.resultsHeaderText = 'Searching for result(s)';
     this.totalNoOfResult = 0;
     this.clearPreviousResult();
     this.showSpinnerNMock = true;
 
-    this._search
-      .search(this.query)
+    if (this.subscription !== undefined) {
+      this.subscription.unsubscribe();
+    }
+
+    this.subscription = this._search.subject
       .subscribe(
-      (data: ISearchResults) => {
-        console.log({ data });
-        this.result = data;
+        (data: ISearchResults) => {
+          if (data !== null) {
+            this.result = data;
 
-        if (this.searchResultContainer) {
-          this.appendResult(data);
-        }
+            if (this.searchResultContainer) {
+              this.appendResult(data);
+            }
 
-        if (data.matches.length > 0) {
-          this.totalNoOfResult += 1;
-        }
-      },
+            if (data.output.length > 0) {
+              this.totalNoOfResult += 1;
+            }
+
+            this.resultsHeaderText = `${ this.totalNoOfResult } result(s) found`;
+          } else {
+            this.resultsHeaderText = 'No result(s) found!';
+          }
+
+          this.showSpinnerNMock = false;
+        },
       (error: any) => {
         console.log({ error });
         this.showSpinnerNMock = false;
@@ -73,6 +91,9 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
         this.showSpinnerNMock = false;
       }
     );
+
+    this._search
+      .search(this.query);
   }
 
   private clearPreviousResult(): void {
@@ -86,7 +107,7 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
   }
 
   private appendResult(data: ISearchResults): void {
-    data.matches.forEach((cur) => {
+    data.output.forEach((cur) => {
       const parentDiv = this.renderer.createElement('div');
       parentDiv.classList.add('d-flex', 'w-100', 'mb-2', '__app--scripture__result--item', 'px-3');
 
