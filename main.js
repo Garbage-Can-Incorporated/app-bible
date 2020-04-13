@@ -19,7 +19,7 @@ const createWindow = () => {
 
   if (process.platform === 'linux') {
     iconPath = path
-        .join(__dirname, '/src/assets/imgs/icon512x512.png');
+        .join(__dirname, '/src/assets/imgs/icon192x192.png');
   }
 
   if (process.platform === 'darwin') {
