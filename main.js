@@ -8,6 +8,8 @@ const ipcSearch = require('./handlers/ipc-search');
 
 let win;
 
+app.commandLine.appendSwitch('enable-speech-dispatcher');
+
 const createWindow = () => {
   const {screen} = require('electron');
   let iconPath;
