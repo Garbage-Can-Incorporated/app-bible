@@ -11,7 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:app": "ng build --base-href ./ --prod --optimization --build-optimizer --source-map --watch",
-    "start:app": "electron . --enable-speech-dispatcher",
+    "start:app": "electron .",
     "start:als": "electron alarm-standby-main.js"
   },
   "private": true,
