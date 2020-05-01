@@ -9,6 +9,8 @@ import { ResourceHandlerService } from './resource-handler.service';
   providedIn: 'root'
 })
 export class ScripturesService {
+  private resource: any;
+
   constructor(
     private _resources: ResourceHandlerService
   ) { }
@@ -89,13 +91,19 @@ export class ScripturesService {
   }
 
   private getBible(cb: any): void {
+    if (this.resource !== undefined) {
+      cb(this.resource);
+      return;
+    }
+
     this._resources.fetchResource()
       .subscribe(
         (data) => {
+          this.resource = data.request;
           cb(data.request);
         },
         (error) => {
-          console.log({error});
+          console.error({error});
           cb(error);
         }
       );
