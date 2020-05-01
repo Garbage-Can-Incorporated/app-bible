@@ -5,8 +5,16 @@ export interface ISearchResults {
     chapterNo: string;
     version: string;
   };
-  output: Array<{
+  matches?: Array<{
     value?: string;
     arrayIndex?: number;
+    key?: string;
+    indices?: Array<any>;
+  }>;
+  output?: Array<{
+    value?: string;
+    arrayIndex?: number;
+    key?: string;
+    indices?: Array<any>;
   }>;
 }
