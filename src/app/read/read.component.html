@@ -4,7 +4,7 @@
 
 <div class="d-flex w-100 mt-auto __app-scripture-toolbar">
   <div class="d-flex w-100 mx-auto my-auto __app--scripture-console">
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="ml-3 my-auto">
+    <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="ml-3 my-auto">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
@@ -16,7 +16,7 @@
         <i class="far fa-bell mr-2 my-auto d-flex"></i>
         <span>alarm</span>
       </button>
-    </mat-menu>
+    </mat-menu> -->
 
 
     <mat-form-field class="mr-2 ml-auto" appearance="outline">
@@ -24,7 +24,7 @@
       <input matInput
         (mouseout)="searchScripture()"
         [(ngModel)]="scripture.book" 
-        placeholder="book" 
+        placeholder="book"
         [type]="'text'">
     </mat-form-field>
 
