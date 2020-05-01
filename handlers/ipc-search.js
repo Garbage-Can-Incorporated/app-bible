@@ -9,6 +9,7 @@ sp.send(Object.assign({}, {purpose: 'init'}));
 
 ipcMain.on('search', (e, data) => {
   let times = 0;
+  let searchResultIndices = [];
   // speak to forked process;
   sp.send(Object.assign({}, {purpose: 'search'}, data));
 
@@ -17,10 +18,27 @@ ipcMain.on('search', (e, data) => {
     // async results from fuse-subject, would send a few times
 
     if (data.status) { // no error
+      console.log('beginning', {searchResultIndices});
+
+      if (
+        searchResultIndices
+            // eslint-disable-next-line max-len
+            .includes(`${data.result.item.bookTitle}-${data.result.item.chapterNo}-${data.result.matches[0].arrayIndex}`) === true
+      ) {
+        console.log('true', {searchResultIndices, sp});
+        return;
+      }
+
+      searchResultIndices.push(
+          // eslint-disable-next-line max-len
+          `${data.result.item.bookTitle}-${data.result.item.chapterNo}-${data.result.matches[0].arrayIndex}`
+      );
+
       e.sender.send('search-result', data.result);
+      console.log('false', {searchResultIndices});
 
       times++;
-      console.log({times, result: data.result.item.chapterNo});
+      console.log({times, result: data.result});
     }
   });
 
@@ -35,6 +53,7 @@ ipcMain.on('search', (e, data) => {
         }
       }); */
 
+  searchResultIndices = [];
   times = 0;
 });
 
