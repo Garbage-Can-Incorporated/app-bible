@@ -71,7 +71,7 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
               this.appendResult(data);
             }
 
-            if (data.output.length > 0) {
+            if (data.matches.length > 0) {
               this.totalNoOfResult += 1;
             }
 
@@ -107,7 +107,7 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
   }
 
   private appendResult(data: ISearchResults): void {
-    data.output.forEach((cur) => {
+    data.matches.forEach((cur) => {
       const parentDiv = this.renderer.createElement('div');
       parentDiv.classList.add('d-flex', 'w-100', 'mb-2', '__app--scripture__result--item', 'px-3');
 

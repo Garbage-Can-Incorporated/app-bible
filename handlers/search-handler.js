@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const {observeOn, distinctUntilChanged} = require('rxjs/operators');
 const {asyncScheduler} = require('rxjs');
+const {observeOn, distinctUntilChanged, share} = require('rxjs/operators');
 
 const Fuse = require('fuse.js');
 
@@ -42,7 +42,6 @@ const getResource = (cb) => {
   }
 };
 
-
 const setup = Object.freeze({
   init: () => {
     getResource((data) => {
@@ -54,11 +53,11 @@ const setup = Object.freeze({
       subscription.unsubscribe();
     }
 
-    subscription = fuse
-        .subject
+    subscription = fuse.search(_data.query)
         .pipe(
             observeOn(asyncScheduler),
-            distinctUntilChanged()
+            distinctUntilChanged(),
+            share()
         )
         .subscribe(
             (result) => {
@@ -78,8 +77,6 @@ const setup = Object.freeze({
               // fuse.subject.unsubscribe();
             }
         );
-
-    fuse.search(_data.query);
   },
   cbSearch: (_data, cb) => {
     /* if (subscription !== undefined) {
