@@ -21,67 +21,35 @@
 
     <mat-form-field class="mr-2 ml-auto" appearance="outline">
       <mat-label>book</mat-label>
-      <input 
-      matInput 
-      (mouseout)="searchScripture()"
-      [(ngModel)]="scripture.book" 
-      placeholder="book" 
-      [type]="'text'" 
-      [typeahead]="bookList"
-      (typeaheadOnSelect)="typeaheadOnSelect($event, 'b')"
-      [typeaheadScrollable]="true"
-      [typeaheadOptionsInScrollableView]="5"
-      [typeaheadOptionsLimit]="bookList.length"
-      [typeaheadMinLength]="0"
-      [isAnimated]="true" 
-      [adaptivePosition]="true" 
-      [typeaheadSingleWords]="true">
+      <input matInput
+        (mouseout)="searchScripture()"
+        [(ngModel)]="scripture.book" 
+        placeholder="book" 
+        [type]="'text'">
     </mat-form-field>
 
     <mat-form-field class="mr-2" appearance="outline">
       <mat-label>chapter</mat-label>
-      <input
-        #chapterEl
-        matInput
-        (mouseout)="searchScripture()"
-        (keyup)="validateChapter(chapterEl, $event)"
-        [(ngModel)]="scripture.chapter"
-        placeholder="chapter"
-        [type]="'number'"
-        [min]="1"
-        [max]="maxChap"
-        [typeahead]="chapterList"
-        (typeaheadOnSelect)="typeaheadOnSelect($event, 'c')"
-        [typeaheadLatinize]="false"
-        [typeaheadScrollable]="true"
-        [typeaheadOptionsLimit]="chapterList.length"
-        [typeaheadMinLength]="0"
-        [isAnimated]="true"
-        [adaptivePosition]="true"
-        [typeaheadSingleWords]="true">
+      <input #chapterEl matInput
+          (mouseout)="searchScripture()"
+          (keyup)="validateChapter(chapterEl, $event)"
+          [(ngModel)]="scripture.chapter"
+          placeholder="chapter"
+          [type]="'number'"
+          [min]="1"
+          [max]="maxChap">
     </mat-form-field>
 
     <mat-form-field class="mr-auto" appearance="outline">
       <mat-label>verse</mat-label>
-      <input 
-      matInput
-      #verseEl
-      (keyup)="searchScripture()"
-      (keyup)="validateVerse(verseEl, $event)"
-      [(ngModel)]="scripture.verse"
-      placeholder="verse"
-      [type]="'number'"
-      [min]="1"
-      [max]="maxVerse"
-      [typeahead]="verseList"
-      (typeaheadOnSelect)="typeaheadOnSelect($event, 'v')"
-      [typeaheadLatinize]="false"
-      [typeaheadScrollable]="true"
-      [typeaheadOptionsLimit]="verseList.length"
-      [typeaheadMinLength]="0"
-      [isAnimated]="true"
-      [adaptivePosition]="true"
-      [typeaheadSingleWords]="true">
+      <input  matInput #verseEl
+        (keyup)="searchScripture()"
+        (keyup)="validateVerse(verseEl, $event)"
+        [(ngModel)]="scripture.verse"
+        placeholder="verse"
+        [type]="'number'"
+        [min]="1"
+        [max]="maxVerse">
     </mat-form-field>
 
     <i appActionScroll [reveal]="scrolled" [_class]="'invisible'"  class="fa fa-search mx-4 my-auto fa-1x invisible __app--search___icon--pseudo" (click)="showSearchPane()"></i>

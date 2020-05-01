@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
 
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-
 import { ScripturesService } from '../services/scriptures.service';
 import { ResourceHandlerService } from '../services/resource-handler.service';
 import { PlayerService } from '../services/player.service';
@@ -39,8 +37,7 @@ import { ReadRoutingModule } from './read-routing.module';
   imports: [
     CommonModule,
     ReadRoutingModule,
-    CoreModule,
-    TypeaheadModule.forRoot(),
+    CoreModule
   ],
   exports: [ CoreModule, ReadRoutingModule],
   providers: [
