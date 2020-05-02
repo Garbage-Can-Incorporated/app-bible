@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, AfterContentChecked, OnDestroy } from '@angular/core';
 
+import { IScriptures } from '../interfaces/i-scriptures';
+
 @Component({
   selector: 'app-scripture-container',
   templateUrl: './scripture-container.component.html',
@@ -8,7 +10,8 @@ import { Component, OnInit, Input, AfterContentChecked, OnDestroy } from '@angul
 export class ScriptureContainerComponent implements OnInit, AfterContentChecked, OnDestroy {
   @Input() passages: Array<string>;
   @Input() focusElementNo = <number>1;
-  @Input() book: string;
+  @Input() resource: IScriptures;
+  public book: string;
 
   private st: any;
 
@@ -17,6 +20,7 @@ export class ScriptureContainerComponent implements OnInit, AfterContentChecked,
   ngOnInit() { }
 
   ngAfterContentChecked(): void {
+    this.book = this.resource.book.toUpperCase();
     this.st = setTimeout(() => { }, 1500);
   }
 

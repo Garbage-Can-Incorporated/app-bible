@@ -4,5 +4,6 @@
     <span class="d-flex"> {{ passage }} </span>
   </div>
 
-  <app-reaction-console [passage]="passage" #reactionConsole class="d-flex"></app-reaction-console>
+  <app-reaction-console #reactionConsole class="d-flex"
+  [passage]="passage" [resource]="resource" [favIconActive]="favIconActive"></app-reaction-console>
 </div>

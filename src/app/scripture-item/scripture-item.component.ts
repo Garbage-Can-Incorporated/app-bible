@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
+import { IScriptures } from '../interfaces/i-scriptures';
+
 @Component({
   selector: 'app-scripture-item',
   templateUrl: './scripture-item.component.html',
@@ -9,21 +11,14 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
   @Input() public passage: string;
   @Input() public i: number;
   @Input() focusElementNo: number;
+  @Input() resource: IScriptures;
+  public favIconActive: boolean;
 
   constructor() { }
 
   ngOnInit() { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log({ focus: this.focusElementNo });
-    /* if (
-      this.itemFocus !== NaN &&
-      this.itemFocus !== undefined &&
-      this.itemFocus != null
-    ) {
-      this.focusElementNo = this.itemFocus;
-    } */
-  }
+  ngOnChanges(changes: SimpleChanges): void { }
 
   public showReactionConsole(el: any): void {
     el.toggleIconsVisibility();
