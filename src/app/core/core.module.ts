@@ -9,7 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -24,9 +26,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     HttpClientModule,
     MatProgressBarModule,
     MatMenuModule,
-    MatDatepickerModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatAutocompleteModule
   ],
   exports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -36,7 +41,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     HttpClientModule,
     MatProgressBarModule,
     MatMenuModule,
-    MatDatepickerModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatAutocompleteModule
   ]
 })
 export class CoreModule { }
