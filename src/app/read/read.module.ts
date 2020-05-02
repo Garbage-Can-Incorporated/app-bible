@@ -7,21 +7,23 @@ import { ScripturesService } from '../services/scriptures.service';
 import { ResourceHandlerService } from '../services/resource-handler.service';
 import { PlayerService } from '../services/player.service';
 import { SpeechSynthesisService } from '../services/speech-synthesis.service';
+import { FavoritesService } from '../services/favorites.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 import { AppComponent } from '../app.component';
 import { ReadComponent } from './read.component';
 import { SearchPaneComponent } from '../search-pane/search-pane.component';
+import { ScriptureItemComponent } from '../scripture-item/scripture-item.component';
+import { ReactionConsoleComponent } from '../reaction-console/reaction-console.component';
+import { ScriptureContainerComponent } from '../scripture-container/scripture-container.component';
+import { ScripturePlayerComponent } from '../scripture-player/scripture-player.component';
+
 import { ScrollViewDirective } from '../directives/scroll-view.directive';
 import { ActionScrollDirective } from '../directives/action-scroll.directive';
 import { ScriptureNavigatorDirective } from '../directives/scripture-navigator.directive';
 import { ToggleReactionsVisibilityDirective } from '../directives/toggle-reactions-visibility.directive';
 import { TwitterShareDirective } from '../directives/twitter-share.directive';
 import { FavoriteDirective } from '../directives/favorite.directive';
-
-import { ScriptureItemComponent } from '../scripture-item/scripture-item.component';
-import { ReactionConsoleComponent } from '../reaction-console/reaction-console.component';
-import { ScriptureContainerComponent } from '../scripture-container/scripture-container.component';
-import { ScripturePlayerComponent } from '../scripture-player/scripture-player.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { ScripturePlayerComponent } from '../scripture-player/scripture-player.c
     ScripturesService,
     ResourceHandlerService,
     PlayerService,
-    SpeechSynthesisService
+    SpeechSynthesisService,
+    FavoritesService,
+    LocalStorageService
   ]
 })
 export class ReadModule { }
