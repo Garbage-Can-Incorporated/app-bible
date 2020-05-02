@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
+import { ReadRoutingModule } from './read-routing.module';
 
 import { ScripturesService } from '../services/scriptures.service';
 import { ResourceHandlerService } from '../services/resource-handler.service';
@@ -13,12 +14,14 @@ import { SearchPaneComponent } from '../search-pane/search-pane.component';
 import { ScrollViewDirective } from '../directives/scroll-view.directive';
 import { ActionScrollDirective } from '../directives/action-scroll.directive';
 import { ScriptureNavigatorDirective } from '../directives/scripture-navigator.directive';
+import { ToggleReactionsVisibilityDirective } from '../directives/toggle-reactions-visibility.directive';
+import { TwitterShareDirective } from '../directives/twitter-share.directive';
+import { FavoriteDirective } from '../directives/favorite.directive';
+
 import { ScriptureItemComponent } from '../scripture-item/scripture-item.component';
 import { ReactionConsoleComponent } from '../reaction-console/reaction-console.component';
-import { ToggleReactionsVisibilityDirective } from '../directives/toggle-reactions-visibility.directive';
 import { ScriptureContainerComponent } from '../scripture-container/scripture-container.component';
 import { ScripturePlayerComponent } from '../scripture-player/scripture-player.component';
-import { ReadRoutingModule } from './read-routing.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,9 @@ import { ReadRoutingModule } from './read-routing.module';
     ReactionConsoleComponent,
     ToggleReactionsVisibilityDirective,
     ScriptureContainerComponent,
-    ScripturePlayerComponent
+    ScripturePlayerComponent,
+    TwitterShareDirective,
+    FavoriteDirective
   ],
   imports: [
     CommonModule,
