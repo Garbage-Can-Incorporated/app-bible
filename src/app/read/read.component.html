@@ -3,53 +3,65 @@
 </div>
 
 <div class="d-flex w-100 mt-auto __app-scripture-toolbar">
+  <mat-progress-bar *ngIf="showProgressbar" [mode]="'query'" [color]="'warn'"></mat-progress-bar>
   <div class="d-flex w-100 mx-auto my-auto __app--scripture-console">
-    <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="ml-3 my-auto">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item class="d-flex">
-        <i class="fa fa-cog mr-2 my-auto d-flex"></i>
-        <span>settings</span>
-      </button>
-      <button mat-menu-item class="d-flex">
-        <i class="far fa-bell mr-2 my-auto d-flex"></i>
-        <span>alarm</span>
-      </button>
-    </mat-menu> -->
-
-
     <mat-form-field class="mr-2 ml-auto" appearance="outline">
       <mat-label>book</mat-label>
-      <input matInput
-        (mouseout)="searchScripture()"
-        [(ngModel)]="scripture.book" 
-        placeholder="book"
-        [type]="'text'">
+      <input 
+      matInput 
+      (keyup)="searchScripture()"
+      [(ngModel)]="scripture.book"
+      placeholder="book"
+      [type]="'text'"
+      [formControl]="bookControl" [matAutocomplete]="bookVar" >
+
+      <mat-autocomplete #bookVar="matAutocomplete">
+        <mat-option *ngFor="let book of filteredBookList | async" [value]="book.toString().charAt(0).toUpperCase() + book.toString().substring(1).toLowerCase()" (click)="searchScripture()">
+          {{ book.toString().charAt(0).toUpperCase() }}{{ book.toString().substring(1).toLowerCase() }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field class="mr-2" appearance="outline">
       <mat-label>chapter</mat-label>
-      <input #chapterEl matInput
-          (mouseout)="searchScripture()"
-          (keyup)="validateChapter(chapterEl, $event)"
-          [(ngModel)]="scripture.chapter"
-          placeholder="chapter"
-          [type]="'number'"
-          [min]="1"
-          [max]="maxChap">
+      <input
+        #chapterEl
+        matInput
+        (keyup)="searchScripture()"
+        (keyup)="validateChapter(chapterEl, $event)"
+        [(ngModel)]="scripture.chapter"
+        placeholder="chapter"
+        [type]="'number'"
+        [min]="1"
+        [max]="maxChap"
+        [formControl]="chapterControl" [matAutocomplete]="chapVar" >
+
+      <mat-autocomplete #chapVar="matAutocomplete">
+        <mat-option *ngFor="let chapter of chapterList" [value]="chapter" (click)="searchScripture()">
+          {{ chapter }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field class="mr-auto" appearance="outline">
       <mat-label>verse</mat-label>
-      <input  matInput #verseEl
-        (keyup)="searchScripture()"
-        (keyup)="validateVerse(verseEl, $event)"
-        [(ngModel)]="scripture.verse"
-        placeholder="verse"
-        [type]="'number'"
-        [min]="1"
-        [max]="maxVerse">
+      <input 
+      matInput
+      #verseEl
+      (keyup)="searchScripture()"
+      (keyup)="validateVerse(verseEl, $event)"
+      [(ngModel)]="scripture.verse"
+      placeholder="verse"
+      [type]="'number'"
+      [min]="1"
+      [max]="maxVerse"
+      [formControl]="verseControl" [matAutocomplete]="verseVar" >
+
+      <mat-autocomplete #verseVar="matAutocomplete">
+        <mat-option *ngFor="let verse of verseList" [value]="verse" (click)="searchScripture()">
+          {{ verse }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <i appActionScroll [reveal]="scrolled" [_class]="'invisible'"  class="fa fa-search mx-4 my-auto fa-1x invisible __app--search___icon--pseudo" (click)="showSearchPane()"></i>
@@ -58,7 +70,7 @@
 
 <app-search-pane *ngIf="_showSearchPane" (closePane)="collapseSearchPane($event)"></app-search-pane>
 
-<app-scripture-container class="d-flex w-100" [book]="scripture.book.toUpperCase()" [passages]="passages"
+<app-scripture-container class="d-flex w-100" [resource]="scripture" [passages]="passages"
   [focusElementNo]="focusElementNo">
 </app-scripture-container>
 

@@ -1,8 +1,11 @@
-import { Component, OnInit, HostListener, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 
 import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
+import { FormControl } from '@angular/forms';
+import { map } from 'rxjs/internal/operators/map';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-read',
@@ -10,8 +13,11 @@ import { ScripturesService } from '../services/scriptures.service';
   styleUrls: ['./read.component.css']
 })
 export class ReadComponent implements OnInit, AfterViewInit {
+  public bookControl: FormControl = new FormControl();
+  public chapterControl: FormControl = new FormControl();
+  public verseControl: FormControl = new FormControl();
   private _scripture: IScriptures =  {
-    book: 'genesis',
+    book: 'Genesis',
     chapter: 1,
     verse: 1
   };
@@ -19,6 +25,9 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public bookList: Array<string> = [];
   public chapterList: number[]  = [];
   public verseList: number[] = [];
+  public filteredBookList: Observable<any>;
+  public filteredChapterList: Observable<any>;
+  public filteredVerseList: Observable<any>;
   public passages: Array<any>;
   public maxChap: number;
   public maxVerse: number;
@@ -27,6 +36,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public scrolled = <boolean>false;
 
   public _showSearchPane = <boolean>false;
+  public showProgressbar = <boolean> false;
 
   constructor(
     private _scripturesProvider: ScripturesService
@@ -39,6 +49,23 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.populateChapterList();
     this.populateVerseList();
 
+    this.filteredBookList = this.bookControl.valueChanges
+      .pipe(
+        map((value) => this._filter(value, this.bookList))
+      );
+
+    this.filteredChapterList = this.chapterControl.valueChanges
+      .pipe(
+        map((value) => this._filter(value, this.chapterList)),
+        map(val => val.map(cur => parseInt(cur, 10)))
+      );
+
+    this.filteredVerseList = this.verseControl.valueChanges
+      .pipe(
+        map((value) => this._filter(value, this.verseList)),
+        map(val => val.map(cur => parseInt(cur, 10))),
+      );
+
     this.searchScripture();
   }
 
@@ -48,6 +75,11 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:scroll') onWindowScroll(): void {
     this.scrolled = true;
+  }
+
+  private _filter(val: string, data: any): string[] {
+    const filterValue = val.toString().toLowerCase();
+    return data.filter((d: any) => d.toString().toLowerCase().includes(filterValue));
   }
 
   public keepFocus(no: number): void {
@@ -83,17 +115,18 @@ export class ReadComponent implements OnInit, AfterViewInit {
   }
 
   public searchScripture(): void {
+    this.showProgressbar = true;
     const {book, verse, chapter} = this.scripture;
 
     if (
-      book !== '' && book !== undefined && book !== ' ' &&
-      chapter !== undefined &&
+      book !== '' && book !== undefined && book !== ' ' && book !== null &&
+      chapter !== undefined && chapter !== null &&
       (typeof chapter === 'string' ? chapter !== ' ' : true)
       ) {
       this.focusElementNo = parseInt(verse.toString(), 10);
 
       this.populateChapterList();
-      this.getPassage(book, chapter);
+      this.getPassage(book.toLowerCase(), chapter);
     }
   }
 
@@ -101,7 +134,10 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getPassage(b, c)
       .subscribe(
-        (data: string[]) => this.passages = data,
+        (data: string[]) => {
+          this.passages = data;
+          this.showProgressbar = false;
+        },
         (error) => console.log({error})
       );
   }
@@ -110,7 +146,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
     const {book, chapter, verse} = this.scripture;
 
     this._scripturesProvider
-    .getVerseLength(book, chapter)
+    .getVerseLength(book.toLowerCase(), chapter)
     .subscribe(
       (data) => {
         this.maxVerse = data;
@@ -125,7 +161,9 @@ export class ReadComponent implements OnInit, AfterViewInit {
   }
 
   private populateChapterList(): void {
-    this._scripturesProvider.getChapterLength(this.scripture.book).subscribe(
+    this._scripturesProvider
+      .getChapterLength(this.scripture.book.toLowerCase())
+      .subscribe(
       (data: number) => {
         this.maxChap = data;
         this.chapterList = this.generateListNumbers(data);
@@ -147,22 +185,6 @@ export class ReadComponent implements OnInit, AfterViewInit {
         (data) => this.bookList.push(data.toString()),
         (error) => console.log(error)
       );
-  }
-
-  public typeaheadOnSelect(e: any, key: string): void {
-    if (key === 'b') {
-      this.scripture.book = e.value;
-    }
-
-    if (key === 'c') {
-      this.scripture.chapter = parseInt(e.value.toString(), 10);
-    }
-
-    if (key === 'v') {
-      this.scripture.verse =  parseInt(e.value.toString(), 10);
-    }
-
-    this.searchScripture();
   }
 
   public showReactionConsole(el: any): void {
