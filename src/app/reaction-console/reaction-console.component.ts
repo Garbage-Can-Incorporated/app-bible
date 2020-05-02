@@ -1,43 +1,42 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+
 import { PlayerService } from '../services/player.service';
+import { SnackbarService } from '../services/snackbar.service';
+
+import {IScriptures} from '../interfaces/i-scriptures';
 
 @Component({
   selector: 'app-reaction-console',
   templateUrl: './reaction-console.component.html',
   styleUrls: ['./reaction-console.component.css']
 })
-export class ReactionConsoleComponent implements OnInit {
+export class ReactionConsoleComponent implements OnInit, OnChanges {
   @Input() passage: string;
+  @Input() resource: IScriptures;
+  @Input() favIconActive: boolean;
   public playerState: boolean = <boolean>false;
 
   public show = <boolean> false;
 
   constructor(
-    private _player: PlayerService
+    private _player: PlayerService,
+    private _snackbar: SnackbarService
   ) { }
 
   ngOnInit() { }
+
+  ngOnChanges(): void { }
 
   public toggleIconsVisibility(): void {
     this.show = !this.show;
   }
 
-  public likeVerse(el: Element): void {
-    if (el.classList.contains('far')) {
-      el.classList.replace('far', 'fa');
-      el.classList.add('__red--color');
-      return;
-    }
-
-    if (el.classList.contains('fa')) {
-      el.classList.replace('fa', 'far');
-      el.classList.remove('__red--color');
-      return;
-    }
-  }
-
   public readVerse(playIcon: Element): void {
-    console.log(this.playerState);
+    /*
+    * to avoid multiple verse queue and collision,
+    * stop whatever is being played first
+    */
+    this.stopPlay();
     // this.playerState = true;
     this.toggleVersePlay(playIcon, this.passage);
   }
@@ -63,11 +62,18 @@ export class ReactionConsoleComponent implements OnInit {
           (data) => console.log(data),
           (error) => {
             console.log(error);
+
             this.stopPlay();
+
             icon.classList.replace('fa-pause', 'fa-play');
             icon.classList.remove('__blue--color');
 
             this.playerState = false;
+            this._snackbar
+              .showSnackbar(
+                `
+              Internet isn't available. Please retry when the internet is available
+              `);
           },
           () => {
             console.log('complete!');
