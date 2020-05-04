@@ -116,14 +116,14 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   public searchScripture(): void {
     this.showProgressbar = true;
-    const {book, verse, chapter} = this.scripture;
+    const {book, chapter} = this.scripture;
 
     if (
       book !== '' && book !== undefined && book !== ' ' && book !== null &&
       chapter !== undefined && chapter !== null &&
       (typeof chapter === 'string' ? chapter !== ' ' : true)
       ) {
-      this.focusElementNo = parseInt(verse.toString(), 10);
+      this.focusElementNo = parseInt(this.scripture.verse.toString(), 10);
 
       this.populateChapterList();
       this.getPassage(book.toLowerCase(), chapter);
