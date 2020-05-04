@@ -31,15 +31,13 @@
 
 .__app-scriptures-player i:first-of-type:hover,
 .__app-scriptures-player i:nth-child(3):hover,
-.__app-scriptures-player i:last-of-type:hover {
+.__app-scriptures-player i:nth-child(4):hover {
   color: var(--dark-red);
-  /* box-shadow: 0 0 3px 1px var(--dark-grey); */
   z-index: 1000;
 }
 
 .__app-scriptures-player i:nth-child(2):hover {
   color: var(--blue);
-  /* box-shadow: 0 0 3px 1px var(--dark-grey); */
   z-index: 1000;
 }
 
