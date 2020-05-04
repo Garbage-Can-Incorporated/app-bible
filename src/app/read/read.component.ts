@@ -187,14 +187,6 @@ export class ReadComponent implements OnInit, AfterViewInit {
       );
   }
 
-  public showReactionConsole(el: any): void {
-    el.toggleIconsVisibility();
-  }
-
-  public hideReactionConsole(el: any): void {
-    el.toggleIconsVisibility();
-  }
-
   public collapseSearchPane(e: boolean) {
     this._showSearchPane = e;
   }
