@@ -13,16 +13,31 @@ export class FavoritesService {
     private lc: LocalStorageService
   ) { }
 
-  public removeFavorite(_item: IScriptures): void {
-    const items: Array<IScriptures> | Array<any> = this.getFavorites();
-
-    const filteredEl: Array<IScriptures> | Array<any> = items
-      .filter((item: IScriptures) => item.book !== _item.book &&
-          item.chapter !== _item.chapter &&
-          item.book !== _item.book
+  public exists(item: IScriptures): boolean {
+    const exists = this.getFavorites().find((_item) => {
+      return (
+        _item.book === item.book &&
+        _item.chapter === item.chapter &&
+        _item.verse === item.verse
       );
+    });
 
-    this.lc.add(filteredEl);
+    return exists !== undefined ? true : false;
+  }
+
+  public removeFavorite(_item: IScriptures): void {
+    const items: Array<IScriptures> | [] = this.getFavorites();
+
+    const itemIndex: number = items.findIndex((cur) => {
+      return cur.book === _item.book &&
+        cur.chapter === _item.chapter &&
+        cur.verse === _item.verse;
+    });
+
+    // remove 1 element from itemIndex, i.e remove only element at itemIndex
+    items.splice(itemIndex, 1);
+
+    this.lc.add(items);
   }
 
   public addToFavorites(item: IScriptures) {
