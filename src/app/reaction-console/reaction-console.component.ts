@@ -13,7 +13,6 @@ import {IScriptures} from '../interfaces/i-scriptures';
 export class ReactionConsoleComponent implements OnInit, OnChanges {
   @Input() passage: string;
   @Input() resource: IScriptures;
-  @Input() favIconActive: boolean;
   public playerState: boolean = <boolean>false;
 
   public show = <boolean> false;

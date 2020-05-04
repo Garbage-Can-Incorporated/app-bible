@@ -1,30 +1,45 @@
-import { Directive, HostListener, OnInit, Input, ElementRef, OnChanges } from '@angular/core';
-
-import { SnackbarService } from '../services/snackbar.service';
+import {
+  Directive, HostListener, OnInit, Input, ElementRef, OnChanges,
+  DoCheck,
+} from '@angular/core';
 
 import { IScriptures } from '../interfaces/i-scriptures';
+
+import { SnackbarService } from '../services/snackbar.service';
+import { FavoritesService } from '../services/favorites.service';
 
 @Directive({
   selector: '[appFavorite]'
 })
-export class FavoriteDirective implements OnInit, OnChanges {
+export class FavoriteDirective implements OnInit, OnChanges, DoCheck {
   @Input() scripture: IScriptures;
-  @Input() toggleIcon: boolean;
+  private toggleIcon: boolean;
 
   constructor(
     private _snackbar: SnackbarService,
-    private el: ElementRef
+    private el: ElementRef,
+    private _favorites: FavoritesService
   ) { }
 
   ngOnInit() { }
 
-  ngOnChanges() {
+  ngDoCheck() {
+    const exists = this._favorites.exists(this.scripture);
+    this.toggleIcon = exists;
+    this.setFavIcon();
+  }
+
+  private setFavIcon(): void {
     if (this.toggleIcon) {
+      // add heart color
       this.addFavIcon(this.el.nativeElement);
     } else {
+      // remove heart color
       this.removeFavIcon(this.el.nativeElement);
     }
   }
+
+  ngOnChanges() { }
 
   @HostListener('click', [ '$event' ])
   onClick(e: Event): void {
@@ -37,11 +52,19 @@ export class FavoriteDirective implements OnInit, OnChanges {
   }
 
   private removeFavVerse(e: EventTarget): void {
-
+    this._favorites.removeFavorite(this.scripture);
+    this._snackbar.showSnackbar('Favorite removed...');
   }
 
   private addToFavVerse(e: EventTarget): void {
+    const exists: boolean = this._favorites.exists(this.scripture);
 
+    if (exists) {
+      return;
+    }
+
+    this._favorites.addToFavorites(this.scripture);
+    this._snackbar.showSnackbar('Favorite added...');
   }
 
   private addFavIcon(el: any): void {

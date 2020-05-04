@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { IScriptures } from '../interfaces/i-scriptures';
 
@@ -7,18 +7,15 @@ import { IScriptures } from '../interfaces/i-scriptures';
   templateUrl: './scripture-item.component.html',
   styleUrls: ['./scripture-item.component.css']
 })
-export class ScriptureItemComponent implements OnInit, OnChanges {
+export class ScriptureItemComponent implements OnInit {
   @Input() public passage: string;
   @Input() public i: number;
   @Input() focusElementNo: number;
   @Input() resource: IScriptures;
-  public favIconActive: boolean;
 
   constructor() { }
 
   ngOnInit() { }
-
-  ngOnChanges(changes: SimpleChanges): void { }
 
   public showReactionConsole(el: any): void {
     el.toggleIconsVisibility();
