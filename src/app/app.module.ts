@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { ReadModule } from './read/read.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [ ],
@@ -14,7 +16,8 @@ import { ReadModule } from './read/read.module';
     BrowserModule,
     BrowserAnimationsModule,
     ReadModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [ ],
   bootstrap: [AppComponent]
