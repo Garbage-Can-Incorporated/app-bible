@@ -1,8 +1,12 @@
-
 .__app--reactions--container {
   transition: ease-out 1s ease-in 1s;
 }
 
 .__app--reactions--container i  {
   cursor: pointer;
+}
+
+a, a:hover {
+  text-decoration: none;
+  color: #000000;
 }

@@ -22,7 +22,7 @@ import { ScrollViewDirective } from '../directives/scroll-view.directive';
 import { ActionScrollDirective } from '../directives/action-scroll.directive';
 import { ScriptureNavigatorDirective } from '../directives/scripture-navigator.directive';
 import { ToggleReactionsVisibilityDirective } from '../directives/toggle-reactions-visibility.directive';
-import { TwitterShareDirective } from '../directives/twitter-share.directive';
+// import { TwitterShareDirective } from '../directives/twitter-share.directive';
 import { FavoriteDirective } from '../directives/favorite.directive';
 
 @NgModule({
@@ -38,7 +38,7 @@ import { FavoriteDirective } from '../directives/favorite.directive';
     ToggleReactionsVisibilityDirective,
     ScriptureContainerComponent,
     ScripturePlayerComponent,
-    TwitterShareDirective,
+    // TwitterShareDirective,
     FavoriteDirective
   ],
   imports: [

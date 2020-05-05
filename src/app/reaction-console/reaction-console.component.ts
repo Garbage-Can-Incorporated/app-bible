@@ -17,6 +17,10 @@ export class ReactionConsoleComponent implements OnInit, OnChanges {
 
   public show = <boolean> false;
 
+  private url = <string> `https://twitter.com/intent/tweet`;
+  public hashtags = <string> `ev'ryword`;
+  public via = <string>'ev\'ryword';
+
   constructor(
     private _player: PlayerService,
     private _snackbar: SnackbarService

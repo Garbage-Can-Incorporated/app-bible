@@ -14,9 +14,9 @@
     </button>
 
     <!-- twitter share -->
-    <button mat-menu-item class="d-flex" appTwitterShare [text]="passage">
+    <button mat-menu-item class="d-flex">
       <i class="fab fa-twitter mr-2 my-auto d-flex"></i>
-      <span> Twitter </span>
+      <a href="https://twitter.com/intent/tweet/?via={{via}}&hashtags={{hashtags}}&text={{passage}}" target="_blank">Twitter</a>
     </button>
   </mat-menu>
 </div>
