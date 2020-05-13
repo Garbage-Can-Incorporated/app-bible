@@ -1,0 +1,64 @@
+<div class="d-flex w-100">
+  <div *ngIf="alarms !== undefined && alarms.length >= 1; else elseBlock" class="w-100 row px-0 mx-0 mt-3">
+    <div #alarmItem *ngFor="let alarm of alarms; index as i"
+      class="col-sm-12 col-md-6 col-lg-4 pt-3 pb-0 pl-3 pr-0 __app-alarm--item__container __app-alarm--item__container--background"
+      (click)="expandCollapse(el, altDays)" #el>
+      <div class="d-flex w-100 mb-3 __app-alarm--item">
+        <div class="d-flex w-100 my-auto __app-alarm--value__toggle--button__container">
+          <mat-slide-toggle #slider class="ml-auto mr-3 my-auto" [color]="'primary'" [checked]="alarm.status" 
+            (click)="$event.stopImmediatePropagation()"
+            (change)="statusChange($event, i)">
+          </mat-slide-toggle>
+
+          <span app-alarm-item-control [slider]="slider" class="d-flex font-weight-bold my-auto __app-alarm--value"
+            [ngClass]="{
+              '__app-alarm--value__color--blue': slider.checked, '__app-alarm--value__color--grey': slider.checked === false
+            }" (click)="openAlarmTimeDialog(alarm.time, $event, i)">
+            {{ alarm.time | date:'HH:mm' }}
+          </span>
+        </div>
+
+        <div class="d-flex w-100 my-2 mb-3 __app-alarm--controls" (click)="$event.stopImmediatePropagation()">
+          <mat-checkbox #repeat class="mt-auto" [color]="'primary'" [checked]="alarm.repeat" (change)="repeatChange(repeat, i)">Repeat</mat-checkbox>
+
+          <app-repeat-days *ngIf="repeat.checked" class="d-flex w-100 mt-2 mb-3" 
+            (selectedDay)="repeatDaySelected(i, $event)"
+            [repeatDays]="alarm.days"></app-repeat-days>
+
+          <div class="d-flex w-100">
+            <i class="fa fa-tag my-auto __app-alarm--tag__icon"></i>
+            <span class="ml-2 my-auto"
+            (click)="setLabel(alarm.label, i)">
+            {{ alarm.label === '' ? 'Label' : alarm.label }}
+          </span>
+          </div>
+        </div>
+
+        <mat-divider class="d-flex mr-3"></mat-divider>
+        <div class="d-flex w-100 my-3 __app-alarm--delete__controls">
+          <i class="far fa-trash-alt my-auto"
+            (click)="deleteAlarm(i, $event, alarmItem)"></i>
+          <span class="ml-2" (click)="deleteAlarm(i, $event, alarmItem)">Delete</span>
+          <i class="fa fa-chevron-up ml-auto mr-3 my-auto" #icon></i>
+        </div>
+      </div>
+
+      <div class="d-none w-100 mb-3 __app-alarm--alternate__controls" #altDays>
+        <span class="my-auto">{{ alarm.days | repeatDays:alarm.time }}</span>
+        <i class="fa fa-chevron-down my-auto ml-auto mr-3"></i>
+      </div>
+      <mat-divider class="d-none mr-3"></mat-divider>
+    </div>
+  </div>
+</div>
+
+<ng-template #elseBlock class="d-flex w-100">
+  <div class="d-flex __app-alarm--value__color--grey __app-alarm--empty">
+    <i class="fa fa-bell mt-auto mx-auto"></i>
+    <span class="mt-2 mb-auto mx-auto">No alarm added yet!</span>
+  </div>
+</ng-template>
+
+<button mat-mini-fab color="warn" class="__app-alarm-add-btn" (click)="openAddDialog()">
+  <i class="fa fa-plus"></i>
+</button>

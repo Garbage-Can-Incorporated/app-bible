@@ -1,0 +1,9 @@
+<div class="d-flex w-100 mb-3 __app--scriptures__item--container" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
+  <div class="d-flex text-left w-100" [ngClass]="{'__app-scriptures-item--focus': (i + 1) === focusElementNo}">
+    <sup class="my-0 mr-2 mb-2 font-weight-bold">{{ (i + 1) }}</sup>
+    <span class="d-flex"> {{ passage }} </span>
+  </div>
+
+  <app-reaction-console #reactionConsole class="d-flex"
+  [passage]="passage" [resource]="resource" [favIconActive]="favIconActive"></app-reaction-console>
+</div>

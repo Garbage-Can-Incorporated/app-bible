@@ -1,0 +1,7 @@
+* {
+  color: #00b5ff;
+}
+
+[mat-dialog-actions] button {
+  font-size: 10px;
+}

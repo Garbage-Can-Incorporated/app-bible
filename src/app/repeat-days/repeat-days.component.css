@@ -1,0 +1,20 @@
+.__app-repeat__days--container {
+  flex-direction: row;
+}
+
+.__app-repeat__day-item {
+  width: 30px;
+  height: 30px;
+  background-color: #3b3c3e;
+  color: #b0b4b8;
+  border-radius: 50%;
+  font-weight: 600;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.__app-repeat__day-item--selected {
+  background-color: #6b6b6b6b;
+  color: #ffffff; /* #2c2d30 */
+}

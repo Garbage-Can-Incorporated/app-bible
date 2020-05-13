@@ -1,0 +1,138 @@
+* {
+  outline: none;
+}
+
+.__app--pane__overlay {
+  background-color: #000000;
+  opacity: 0.6;
+}
+
+.__app-scripture-search-pane,
+.__app--scripture__search--pane__body,
+.__app--scripture__search--console,
+.__app--scripture__search--result,
+.__app--scripture__result--item {
+  flex-direction: column;
+}
+
+.__app-scripture-search-pane {
+  position: fixed;
+  height: 100%;
+  width: 320px;
+  background-color: var(--white);
+  right: 0;
+  top: 0;
+  box-shadow: 0 0 3px 0.5px #adb5bd;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.__app--scripture__search--pane__body {
+  margin-top: 1.8rem;
+}
+
+.__app--scripture__search--console__container {
+  flex-direction: row;
+}
+
+.__app--scripture__result--header {
+  font-size: 10.5px;
+}
+
+.__app--scripture__result--item {
+  max-height: fit-content;
+  cursor: pointer;
+  transition: ease-in .3s ease-out;
+}
+
+.__app--scripture__result--item:last-of-type {
+  margin-bottom: .5em!important;
+}
+
+.__app--scripture__result--item:hover {
+  box-shadow: 0px 3px 7px #e8e5e5;
+}
+
+.__app--scripture__result__mock--container {
+  flex-direction: column;
+}
+
+.__app--scripture__result--item--mock:hover {
+  box-shadow: none!important;
+}
+
+.__app--scripture__result--item__reference--mock,
+.__app--scripture__result--item__passage--mock {
+  height: 12px;
+  background-color: #e8e5e5;
+  border-radius: 8px;
+}
+
+.__app--scripture__result--item__reference--mock {
+  width: 30px;
+}
+
+.__app--scripture__result--item__passage--mock {
+  width: 60px; 
+}
+
+.__app--scripture__result--item__reference {
+  font-size: 12px;
+}
+
+.__app--scripture__result--item__passage {
+  font-size: 14px;
+}
+
+.__app--pane__action--container {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 0 5px 0px var(--dark-red);
+  position: fixed;
+  top: 50%;
+  right: 300px;
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+.__app--pane__cancel--icon {
+  font-size: 1rem;
+}
+
+.__app--scripture__header {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.mdl-textfield__input {
+  border: 1px solid #f02266;
+  border-radius: 25px;
+  height: 45px;
+  padding: 7px 10px;
+}
+
+/* small device for the web */
+@media (max-width: 374px) {
+  .__app-scripture-search-pane {
+    width: 240px;
+    z-index: 10000;
+  }
+
+  .__app--pane__action--container {
+    right: 240px;
+  }
+}
+
+/* large devices */
+@media (min-width: 992px) {
+  .__app-scripture-search-pane {
+    width: 400px;
+    z-index: 10000;
+  }
+
+  .__app--pane__action--container {
+    right: 400px;
+  }
+}
+

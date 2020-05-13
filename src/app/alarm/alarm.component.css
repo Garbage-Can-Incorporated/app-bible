@@ -1,0 +1,75 @@
+.__app-alarm-add-btn {
+  position: fixed;
+  right: 15%;
+  bottom: 12%;
+  z-index: 1000;
+}
+
+.__app-alarm--item,
+.__app-alarm--controls {
+  flex-direction: column;
+}
+
+.__app-alarm--item__container {
+  min-height: fit-content;
+}
+
+.__app-alarm--item__container--background {
+  background-color: #f7f7f7;
+}
+
+.__app-alarm--value__toggle--button__container {
+  flex-direction: row-reverse;
+}
+
+.__app-alarm--value {
+  font-size: 35px;
+  line-height: normal;
+}
+
+.__app-alarm--value__color--blue {
+  color: steelblue;
+}
+
+.__app-alarm--value__color--grey {
+  color: grey;
+}
+
+.__app-alarm--value, /* alarm time */
+.__app-alarm--controls div span, /* label */
+.__app-alarm--delete__controls span, /* delete icon and text */
+.__app-alarm--delete__controls i, /* delete icon and text */
+.__app-alarm--alternate__controls span, /* repeated days */
+.__app-alarm--alternate__controls i /* icon */ {
+  cursor: pointer;
+}
+
+.__app-alarm--controls,
+.__app-alarm--alternate__controls,
+.__app-alarm--delete__controls {
+  font-size: 13px;
+}
+
+.__app-alarm--tag__icon {
+  transform: rotate(135deg);
+}
+
+i {
+  font-size: 1.3em;
+}
+
+.__app-alarm--empty {
+  flex-direction: column;
+  position: fixed;
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+}
+
+/* breakpoint  */
+@media (max-width: 768px) {
+  .__app-alarm--item__container:last-child {
+    margin-bottom: 5em;
+  }
+}

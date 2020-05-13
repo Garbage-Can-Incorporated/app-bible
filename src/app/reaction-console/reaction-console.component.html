@@ -1,0 +1,15 @@
+<div class="d-flex ml-auto __app--reactions--container">
+  <i class="fa fa-play ml-auto mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show" #playIcon (click)="readVerse(playIcon)"></i>
+
+  <i appFavorite [scripture]="resource" [toggleIcon]="favIconActive" class="far fa-heart mr-3 my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show"></i>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="my-auto d-none" appToggleReactionsVisibility [toggleVisibility]="show">
+    <i class="fa fa-share-alt my-auto d-flex"></i>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item class="d-flex" appTwitterShare [text]="passage">
+      <i class="fab fa-twitter mr-2 my-auto d-flex"></i>
+      <span> Twitter </span>
+    </button>
+  </mat-menu>
+</div>
