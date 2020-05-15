@@ -31,7 +31,7 @@
             "scripts": [
               "src/assets/vendor/jquery/jquery-3.4.1.min.js",
               "src/assets/vendor/bootstrap/popper.min.js",
-              "src/assets/vendor/bootstrap/bootstrap.min.js",
+              "src/assets/vendor/bootstrap/bootstrap.min.js"
             ]
           },
           "configurations": {
