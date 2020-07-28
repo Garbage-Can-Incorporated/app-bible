@@ -8,9 +8,12 @@ export class RepeatDaysCuratorPipe implements PipeTransform {
 
   transform(days: Array<number>, time: number): any {
     this.daysString = '';
-    days.map((cur: number) => {
-      this.switchValue(cur);
-    });
+
+    if (days) {
+      days.map((cur: number) => {
+        this.switchValue(cur);
+      });
+    }
 
     this.daysString = this.daysString.trimLeft()
       .trimRight()

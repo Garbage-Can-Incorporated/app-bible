@@ -1,5 +1,7 @@
-import { Directive, HostListener } from '@angular/core';
-import { DialogService } from '../services/dialog.service';
+import {Directive, HostListener} from '@angular/core';
+
+import {DialogService} from '../services/dialog.service';
+
 import { MoreComponent } from '../more/more.component';
 
 @Directive({

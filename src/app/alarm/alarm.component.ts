@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { DialogService } from '../services/dialog.service';
 import { AlarmIpcService } from '../services/alarm-ipc.service';
@@ -23,7 +23,8 @@ export class AlarmComponent implements OnInit {
   constructor(
     private _dialog: DialogService,
     private _alarmIpc: AlarmIpcService,
-    private _snackbar: SnackbarService
+    private _snackbar: SnackbarService,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -32,6 +33,16 @@ export class AlarmComponent implements OnInit {
     this._alarmIpc.editComplete();
 
     this.setupListeners();
+
+    this.alarms = [
+      {time: new Date().getTime(), status: true, repeat: false, label: 'test 1'},
+      {time: new Date().getTime() + 60000, status: true, repeat: false, label: 'test 2'},
+      {time: new Date().getTime() + 120000, status: true, repeat: false, label: 'test 3'},
+      {time: new Date().getTime() + 180000, status: true, repeat: false, label: 'test 4'},
+      {time: new Date().getTime() + 60000, status: true, repeat: false, label: 'test 2'},
+      {time: new Date().getTime() + 120000, status: true, repeat: false, label: 'test 3'},
+      {time: new Date().getTime() + 180000, status: true, repeat: false, label: 'test 4'}
+    ];
   }
 
   public deleteAlarm(i: number, e: Event, node: any): void {
@@ -40,9 +51,8 @@ export class AlarmComponent implements OnInit {
     this._alarmIpc
       .deleteAlarm({ i });
 
-    console.log({ node });
-
     node.remove();
+    this.detectChange();
   }
 
   public repeatDaySelected(i: number, data: {status: boolean, day: number}): void {
@@ -69,6 +79,7 @@ export class AlarmComponent implements OnInit {
     }
 
     this.alarms = [ ...this.alarms ];
+    this.detectChange();
   }
 
   public repeatChange(data: any, i: number): void {
@@ -85,6 +96,7 @@ export class AlarmComponent implements OnInit {
     this._alarmIpc
       .editAlarmProp({ i, repeat: this.alarms[ i ].repeat });
     this.alarms = [ ...this.alarms ];
+    this.detectChange();
   }
 
   public statusChange(data: any, i: number): void {
@@ -139,6 +151,8 @@ export class AlarmComponent implements OnInit {
             this._alarmIpc
               .editAlarmProp({ i, time: this.alarms[ i ].time });
           }
+
+          this.detectChange();
         }
       );
   }
@@ -163,6 +177,8 @@ export class AlarmComponent implements OnInit {
           days.classList.replace('d-flex', 'd-none');
           days.nextSibling.classList.replace('d-flex', 'd-none');
         }
+
+        this.detectChange();
       }
     });
   }
@@ -242,6 +258,7 @@ export class AlarmComponent implements OnInit {
           ];
 
           this.trimAlarmItem(this.alarms);
+          this.detectChange();
         },
         (error) => console.log({ error })
       );
@@ -272,6 +289,7 @@ export class AlarmComponent implements OnInit {
     }
 
     this.i++;
+
     if (this.i < this.alarms.length) {
       this.trimAlarmItem(alarms);
     }
@@ -281,5 +299,12 @@ export class AlarmComponent implements OnInit {
     }
 
     this.alarms = [ ...this.filteredAlarms ];
+    this.detectChange();
+  }
+
+  public detectChange(): void {
+    this.changeDetector.detach();
+    this.changeDetector.reattach();
+    this.changeDetector.detectChanges();
   }
 }
