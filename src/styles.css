@@ -63,6 +63,8 @@ app-reaction-console {
 
 mat-dialog-container.mat-dialog-container {
   background-color: inherit;
+  padding: 0px;
+  border-radius: 0;
 }
 
 .__red--color {
