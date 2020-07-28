@@ -36,6 +36,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   color: var(--dark-grey)!important;
+  scroll-behavior: smooth;
 }
 
 .container-after-titlebar {
