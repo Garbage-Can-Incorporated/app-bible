@@ -7,8 +7,11 @@
   <div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100">
     <app-scripture-item *ngFor="let passage of passages; index as i"
       class="d-flex w-100 __app-scriptures-item mb-2"
-      [passage]="passage" [i]="i" [focusElementNo]="focusElementNo"
-      appScrollView [status]="(i + 1) === focusElementNo" [exception]="(i + 1) > 5"
+      [passage]="passage" [i]="i"
+      [focusElementNo]="focusElementNo"
+      appScrollView [status]="(i + 1) === focusElementNo"
+      [exception]="(i + 1) > 5"
+      [lastScrolled]="i"
       [resource]="{book: resource.book, chapter: resource.chapter, verse: i}"></app-scripture-item>
   </div>
 
