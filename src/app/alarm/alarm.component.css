@@ -1,8 +1,17 @@
 .__app-alarm-add-btn {
   position: fixed;
-  right: 15%;
-  bottom: 12%;
+  right: 11%;
+  bottom: 11%;
   z-index: 1000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: #880800;
+  box-shadow: 0 0 5px .5px #9a9a9a;
+}
+
+.__app-alarm-add-btn i {
+  color: #ffffff;
 }
 
 .__app-alarm--item,
