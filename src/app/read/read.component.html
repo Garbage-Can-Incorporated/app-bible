@@ -10,13 +10,13 @@
 
     <mat-form-field class="mr-2 ml-auto" appearance="outline">
       <mat-label>book</mat-label>
-      <input 
-      matInput 
-      (keyup)="searchScripture()"
-      [(ngModel)]="scripture.book" 
-      placeholder="book" 
-      [type]="'text'"
-      [formControl]="bookControl" [matAutocomplete]="bookVar" >
+      <input tabindex="0" autofocus
+        matInput 
+        (keyup)="searchScripture()"
+        [(ngModel)]="scripture.book" 
+        placeholder="book" 
+        [type]="'text'"
+        [formControl]="bookControl" [matAutocomplete]="bookVar" >
 
       <mat-autocomplete #bookVar="matAutocomplete">
         <mat-option *ngFor="let book of filteredBookList | async" [value]="book.toString().charAt(0).toUpperCase() + book.toString().substring(1).toLowerCase()" (click)="searchScripture()">
@@ -27,7 +27,7 @@
 
     <mat-form-field class="mr-2" appearance="outline">
       <mat-label>chapter</mat-label>
-      <input
+      <input tabindex="1"
         #chapterEl
         matInput
         (keyup)="searchScripture()"
@@ -48,17 +48,17 @@
 
     <mat-form-field class="mr-auto" appearance="outline">
       <mat-label>verse</mat-label>
-      <input 
-      matInput
-      #verseEl
-      (keyup)="searchScripture()"
-      (keyup)="validateVerse(verseEl, $event)"
-      [(ngModel)]="scripture.verse"
-      placeholder="verse"
-      [type]="'number'"
-      [min]="1"
-      [max]="maxVerse"
-      [formControl]="verseControl" [matAutocomplete]="verseVar" >
+      <input tabindex="2"
+        matInput
+        #verseEl
+        (keyup)="searchScripture()"
+        (keyup)="validateVerse(verseEl, $event)"
+        [(ngModel)]="scripture.verse"
+        placeholder="verse"
+        [type]="'number'"
+        [min]="1"
+        [max]="maxVerse"
+        [formControl]="verseControl" [matAutocomplete]="verseVar" >
 
       <mat-autocomplete #verseVar="matAutocomplete">
         <mat-option *ngFor="let verse of verseList" [value]="verse" (click)="searchScripture()">
