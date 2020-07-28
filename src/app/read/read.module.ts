@@ -10,6 +10,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { DialogService } from '../services/dialog.service';
 import { DbIpcService } from '../services/db-ipc.service';
 import { AlarmIpcService } from '../services/alarm-ipc.service';
+import {LastReadService} from '../services/last-read.service';
 
 import { AppComponent } from '../app.component';
 import { ReadComponent } from './read.component';
@@ -82,7 +83,8 @@ import { RepeatDaysCuratorPipe } from '../pipes/repeat-days-curator.pipe';
     SnackbarService,
     DialogService,
     DbIpcService,
-    RendererBwService, AlarmIpcService
+    RendererBwService, AlarmIpcService,
+    LastReadService
   ],
   entryComponents: [
     MoreComponent,

@@ -1,11 +1,13 @@
-import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import {FormControl} from '@angular/forms';
+
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/internal/operators/map';
 
 import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
-import { FormControl } from '@angular/forms';
-import { map } from 'rxjs/internal/operators/map';
-import { Observable } from 'rxjs';
+import {LastReadService} from '../services/last-read.service';
 
 @Component({
   selector: 'app-read',
@@ -39,11 +41,15 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public showProgressbar = <boolean> false;
 
   constructor(
-    private _scripturesProvider: ScripturesService
+    private _scripturesProvider: ScripturesService,
+    private lastRead: LastReadService,
+    private _zone: NgZone,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.scrolled = false;
+    this.scripture = this.lastRead.lastRead || {...this._scripture};
 
     this.populateBookList();
     this.populateChapterList();
@@ -71,10 +77,12 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.scrolled = false;
+    this.detectChange();
   }
 
   @HostListener('window:scroll') onWindowScroll(): void {
     this.scrolled = true;
+    this.detectChange();
   }
 
   private _filter(val: string, data: any): string[] {
@@ -85,6 +93,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public keepFocus(no: number): void {
     this.focusElementNo = no;
     this.scripture.verse = no;
+    this.detectChange();
     console.log({ focus: this.focusElementNo, no });
   }
 
@@ -107,27 +116,36 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public previousScripture(e: any): void {
     Object.assign(this.scripture, e);
     this.searchScripture();
+    this.detectChange();
   }
 
   public nextScripture(e: any): void {
     Object.assign(this.scripture, e);
     this.searchScripture();
+    this.detectChange();
   }
 
   public searchScripture(): void {
     this.showProgressbar = true;
     const {book, verse, chapter} = this.scripture;
 
-    if (
-      book !== '' && book !== undefined && book !== ' ' && book !== null &&
-      chapter !== undefined && chapter !== null &&
-      (typeof chapter === 'string' ? chapter !== ' ' : true)
+    this._zone.run((): void => {
+      if (
+        book !== '' && book !== undefined &&
+        book !== ' ' && book !== null &&
+        chapter !== undefined && chapter !== null &&
+        (typeof chapter === 'string' ? chapter !== ' ' : true) &&
+        verse !== undefined && verse !== null
       ) {
-      this.focusElementNo = parseInt(verse.toString(), 10);
+        this.focusElementNo = parseInt(verse.toString(), 10);
 
-      this.populateChapterList();
-      this.getPassage(book.toLowerCase(), chapter);
-    }
+        this.populateChapterList();
+        this.getPassage(book.toLowerCase(), chapter);
+        this.lastRead.setLastRead(this.scripture);
+
+        this.detectChange();
+      }
+    });
   }
 
   private getPassage(b: string, c: number): void {
@@ -156,6 +174,8 @@ export class ReadComponent implements OnInit, AfterViewInit {
           this.scripture.verse = this.verseList.length;
           this.focusElementNo = parseInt(verse.toString(), 10);
         }
+
+        this.detectChange();
       }
     );
   }
@@ -168,6 +188,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
         this.maxChap = data;
         this.chapterList = this.generateListNumbers(data);
         this.populateVerseList();
+        this.detectChange();
       }
     );
   }
@@ -182,8 +203,8 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getBookList()
       .subscribe(
-        (data) => this.bookList.push(data.toString()),
-        (error) => console.log(error)
+        (data): void => (this.bookList.push(data.toString()), this.detectChange()),
+        (error): void => console.log(error)
       );
   }
 
@@ -201,5 +222,11 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   public showSearchPane(): void {
     this._showSearchPane = true;
+  }
+
+  public detectChange(): void {
+    this.changeDetector.detach();
+    this.changeDetector.reattach();
+    this.changeDetector.detectChanges();
   }
 }
