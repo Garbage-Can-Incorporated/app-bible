@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener, ChangeDetectorRef } from '@angular/core';
 
 import { ElectronService } from 'ngx-electron';
 
@@ -18,12 +18,15 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
   public favIconActive: boolean;
 
   constructor(
-    private _electron: ElectronService
+    private _electron: ElectronService,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() { }
 
-  ngOnChanges(changes: SimpleChanges): void { }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.detectChange();
+  }
 
   @HostListener('mouseenter', [ '$event' ])
   onMouseover(e: Event): void {
@@ -57,5 +60,11 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
 
   public hideReactionConsole(el: any): void {
     el.toggleIconsVisibility();
+  }
+
+  public detectChange(): void {
+    this.changeDetector.detach();
+    this.changeDetector.reattach();
+    this.changeDetector.detectChanges();
   }
 }
