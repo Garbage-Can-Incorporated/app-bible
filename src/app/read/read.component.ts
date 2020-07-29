@@ -167,13 +167,15 @@ export class ReadComponent implements OnInit, AfterViewInit {
     .getVerseLength(book.toLowerCase(), chapter)
     .subscribe(
       (data) => {
-        this.maxVerse = data;
-        this.verseList = this.generateListNumbers(data);
+        this._zone.run((): void => {
+          this.maxVerse = data;
+          this.verseList = this.generateListNumbers(data);
 
-        if (verse > this.verseList.length) {
-          this.scripture.verse = this.verseList.length;
-          this.focusElementNo = parseInt(verse.toString(), 10);
-        }
+          if (verse > this.verseList.length) {
+            this.scripture.verse = this.verseList.length;
+            this.focusElementNo = parseInt(verse.toString(), 10);
+          }
+        });
 
         this.detectChange();
       }
@@ -184,12 +186,14 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getChapterLength(this.scripture.book.toLowerCase())
       .subscribe(
-      (data: number) => {
-        this.maxChap = data;
-        this.chapterList = this.generateListNumbers(data);
-        this.populateVerseList();
-        this.detectChange();
-      }
+        (data: number) => {
+          this._zone.run((): void => {
+            this.maxChap = data;
+            this.chapterList = this.generateListNumbers(data);
+            this.populateVerseList();
+            this.detectChange();
+          });
+        }
     );
   }
 
@@ -203,7 +207,8 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getBookList()
       .subscribe(
-        (data): void => (this.bookList.push(data.toString()), this.detectChange()),
+        (data): void => this._zone
+          .run((): void => (this.bookList.push(data.toString()), this.detectChange())),
         (error): void => console.log(error)
       );
   }

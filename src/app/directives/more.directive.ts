@@ -1,4 +1,4 @@
-import {Directive, HostListener} from '@angular/core';
+import {Directive, HostListener, NgZone} from '@angular/core';
 
 import {DialogService} from '../services/dialog.service';
 
@@ -10,12 +10,14 @@ import { MoreComponent } from '../more/more.component';
 export class MoreDirective {
 
   constructor(
-    private _dialog: DialogService
+    private _dialog: DialogService,
+    private zone: NgZone
   ) { }
 
   @HostListener('click', [ '$event' ])
   onClick(e: Event): void {
-    this._dialog
+    this.zone.run((): void => {
+      this._dialog
       .openDialog(
         {},
         MoreComponent,
@@ -24,5 +26,6 @@ export class MoreDirective {
           maxWidth: '80%', width: '80%'
         }
       );
+    });
   }
 }

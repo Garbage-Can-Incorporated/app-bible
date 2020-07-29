@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 
 import { DialogService } from '../services/dialog.service';
 import { AlarmIpcService } from '../services/alarm-ipc.service';
@@ -24,7 +24,8 @@ export class AlarmComponent implements OnInit {
     private _dialog: DialogService,
     private _alarmIpc: AlarmIpcService,
     private _snackbar: SnackbarService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -97,54 +98,58 @@ export class AlarmComponent implements OnInit {
   }
 
   public setLabel(label: string, i: number): void {
-    const dialog = this._dialog
-      .openDialog(
-        {label: label === '' ? '' : label},
-        LabelComponent,
-        { height: 'fit-content', disableClose: true }
-      );
+    this.zone.run((): void => {
+      const dialog = this._dialog
+        .openDialog(
+          {label: label === '' ? '' : label},
+          LabelComponent,
+          { height: 'fit-content', disableClose: true }
+        );
 
-    dialog.afterClosed()
-      .subscribe(
-        (data) => {
-          if (data) {
-            this.alarms[ i ].label = data.label;
-            this._alarmIpc
-              .editAlarmProp({ i, label: this.alarms[ i ].label });
+      dialog.afterClosed()
+        .subscribe(
+          (data) => {
+            if (data) {
+              this.alarms[ i ].label = data.label;
+              this._alarmIpc
+                .editAlarmProp({ i, label: this.alarms[ i ].label });
+            }
           }
-        }
-      );
+        );
+    });
   }
 
   public openAlarmTimeDialog(time: Date, e: Event, i: number): void {
     e.stopImmediatePropagation();
 
-    const dialog = this._dialog
-      .openDialog(
-        {
-          hour: new Date(time).getHours(),
-          minute: new Date(time).getMinutes(),
-        },
-        TimeComponent,
-        { height: 'fit-content', disableClose: true }
-    );
-
-    dialog.afterClosed()
-      .subscribe(
-        (data) => {
-          if (data) {
-            this.setTime = new Date(
-              new Date().setHours(data.hour, data.minute)
-            ).toJSON();
-
-            this.alarms[ i ].time = new Date(this.setTime).getTime();
-            this._alarmIpc
-              .editAlarmProp({ i, time: this.alarms[ i ].time });
-          }
-
-          this.detectChange();
-        }
+    this.zone.run((): void => {
+      const dialog = this._dialog
+        .openDialog(
+          {
+            hour: new Date(time).getHours(),
+            minute: new Date(time).getMinutes(),
+          },
+          TimeComponent,
+          { height: 'fit-content', disableClose: true, width: 'fit-content'}
       );
+
+      dialog.afterClosed()
+        .subscribe(
+          (data) => {
+            if (data) {
+              this.setTime = new Date(
+                new Date().setHours(data.hour, data.minute)
+              ).toJSON();
+
+              this.alarms[ i ].time = new Date(this.setTime).getTime();
+              this._alarmIpc
+                .editAlarmProp({ i, time: this.alarms[ i ].time });
+            }
+
+            this.detectChange();
+          }
+        );
+    });
   }
 
   public expandCollapse(el: any, days): void {
@@ -174,33 +179,36 @@ export class AlarmComponent implements OnInit {
   }
 
   public openAddDialog(): void {
-    const dialog = this._dialog
-      .openDialog(
-        {},
-        TimeComponent,
-        { height: 'fit-content', disableClose: true }
-      );
+    this.zone.run((): void => {
+      const dialog = this._dialog
+        .openDialog(
+          {},
+          TimeComponent,
+          { height: 'fit-content', disableClose: true, width: 'fit-content' }
+        );
 
-    dialog.afterClosed()
-      .subscribe(
-        (data) => {
-          if (data) {
-            this.setTime = new Date(
-              new Date().setHours(data.hour, data.minute)
-            ).toJSON();
+      dialog.afterClosed()
+        .subscribe(
+          (data) => {
+            if (data) {
+              this.setTime = new Date(
+                new Date().setHours(data.hour, data.minute)
+              ).toJSON();
 
-            this._alarmIpc.submitAlarm({
-              time: new Date(this.setTime).getTime(),
-              status: true,
-              repeat: false,
-              days: [],
-              label: ''
-            });
+              this._alarmIpc.submitAlarm({
+                time: new Date(this.setTime).getTime(),
+                status: true,
+                repeat: false,
+                days: [],
+                label: ''
+              });
 
-            this._alarmIpc.getAlarms();
+              this._alarmIpc.getAlarms();
+            }
           }
-        }
-      );
+        );
+
+    });
   }
 
   private setupListeners(): void {
