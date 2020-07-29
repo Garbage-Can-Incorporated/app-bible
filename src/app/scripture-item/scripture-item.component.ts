@@ -17,14 +17,19 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
   @Input() resource: IScriptures;
   public favIconActive: boolean;
 
+  public textToRemove: string;
+
   constructor(
     private _electron: ElectronService,
     private changeDetector: ChangeDetectorRef
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.textToRemove = `${this.resource.book} ${this.resource.chapter}:${this.resource.verse + 1}`;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.textToRemove = `${this.resource.book} ${this.resource.chapter}:${this.resource.verse}`;
     this.detectChange();
   }
 
@@ -45,6 +50,8 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
           } else {
             this.favIconActive = false;
           }
+
+          this.detectChange();
         }
       );
 
@@ -56,10 +63,12 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
 
   public showReactionConsole(el: any): void {
     el.toggleIconsVisibility();
+    this.detectChange();
   }
 
   public hideReactionConsole(el: any): void {
     el.toggleIconsVisibility();
+    this.detectChange();
   }
 
   public detectChange(): void {
