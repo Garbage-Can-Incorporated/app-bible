@@ -106,10 +106,11 @@
 }
 
 .mdl-textfield__input {
-  border: 1px solid #f02266;
+  border: none;
+  box-shadow: 0 0 2.5px 0.3px #adadad;
   border-radius: 25px;
-  height: 45px;
-  padding: 7px 10px;
+  height: 40px;
+  padding: 7px 15px;
 }
 
 /* small device for the web */
