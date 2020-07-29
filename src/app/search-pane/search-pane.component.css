@@ -116,7 +116,7 @@
 @media (max-width: 374px) {
   .__app-scripture-search-pane {
     width: 240px;
-    z-index: 10000;
+    z-index: 800;
   }
 
   .__app--pane__action--container {
@@ -128,7 +128,7 @@
 @media (min-width: 992px) {
   .__app-scripture-search-pane {
     width: 400px;
-    z-index: 10000;
+    z-index: 800;
   }
 
   .__app--pane__action--container {
