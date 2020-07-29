@@ -33,7 +33,11 @@ export class DbIpcService {
         .showSnackbar('This is not an electron app.');
     }
 
-    return this.dbInitSubject;
+      return this.dbInitSubject;
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public isConnected(name: string): Subject<any> {
@@ -47,7 +51,11 @@ export class DbIpcService {
         .showSnackbar('This is not an electron app.');
     }
 
-    return this.isConnectedSubject;
+      return this.isConnectedSubject;
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public isDBCreated(name: string): void {
