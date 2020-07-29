@@ -10,6 +10,10 @@
   box-shadow: 0 0 5px .5px #adadad;
 }
 
+.__app-alarm-add-btn:hover {
+  cursor: pointer;
+}
+
 .__app-alarm-add-btn i {
   color: #ffffff;
 }
