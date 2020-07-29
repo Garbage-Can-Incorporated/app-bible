@@ -40,6 +40,7 @@ import { AlarmItemControlDirective } from '../directives/alarm-item-control.dire
 import { LabelComponent } from '../label/label.component';
 import { RepeatDaysComponent } from '../repeat-days/repeat-days.component';
 import { RepeatDaysCuratorPipe } from '../pipes/repeat-days-curator.pipe';
+import { FormatVersePipe } from '../pipes/format-verse.pipe';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { RepeatDaysCuratorPipe } from '../pipes/repeat-days-curator.pipe';
     AlarmItemControlDirective,
     LabelComponent,
     RepeatDaysComponent,
-    RepeatDaysCuratorPipe
+    RepeatDaysCuratorPipe,
+    FormatVersePipe
   ],
   imports: [
     CommonModule,
