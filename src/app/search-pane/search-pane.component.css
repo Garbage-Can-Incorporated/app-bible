@@ -35,6 +35,11 @@
   flex-direction: row;
 }
 
+.__app--scripture__search--console {
+  position: sticky;
+  top: 2rem;
+}
+
 .__app--scripture__result--header {
   font-size: 10.5px;
 }
