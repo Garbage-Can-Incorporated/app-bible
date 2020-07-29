@@ -33,16 +33,6 @@ export class AlarmComponent implements OnInit {
     this._alarmIpc.editComplete();
 
     this.setupListeners();
-
-    this.alarms = [
-      {time: new Date().getTime(), status: true, repeat: false, label: 'test 1'},
-      {time: new Date().getTime() + 60000, status: true, repeat: false, label: 'test 2'},
-      {time: new Date().getTime() + 120000, status: true, repeat: false, label: 'test 3'},
-      {time: new Date().getTime() + 180000, status: true, repeat: false, label: 'test 4'},
-      {time: new Date().getTime() + 60000, status: true, repeat: false, label: 'test 2'},
-      {time: new Date().getTime() + 120000, status: true, repeat: false, label: 'test 3'},
-      {time: new Date().getTime() + 180000, status: true, repeat: false, label: 'test 4'}
-    ];
   }
 
   public deleteAlarm(i: number, e: Event, node: any): void {
