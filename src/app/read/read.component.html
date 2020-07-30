@@ -52,7 +52,7 @@
         matInput
         #verseEl
         (keyup)="searchScripture()"
-        (keyup)="validateVerse(verseEl, $event)"
+        (keyup)="validateVerse(verseEl)"
         [(ngModel)]="scripture.verse"
         placeholder="verse"
         [type]="'number'"

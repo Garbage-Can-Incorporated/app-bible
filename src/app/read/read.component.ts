@@ -105,8 +105,12 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.searchScripture();
   }
 
-  public validateVerse(el: any, e: any): void {
-    if (parseInt(el.value, 10) > this.verseList.length) {
+  public validateVerse(el?: any, verse?: string | number): void {
+    if (el && parseInt(el.value, 10) > this.verseList.length) {
+      this.scripture.verse = this.verseList.length;
+    }
+
+    if (verse && parseInt(verse as string, 10) > this.verseList.length) {
       this.scripture.verse = this.verseList.length;
     }
 
@@ -115,12 +119,14 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   public previousScripture(e: any): void {
     Object.assign(this.scripture, e);
+    this.validateVerse(undefined, this.scripture.verse);
     this.searchScripture();
     this.detectChange();
   }
 
-  public nextScripture(e: any): void {
+  public nextScripture(e: IScriptures): void {
     Object.assign(this.scripture, e);
+    this.validateVerse(undefined, this.scripture.verse);
     this.searchScripture();
     this.detectChange();
   }
