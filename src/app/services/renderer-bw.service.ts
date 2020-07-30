@@ -24,14 +24,18 @@ export class RendererBwService {
       autoHideMenuBar: true,
     }
   ): Promise<void> {
-    this.bw = new this._electron.remote.BrowserWindow(windowConfig);
+    if (this._electron.isElectronApp) {
+      this.bw = new this._electron.remote.BrowserWindow(windowConfig);
 
-    return this.bw
-      .loadURL(
-        url
-          .concat(`text=${ data.text }`)
-          .concat(`&via=${ data.via }`)
-          .concat(`&hashtags=${data.hashtags}`)
-      );
+      return this.bw
+        .loadURL(
+          url
+            .concat(`text=${ data.text }`)
+            .concat(`&via=${ data.via }`)
+            .concat(`&hashtags=${data.hashtags}`)
+        );
+    } else {
+      return Promise.reject(new Error('Not an Electron App'));
+    }
   }
 }
