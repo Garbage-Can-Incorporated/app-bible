@@ -8,7 +8,7 @@ import { RendererBwService } from '../services/renderer-bw.service';
 export class TwitterShareDirective {
   private url = <string> `https://twitter.com/intent/tweet?`;
   @Input() public text: string;
-  private hashtags = <string> `ev'ryword`;
+  private hashtags = <string> `ev_ryword`;
 
   constructor(
     private _bwService: RendererBwService
@@ -20,10 +20,10 @@ export class TwitterShareDirective {
       .createWindow(
         this.url,
         {
-          text: this.text, hashtags: this.hashtags, via: `ev'ryword`
+          text: this.text.concat('Shared from EvryWord Software'), hashtags: this.hashtags, via: `ev_ryword`
         }
       )
-      .then((value) => console.log(`[BW] window opened successfully ${value}`))
-      .catch((err) => console.log(`[BW] An error occured ${err}`));
+      .then(() => console.log(`[BW] window opened successfully`))
+      .catch((err) => console.log(`[BW] An error occured`, {err}));
   }
 }
