@@ -61,15 +61,21 @@ const createWindow = () => {
   ]);
   tray.setContextMenu(trayMenu);
 
-  const {
+  let {
     // width: displayWidth,
     height: displayHeight,
   } = screen
       .getPrimaryDisplay()
       .size;
 
-  win.setMinimumSize(768, displayHeight - 30);
+  if (process.platform === 'linux') {
+    displayHeight -= 28;
+  }
+
+  win.setMinimumSize(768, displayHeight);
   win.setMaximumSize(992, displayHeight);
+  win.minimize();
+  win.hide();
 
   win.loadURL(
       url.format({
@@ -77,7 +83,18 @@ const createWindow = () => {
         protocol: 'file:',
         slashes: true,
       })
-  );
+  ).then(() => {
+    // workaround for speech synthesis voices
+    win.webContents.reload();
+    win.loadURL(
+        url.format({
+          pathname: path.join(__dirname, `/dist/app-bible/index.html`),
+          protocol: 'file:',
+          slashes: true,
+        })
+    ).then(() => win.show());
+  });
+
 
   // The following is optional and will open the DevTools:
   win.webContents.openDevTools();
