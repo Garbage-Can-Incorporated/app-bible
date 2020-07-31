@@ -31,10 +31,12 @@ export class SpeechSynthesisService {
         }
 
         const utterance = this.speechSynthUtterance(content);
-        utterance.volume = this.volume;
+        const extras = this.getExtras;
+        utterance.volume = extras.volume || this.volume;
         utterance.lang = `en-NG`;
-        utterance.pitch = this.pitch;
-        utterance.rate = this.rate;
+        utterance.pitch = extras.pitch || this.pitch;
+        utterance.rate = extras.rate || this.rate;
+        console.log({extras});
 
         if (this.voicesList.length !== 0) {
           utterance.voice = this.voicesList[
@@ -103,7 +105,15 @@ export class SpeechSynthesisService {
   }
 
   public preferedVoice(): number {
-    const settings = JSON.parse(window.localStorage.getItem('settings'));
+    const settings = this.getSettings;
     return settings ? settings.voice : 1;
+  }
+
+  private get getExtras(): {pitch: number, rate: number, volume: number} {
+    return this.getSettings ? this.getSettings.extra : {} as {pitch: number, rate: number, volume: number};
+  }
+
+  private get getSettings(): {voice: number, extra: {pitch: number, rate: number, volume: number}} {
+    return JSON.parse(window.localStorage.getItem('settings'));
   }
 }
