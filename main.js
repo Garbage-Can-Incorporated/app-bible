@@ -69,7 +69,7 @@ const createWindow = () => {
       .size;
 
   if (process.platform === 'linux') {
-    displayHeight -= 28;
+    displayHeight -= 27;
   }
 
   win.setMinimumSize(768, displayHeight);
