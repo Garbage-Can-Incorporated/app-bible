@@ -6,13 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SpeechSynthesisService {
-  private synth = window.speechSynthesis;
+  private synth: SpeechSynthesis = window.speechSynthesis;
   private volume: number;
   private pitch = <number>1;
   private rate = <number>1;
   private voicesList: any[];
 
-  constructor() { }
+  constructor( ) {
+    this.synth.onvoiceschanged = function(this: SpeechSynthesis, ev: Event): any {
+      this.getVoices();
+    };
+  }
 
   public play (content: string): Observable<any> {
     return new Observable(
@@ -71,7 +75,7 @@ export class SpeechSynthesisService {
     return this.synth.pending;
   }
 
-  private speechSynthUtterance(content) {
+  private speechSynthUtterance(content: string) {
     return new SpeechSynthesisUtterance(content);
   }
 
@@ -83,8 +87,7 @@ export class SpeechSynthesisService {
     return this.volume;
   }
 
-  private getVoices(): any[] {
-    console.log({ voicesAvailable: speechSynthesis.getVoices() });
+  public getVoices(): SpeechSynthesisVoice[] {
     this.voicesList = speechSynthesis.getVoices();
     return this.voicesList;
   }
@@ -100,16 +103,7 @@ export class SpeechSynthesisService {
   }
 
   public preferedVoice(): number {
-    return this.voicesList.findIndex(
-      (cur) => cur.lang === 'en-US' ||
-                cur.voiceURI === 'Google US English' ||
-                cur.name === 'Google US English' ||
-                (
-                  cur.name.includes('English') &&
-                  cur.lang === 'en-US' &&
-                  cur.voiceURI.includes('Microsoft') &&
-                  (cur.voiceURI.includes('David') || cur.voiceURI.includes('Zira'))
-                  )
-    );
+    const settings = JSON.parse(window.localStorage.getItem('settings'));
+    return settings ? settings.voice : 1;
   }
 }

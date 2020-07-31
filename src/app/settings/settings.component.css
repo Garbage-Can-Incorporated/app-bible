@@ -1,0 +1,17 @@
+.app__settings--container,
+.app__settings--group {
+    flex-direction: column;
+}
+
+span {
+    color: #adadad;
+}
+
+mat-select {
+    width: 150px;
+    border-bottom: 1px solid #adadad;
+}
+
+.app__settings--selected__voice {
+    font-size: 12px;
+}

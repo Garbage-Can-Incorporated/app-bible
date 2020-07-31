@@ -1,1 +1,21 @@
-<p>settings works!</p>
+<div class="d-flex w-100 app__settings--container pt-3">
+    <div class="d-flex w-100 app__settings--group">
+        <span class="font-weight-bold mr-auto">Change Player Voice</span>
+
+        <ng-container *ngIf="voiceList.length > 0; else novoicelist">
+            <mat-select
+                class="my-2"
+                [(value)]="voiceIndex" 
+                [panelClass]="{'ml-3': true}"
+                disableOptionCentering>
+                <mat-option *ngFor="let voice of voiceList; index as i" [value]="i" (click)="setVoice(i)">{{voice.name.replace('espeak-ng', '').replace('_', ' ')}}</mat-option>
+            </mat-select>
+
+            <span *ngIf="voiceIndex !== undefined" class="mb-2 font-weight-bold app__settings--selected__voice">Currently selected voice is {{voiceList[voiceIndex].name }}</span>
+        </ng-container>
+
+        <ng-template #novoicelist>
+            <span class="my-2 font-weight-bold">No voice available yet...</span>
+        </ng-template>
+    </div>
+</div>
