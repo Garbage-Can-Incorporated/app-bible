@@ -20,6 +20,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [],
@@ -44,7 +45,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatSlideToggleModule,
     MatCheckboxModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSliderModule
   ],
   exports: [
     CommonModule,
@@ -67,7 +69,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatSlideToggleModule,
     MatCheckboxModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSliderModule
   ]
 })
 export class CoreModule { }
