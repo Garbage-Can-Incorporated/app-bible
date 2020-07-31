@@ -3,6 +3,8 @@
 # others
 test.js
 test-alarm.js
+/resource
+!/resource/bible-kjv.json
 
 # compiled output
 /dist
