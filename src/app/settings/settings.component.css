@@ -3,6 +3,15 @@
     flex-direction: column;
 }
 
+.app__settings--group__sub-group {
+    flex-direction: row;
+}
+
+.app__settings--container {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 span {
     color: #adadad;
 }

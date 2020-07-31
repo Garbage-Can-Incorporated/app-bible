@@ -11,11 +11,59 @@
                 <mat-option *ngFor="let voice of voiceList; index as i" [value]="i" (click)="setVoice(i)">{{voice.name.replace('espeak-ng', '').replace('_', ' ')}}</mat-option>
             </mat-select>
 
-            <span *ngIf="voiceIndex !== undefined" class="mb-2 font-weight-bold app__settings--selected__voice">Currently selected voice is {{voiceList[voiceIndex].name }}</span>
+            <span *ngIf="voiceIndex !== undefined" class="mb-2 font-weight-bold app__settings--selected__voice">Currently selected voice is {{voiceList[voiceIndex].name.replace('espeak-ng', '').replace('_', ' ') }}</span>
         </ng-container>
 
         <ng-template #novoicelist>
             <span class="my-2 font-weight-bold">No voice available yet...</span>
         </ng-template>
     </div>
+
+    <div class="d-flex w-100 app__settings--group mt-2">
+        <span class="font-weight-bold mr-auto">Set Volume, Pitch and Rate</span>
+
+        <div class="d-flex w-100">
+            <div class="d-flex app__settings--group__sub-group">
+                <span class="d-flex mb-2 mr-2 my-auto app__settings--selected__voice">Volume</span>
+                <mat-slider
+                    [color]="'warn'"
+                    [min]="0"
+                    [max]="100"
+                    [step]="1"
+                    [thumbLabel]="true"
+                    [(ngModel)]="volumeValue"
+                    (change)="sliderChange(0, $event)">
+                </mat-slider>
+            </div>
+            <div class="d-flex app__settings--group__sub-group">
+                <span class="d-flex mb-2 mr-2 my-auto app__settings--selected__voice">Pitch</span>
+                <mat-slider
+                    [color]="'warn'"
+                    [min]="0.1"
+                    [max]="2"
+                    [step]="0.1"
+                    [thumbLabel]="true"
+                    [(ngModel)]="pitchValue"
+                    (change)="sliderChange(1, $event)">
+                </mat-slider>
+            </div>
+            <div class="d-flex app__settings--group__sub-group">
+                <span class="d-flex mb-2 mr-2 my-auto app__settings--selected__voice">Rate</span>
+                <mat-slider
+                    [color]="'warn'"
+                    [min]="0.1"
+                    [max]="10"
+                    [step]="0.1"
+                    [thumbLabel]="true"
+                    [(ngModel)]="rateValue"
+                    (change)="sliderChange(2, $event)">
+                </mat-slider>
+            </div>
+        </div>
+    </div>
+
+    volume value - {{volumeValue}}
+    alt volume value - {{altVolumeValue}}
+    pitch value - {{pitchValue}}
+    rate value - {{rateValue}}
 </div>
