@@ -54,7 +54,7 @@ const createWindow = () => {
       type: 'normal',
       role: 'click',
       label: 'quit',
-      click: (mt, win, _) => {
+      click: () => {
         win.close();
       },
     },
