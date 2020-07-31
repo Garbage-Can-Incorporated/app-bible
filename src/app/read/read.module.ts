@@ -41,6 +41,7 @@ import { LabelComponent } from '../label/label.component';
 import { RepeatDaysComponent } from '../repeat-days/repeat-days.component';
 import { RepeatDaysCuratorPipe } from '../pipes/repeat-days-curator.pipe';
 import { FormatVersePipe } from '../pipes/format-verse.pipe';
+import { SettingsComponent } from '../settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { FormatVersePipe } from '../pipes/format-verse.pipe';
     LabelComponent,
     RepeatDaysComponent,
     RepeatDaysCuratorPipe,
-    FormatVersePipe
+    FormatVersePipe,
+    SettingsComponent
   ],
   imports: [
     CommonModule,
