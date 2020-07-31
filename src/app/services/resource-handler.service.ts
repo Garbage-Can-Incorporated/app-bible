@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ResourceHandlerService {
-  private url = './assets/resource/bible-all.json';
+  private url = './assets/resource/bible-kjv.json';
 
   constructor(
     private http: HttpClient
