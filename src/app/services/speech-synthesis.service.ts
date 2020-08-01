@@ -21,12 +21,13 @@ export class SpeechSynthesisService {
   public play (content: string): Observable<any> {
     return new Observable(
       (obs) => {
-        if (this.synth.speaking === true) {
-          console.log('was speaking!');
+        if (this.synth.paused === true) {
+          // console.log('was speaking!');
+          console.log('was paused!');
 
           this.synth.resume();
+          obs.next({ status: true, msg: 'Resumed speaking', synth: this.synth });
 
-          obs.next({ status: true, msg: 'Resumed speaking' });
           return;
         }
 
@@ -36,15 +37,12 @@ export class SpeechSynthesisService {
         utterance.lang = `en-NG`;
         utterance.pitch = extras.pitch || this.pitch;
         utterance.rate = extras.rate || this.rate;
-        console.log({extras});
 
         if (this.voicesList.length !== 0) {
-          utterance.voice = this.voicesList[
-            this.preferedVoice()
-          ];
+          utterance.voice = this.voicesList[this.preferedVoice()];
 
           this.synth.speak(utterance);
-          obs.next({status: true, msg: 'Success!'});
+          obs.next({status: true, msg: 'Success!', synth: this.synth});
 
           utterance.onend = () => {
             obs.complete();
@@ -63,6 +61,10 @@ export class SpeechSynthesisService {
 
   public stop(): void {
     this.synth.cancel();
+  }
+
+  public isPaused(): boolean {
+    return this.synth.paused;
   }
 
   public pause(): void {
