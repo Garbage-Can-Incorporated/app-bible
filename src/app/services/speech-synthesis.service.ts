@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscriber } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,14 @@ export class SpeechSynthesisService {
   private pitch = <number>1;
   private rate = <number>1;
   private voicesList: any[];
+  private voicesReadySubject: Subject<any> = new Subject();
 
-  constructor( ) {
+  constructor() {
+    this.voicesReadySubject
+      .subscribe(() => {
+        console.log('[Voice changed] voices arrived');
+        this.synth.resume();
+      });
     this.synth.onvoiceschanged = function(this: SpeechSynthesis, ev: Event): any {
       this.getVoices();
     };
@@ -21,15 +27,9 @@ export class SpeechSynthesisService {
   public play (content: string): Observable<any> {
     return new Observable(
       (obs) => {
-        if (this.synth.paused === true) {
-          // console.log('was speaking!');
-          console.log('was paused!');
+        console.log(`playing...`, {synth: this.synth});
 
-          this.synth.resume();
-          obs.next({ status: true, msg: 'Resumed speaking', synth: this.synth });
-
-          return;
-        }
+        this.resumeSpeaking(obs);
 
         const utterance = this.speechSynthUtterance(content);
         const extras = this.getExtras;
@@ -59,6 +59,18 @@ export class SpeechSynthesisService {
     );
   }
 
+  public resumeSpeaking(obs?: Subscriber<any>): void {
+    if ((this.synth.paused || this.synth.speaking) === true) {
+      // console.log('was speaking!');
+      console.log('was paused!');
+
+      this.synth.resume();
+      obs.next({ status: true, msg: 'Resumed speaking', synth: this.synth });
+
+      return;
+    }
+  }
+
   public stop(): void {
     this.synth.cancel();
   }
@@ -70,7 +82,7 @@ export class SpeechSynthesisService {
   public pause(): void {
     if (this.synth.paused === false) {
       this.synth.pause();
-      console.log('original pause');
+      console.log('original pause', {synth: this.synth});
       return;
     }
   }
@@ -93,6 +105,8 @@ export class SpeechSynthesisService {
 
   public getVoices(): SpeechSynthesisVoice[] {
     this.voicesList = speechSynthesis.getVoices();
+    console.log(`[Get Voices]`, {voicesList: this.voicesList});
+    this.voicesReadySubject.next(this.voicesList);
     return this.voicesList;
   }
 

@@ -41,9 +41,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
       this.initial = 0;
     }
 
-    // this.watchFocus.emit(this.initial);
-    console.log({ _init: this.initial });
-    this.playChapter();
+    this.playChapter(this.initial);
   }
 
   public next(): void {
@@ -55,19 +53,20 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
       this.initial = 0;
     }
 
-    // this.watchFocus.emit(this.initial);
-    this.playChapter();
+    this.playChapter(this.initial);
   }
 
-  public playChapter() {
+  public playChapter(ind?: number) {
     this.playerState = true;
 
-    if (this.initial === 0) {
+    // if (this.initial === 0) {
       this.watchFocus.emit(this.initial);
-    }
+    // }
+
+    console.log(`[play chapter]`, {ind, initial: this.initial});
 
     this._player
-      .play(this.passages[ this.initial ])
+      .play(this.passages[ ind || this.initial ])
       .subscribe(
         (data) => console.log({ data }),
         // scrollIntoView
@@ -81,6 +80,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
               `);
         },
         () => {
+          console.log('done!', {playerState: this.playerState});
           // end of list EOL
           if (this.EOPassage) {
             console.log(`=========`);
@@ -106,7 +106,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
             console.log(`=========`);
             console.log(`playing next on the list`, {prev: this.initial, next: this.initial + 1});
             this.initial += 1;
-            this.watchFocus.emit(this.initial); // - removed
+            this.watchFocus.emit(this.initial);
             this.playChapter();
             console.log(`=========`);
           }
@@ -116,9 +116,14 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
 
   public pause(): void {
     this._player.pause();
+    this.togglePlayerState();
   }
 
-  public stopPlay(): void {
+  public stopPlay(out?: boolean): void {
+    if (out) {
+      this.playerState = false;
+    }
+
     this._player.stop();
   }
 
