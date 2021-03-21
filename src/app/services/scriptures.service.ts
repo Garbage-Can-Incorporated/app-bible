@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinct } from 'rxjs/operators';
 
-import { ResourceHandlerService } from './resource-handler.service';
+import { BibleElement, ResourceHandlerService } from './resource-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScripturesService {
-  private resource: any;
+  private resource: Array<BibleElement>;
+  private semiIndex: {[key in string]: Array<BibleElement>} = {};
+
   constructor(
     private _resources: ResourceHandlerService
   ) { }
@@ -30,27 +32,15 @@ export class ScripturesService {
         }
       });
     });
-      // .pipe(
-      //     map((v: Array<any>) => v.map((vv) => vv.split(' ').slice(2).join(' ')))
-      //   );
   }
 
   public getVerseLength(bookTitle: string = 'genesis', chapNo: number = 1): Observable<number> {
     return new Observable((obs) => {
       this.getBible((book: any): void => {
-        const passage = book
-          .find((cur: any) => {
-            return (
-              cur.bookTitle === bookTitle.toLowerCase() &&
-              cur.chapterNo === `chapter-${ chapNo }`
-            );
-          });
+        const chapter = this.semiIndex[bookTitle].find((cur) => cur.chapterNo === `chapter-${ chapNo }`);
 
-        if (passage !== undefined) {
-          obs.next(
-            passage.verses.length
-            // .filter((cur: any) => cur !== undefined)
-          );
+        if (chapter !== undefined) {
+          obs.next(chapter.verses.length);
         }
       });
     });
@@ -58,16 +48,9 @@ export class ScripturesService {
 
   public getChapterLength(bookTitle: string = 'genesis'): Observable<number> {
     return new Observable((obs) => {
-      this.getBible((book: any): void => {
-        obs.next(book
-          .filter((cur: any) => {
-            if (cur.bookTitle === bookTitle.toLowerCase()) {
-              return cur.chapterNo;
-            }
-          })
-          .filter((cur: any) => cur !== undefined)
-          .length
-        );
+      this.getBible((): void => {
+        const len = this.semiIndex[bookTitle].length;
+        obs.next(len || 0);
       });
     });
   }
@@ -86,15 +69,16 @@ export class ScripturesService {
     );
   }
 
-  private getBible(cb: any): void {
+  private getBible(cb: (data?: Array<BibleElement>) => any): void {
     if (this.resource !== undefined) {
       cb(this.resource);
     } else {
       this._resources.fetchResource()
         .subscribe(
-          (data) => {
-            this.resource = data.request;
-            cb(data.request);
+          (data: Array<BibleElement>) => {
+            this.resource = data;
+            this.semiIndexList();
+            cb(data);
           },
           (error) => {
             console.log({ error });
@@ -102,6 +86,40 @@ export class ScripturesService {
           }
         );
     }
+  }
+
+  private semiIndexList(): void {
+    let knownKeys: Array<string>;
+
+    if (knownKeys === undefined) {
+      // take first element's key as model, keys are circular, same for all elements
+      knownKeys = Object.keys(this.resource[0]);
+    }
+
+    knownKeys.forEach((key) => {
+      if (key.toLowerCase() !== 'verses' && key.toLowerCase() !== 'version') {
+        this.resource.forEach((resource) => {
+          if (this.semiIndex[resource[key]] === undefined) {
+            this.semiIndex[resource[key]] = [];
+          }
+
+          if (this.semiIndex[resource[key]].length === 0) {
+            this.semiIndex[resource[key]] = this.resource
+              .map(r => {
+                if (resource[key] === r[key]) {
+                  return r;
+                }
+              }).filter((e) => e !== undefined);
+          }
+        });
+      }
+    });
+
+    // console.log(this.semiIndex);
+  }
+
+  public resetResource(): void {
+    this.resource = undefined;
   }
 
   public get _getBible(): Observable<any> {

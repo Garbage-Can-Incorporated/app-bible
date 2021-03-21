@@ -5,6 +5,7 @@ const url = require('url');
 const ipcFavorite = require('./handlers/ipc-favorite');
 const ipcAlarm = require('./handlers/ipc-alarm');
 const ipcSearch = require('./handlers/ipc-search');
+const ipcResource = require('./handlers/ipc-resource.handler');
 
 let win;
 
@@ -103,6 +104,7 @@ const createWindow = () => {
     ipcFavorite();
     ipcAlarm();
     ipcSearch();
+    ipcResource();
   });
 
   win.on('window-all-closed', app.quit);
