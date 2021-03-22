@@ -11,7 +11,6 @@ ipcMain.on('fetch-resource', (e, data) => {
             {encoding: 'utf-8'}
         );
     
-        console.log(JSON.parse(resource).request[0]);
         versionsMap[data.name] = JSON.parse(resource).request;
     }
 

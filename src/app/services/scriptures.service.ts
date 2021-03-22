@@ -16,19 +16,13 @@ export class ScripturesService {
     private _resources: ResourceHandlerService
   ) { }
 
-  public getPassage(b: string, c: number): Observable<any> {
+  public getPassage(bookTitle: string = 'genesis', chapNo: number = 1): Observable<any> {
     return new Observable((obs) => {
-      this.getBible((book: any): void => {
-        const passage = book
-          .find((cur: any) => {
-            return (
-              cur.bookTitle === b.toLowerCase() &&
-              cur.chapterNo === `chapter-${ c }`
-            );
-          });
+      this.getBible((): void => {
+        const chapter = this.semiIndex[`${bookTitle}-chapter-${ chapNo }`][0];
 
-        if (passage !== undefined) {
-          obs.next(passage.verses);
+        if (chapter !== undefined) {
+          obs.next(chapter.verses);
         }
       });
     });
@@ -36,8 +30,8 @@ export class ScripturesService {
 
   public getVerseLength(bookTitle: string = 'genesis', chapNo: number = 1): Observable<number> {
     return new Observable((obs) => {
-      this.getBible((book: any): void => {
-        const chapter = this.semiIndex[bookTitle].find((cur) => cur.chapterNo === `chapter-${ chapNo }`);
+      this.getBible((): void => {
+        const chapter = this.semiIndex[`${bookTitle}-chapter-${ chapNo }`][0];
 
         if (chapter !== undefined) {
           obs.next(chapter.verses.length);
@@ -49,8 +43,12 @@ export class ScripturesService {
   public getChapterLength(bookTitle: string = 'genesis'): Observable<number> {
     return new Observable((obs) => {
       this.getBible((): void => {
-        const len = this.semiIndex[bookTitle].length;
-        obs.next(len || 0);
+        const resource = this.semiIndex[bookTitle];
+
+        if (resource !== undefined) {
+          const len = this.semiIndex[bookTitle].length;
+          obs.next(len);
+        }
       });
     });
   }
@@ -81,7 +79,7 @@ export class ScripturesService {
             cb(data);
           },
           (error) => {
-            console.log({ error });
+            console.error({ error });
             cb(error);
           }
         );
@@ -96,26 +94,34 @@ export class ScripturesService {
       knownKeys = Object.keys(this.resource[0]);
     }
 
-    knownKeys.forEach((key) => {
-      if (key.toLowerCase() !== 'verses' && key.toLowerCase() !== 'version') {
+    knownKeys.filter(key => (key !== 'verses' || (key as string) !== 'version'))
+      .forEach((key) => {
         this.resource.forEach((resource) => {
-          if (this.semiIndex[resource[key]] === undefined) {
-            this.semiIndex[resource[key]] = [];
-          }
+          const indexKey = key === 'bookTitle' ? resource[key] : `${resource.bookTitle}-${resource[key]}`;
 
-          if (this.semiIndex[resource[key]].length === 0) {
-            this.semiIndex[resource[key]] = this.resource
+          if (this.semiIndex[indexKey] === undefined) {
+            this.semiIndex[indexKey] = [];
+          }
+          
+          if (this.semiIndex[indexKey].length === 0) {
+            if (key === 'bookTitle') {
+              this.semiIndex[indexKey] = this.resource
               .map(r => {
-                if (resource[key] === r[key]) {
+                if (indexKey === r[key]) {
                   return r;
                 }
               }).filter((e) => e !== undefined);
+            } else {
+              this.semiIndex[indexKey] = this.resource
+                .map(r => {
+                  if (resource[key] === r[key] && resource.bookTitle === r.bookTitle) {
+                    return r;
+                  }
+                }).filter((e) => e !== undefined);
+            }
           }
         });
-      }
-    });
-
-    // console.log(this.semiIndex);
+      });
   }
 
   public resetResource(): void {
