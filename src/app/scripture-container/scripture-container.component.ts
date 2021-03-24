@@ -13,21 +13,16 @@ export class ScriptureContainerComponent implements OnInit, AfterContentChecked,
   @Input() resource: IScriptures;
   public book: string;
 
-  private st: any;
-
   constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() { }
 
   ngAfterContentChecked(): void {
     this.book = this.resource.book.toUpperCase();
-    // this.st = setTimeout(() => { }, 1500);
     this.detectChange();
   }
 
-  ngOnDestroy() {
-    // clearTimeout(this.st);
-  }
+  ngOnDestroy() {}
 
   public detectChange(): void {
     this.changeDetector.detach();

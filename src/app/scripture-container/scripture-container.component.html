@@ -1,7 +1,7 @@
 <div class="d-flex w-100 __app-scriptures-container">
-  <span class="d-flex __app-scriptures-book text-uppercase mt-3">
+  <span class="d-flex flex-wrap __app-scriptures-book text-uppercase mt-3">
     <p class="my-auto ml-0 mr-2 text-capitalize">The book of</p>
-    {{ book }}
+    <p class="my-auto" style="font-size: 36px; color: #e95344;"> {{book}}</p>
   </span>
 
   <div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100">
