@@ -28,7 +28,7 @@ const getResource = (cb) => {
     cb(resource.request);
   } else {
     fs.readFile(
-        path.join(path.dirname(__dirname), '/resource/bible-all.json'),
+        path.join(path.dirname(__dirname), '/resource/bible-kjv.json'),
         {encoding: 'utf8'},
         (err, data) => {
           if (err) {

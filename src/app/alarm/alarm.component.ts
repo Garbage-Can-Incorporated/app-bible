@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 
 import { DialogService } from '../services/dialog.service';
 import { AlarmIpcService } from '../services/alarm-ipc.service';
@@ -23,7 +23,9 @@ export class AlarmComponent implements OnInit {
   constructor(
     private _dialog: DialogService,
     private _alarmIpc: AlarmIpcService,
-    private _snackbar: SnackbarService
+    private _snackbar: SnackbarService,
+    private changeDetector: ChangeDetectorRef,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -40,9 +42,8 @@ export class AlarmComponent implements OnInit {
     this._alarmIpc
       .deleteAlarm({ i });
 
-    console.log({ node });
-
     node.remove();
+    this.detectChange();
   }
 
   public repeatDaySelected(i: number, data: {status: boolean, day: number}): void {
@@ -69,6 +70,7 @@ export class AlarmComponent implements OnInit {
     }
 
     this.alarms = [ ...this.alarms ];
+    this.detectChange();
   }
 
   public repeatChange(data: any, i: number): void {
@@ -85,6 +87,7 @@ export class AlarmComponent implements OnInit {
     this._alarmIpc
       .editAlarmProp({ i, repeat: this.alarms[ i ].repeat });
     this.alarms = [ ...this.alarms ];
+    this.detectChange();
   }
 
   public statusChange(data: any, i: number): void {
@@ -95,52 +98,58 @@ export class AlarmComponent implements OnInit {
   }
 
   public setLabel(label: string, i: number): void {
-    const dialog = this._dialog
-      .openDialog(
-        {label: label === '' ? '' : label},
-        LabelComponent,
-        { height: 'fit-content', disableClose: true }
-      );
+    this.zone.run((): void => {
+      const dialog = this._dialog
+        .openDialog(
+          {label: label === '' ? '' : label},
+          LabelComponent,
+          { height: 'fit-content', disableClose: true }
+        );
 
-    dialog.afterClosed()
-      .subscribe(
-        (data) => {
-          if (data) {
-            this.alarms[ i ].label = data.label;
-            this._alarmIpc
-              .editAlarmProp({ i, label: this.alarms[ i ].label });
+      dialog.afterClosed()
+        .subscribe(
+          (data) => {
+            if (data) {
+              this.alarms[ i ].label = data.label;
+              this._alarmIpc
+                .editAlarmProp({ i, label: this.alarms[ i ].label });
+            }
           }
-        }
-      );
+        );
+    });
   }
 
   public openAlarmTimeDialog(time: Date, e: Event, i: number): void {
     e.stopImmediatePropagation();
 
-    const dialog = this._dialog
-      .openDialog(
-        {
-          hour: new Date(time).getHours(),
-          minute: new Date(time).getMinutes(),
-        },
-        TimeComponent,
-        { height: 'fit-content', disableClose: true }
-    );
-
-    dialog.afterClosed()
-      .subscribe(
-        (data) => {
-          if (data) {
-            this.setTime = new Date(
-              new Date().setHours(data.hour, data.minute)
-            ).toJSON();
-
-            this.alarms[ i ].time = new Date(this.setTime).getTime();
-            this._alarmIpc
-              .editAlarmProp({ i, time: this.alarms[ i ].time });
-          }
-        }
+    this.zone.run((): void => {
+      const dialog = this._dialog
+        .openDialog(
+          {
+            hour: new Date(time).getHours(),
+            minute: new Date(time).getMinutes(),
+          },
+          TimeComponent,
+          { height: 'fit-content', disableClose: true, width: 'fit-content'}
       );
+
+      dialog.afterClosed()
+        .subscribe(
+          (data) => {
+            if (data) {
+              this.setTime = new Date(
+                new Date().setHours(data.hour, data.minute)
+              ).toJSON();
+
+              this.alarms[ i ].time = new Date(this.setTime).getTime();
+              this._alarmIpc
+                .editAlarmProp({ i, time: this.alarms[ i ].time });
+            }
+
+            this.detectChange();
+          }
+        );
+    });
   }
 
   public expandCollapse(el: any, days): void {
@@ -163,38 +172,43 @@ export class AlarmComponent implements OnInit {
           days.classList.replace('d-flex', 'd-none');
           days.nextSibling.classList.replace('d-flex', 'd-none');
         }
+
+        this.detectChange();
       }
     });
   }
 
   public openAddDialog(): void {
-    const dialog = this._dialog
-      .openDialog(
-        {},
-        TimeComponent,
-        { height: 'fit-content', disableClose: true }
-      );
+    this.zone.run((): void => {
+      const dialog = this._dialog
+        .openDialog(
+          {},
+          TimeComponent,
+          { height: 'fit-content', disableClose: true, width: 'fit-content' }
+        );
 
-    dialog.afterClosed()
-      .subscribe(
-        (data) => {
-          if (data) {
-            this.setTime = new Date(
-              new Date().setHours(data.hour, data.minute)
-            ).toJSON();
+      dialog.afterClosed()
+        .subscribe(
+          (data) => {
+            if (data) {
+              this.setTime = new Date(
+                new Date().setHours(data.hour, data.minute)
+              ).toJSON();
 
-            this._alarmIpc.submitAlarm({
-              time: new Date(this.setTime).getTime(),
-              status: true,
-              repeat: false,
-              days: [],
-              label: ''
-            });
+              this._alarmIpc.submitAlarm({
+                time: new Date(this.setTime).getTime(),
+                status: true,
+                repeat: false,
+                days: [],
+                label: ''
+              });
 
-            this._alarmIpc.getAlarms();
+              this._alarmIpc.getAlarms();
+            }
           }
-        }
-      );
+        );
+
+    });
   }
 
   private setupListeners(): void {
@@ -242,6 +256,7 @@ export class AlarmComponent implements OnInit {
           ];
 
           this.trimAlarmItem(this.alarms);
+          this.detectChange();
         },
         (error) => console.log({ error })
       );
@@ -272,6 +287,7 @@ export class AlarmComponent implements OnInit {
     }
 
     this.i++;
+
     if (this.i < this.alarms.length) {
       this.trimAlarmItem(alarms);
     }
@@ -281,5 +297,12 @@ export class AlarmComponent implements OnInit {
     }
 
     this.alarms = [ ...this.filteredAlarms ];
+    this.detectChange();
+  }
+
+  public detectChange(): void {
+    this.changeDetector.detach();
+    this.changeDetector.reattach();
+    this.changeDetector.detectChanges();
   }
 }

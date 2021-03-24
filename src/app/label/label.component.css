@@ -3,5 +3,12 @@
 }
 
 [mat-dialog-actions] button {
-  font-size: 10px;
+  font-size: 12px;
+}
+
+.app--label__dialog {
+  background-color: #292828;
+  height: fit-content;
+  flex-direction: column;
+  overflow: hidden;
 }

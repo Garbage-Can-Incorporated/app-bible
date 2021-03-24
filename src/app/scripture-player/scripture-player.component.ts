@@ -33,37 +33,40 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   }
 
   public previous(): void {
+    this.playerState = false;
     this.stopPlay();
-
     this.initial -= 1;
 
     if (this.passageUnderflow) {
       this.initial = 0;
     }
 
-    console.log({ _init: this.initial });
-    this.playChapter();
+    this.playChapter(this.initial);
   }
 
   public next(): void {
+    this.playerState = false;
     this.stopPlay();
-
     this.initial += 1;
+
     if (this.passageOverflow) {
       this.initial = 0;
     }
 
-    console.log({ init_: this.initial });
-    this.playChapter();
+    this.playChapter(this.initial);
   }
 
-  public playChapter() {
+  public playChapter(ind?: number) {
     this.playerState = true;
 
-    this.watchFocus.emit(this.initial + 1);
-    console.log({ playInit: this.initial });
+    // if (this.initial === 0) {
+      this.watchFocus.emit(this.initial);
+    // }
+
+    console.log(`[play chapter]`, {ind, initial: this.initial});
+
     this._player
-      .play(this.passages[ this.initial ])
+      .play(this.passages[ ind || this.initial ])
       .subscribe(
         (data) => console.log({ data }),
         // scrollIntoView
@@ -77,13 +80,20 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
               `);
         },
         () => {
-          // console.log('done!');
-          // console.log('last played => ', { lastPlayed: this.initial + 1 });
-
+          console.log('done!', {playerState: this.playerState});
           // end of list EOL
           if (this.EOPassage) {
-            this.stopPlay();
+            console.log(`=========`);
+            this.playerState = false;
+            console.log(`stopping player`, {prev: this.initial});
             this.initial = 0;
+            this.watchFocus.emit(0);
+            console.log(
+              `stopping player`,
+              {current: this.initial, playerState: this.playerState, repeatAll: this.repeatAll}
+            );
+            console.log(`=========`);
+            this.stopPlay();
 
             // repeat all if repeat enabled
             if (this.repeatAll === true) {
@@ -93,10 +103,12 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
 
           // play next on the list
           if (this.playerState === true) {
+            console.log(`=========`);
+            console.log(`playing next on the list`, {prev: this.initial, next: this.initial + 1});
             this.initial += 1;
-            // console.log('currently being played', { currentlyPlayed: this.initial + 1 });
-            this.watchFocus.emit(this.initial + 1);
+            this.watchFocus.emit(this.initial);
             this.playChapter();
+            console.log(`=========`);
           }
         }
       );
@@ -104,11 +116,15 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
 
   public pause(): void {
     this._player.pause();
+    this.togglePlayerState();
   }
 
-  public stopPlay(): void {
+  public stopPlay(out?: boolean): void {
+    if (out) {
+      this.playerState = false;
+    }
+
     this._player.stop();
-    this.togglePlayerState();
   }
 
   public togglePlayerState(): void {
@@ -124,6 +140,6 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   }
 
   private get EOPassage(): boolean {
-    return (this.initial + 1) >= this.passages.length;
+    return (this.initial) === (this.passages.length - 1);
   }
 }

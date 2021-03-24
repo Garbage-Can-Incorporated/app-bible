@@ -9,7 +9,7 @@
   height: var(--player-height);
   background-color: var(--white);
   box-shadow: 0 0 4px 0px #adb5bdfc;
-  z-index: 1000;
+  z-index: 500;
   border-top-left-radius: var(--player-bottom-radius);
   border-top-right-radius: var(--player-bottom-radius);
   border-bottom-left-radius: var(--player-bottom-radius);
@@ -31,6 +31,7 @@
 
 .__app-scriptures-player i:first-of-type:hover,
 .__app-scriptures-player i:nth-child(3):hover,
+.__app-scriptures-player i:nth-child(4):hover,
 .__app-scriptures-player i:last-of-type:hover {
   color: var(--dark-red);
   /* box-shadow: 0 0 3px 1px var(--dark-grey); */
@@ -51,8 +52,8 @@
   content: '1';
   padding: 3px 5px;
   position: absolute;
-  bottom: 31%;
-  right: 23%;
+  bottom: 10%;
+  right: 25%;
   font-size: 8px;
   color: white;
   background-color: purple;

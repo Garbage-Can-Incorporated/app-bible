@@ -5,6 +5,7 @@ const url = require('url');
 const ipcFavorite = require('./handlers/ipc-favorite');
 const ipcAlarm = require('./handlers/ipc-alarm');
 const ipcSearch = require('./handlers/ipc-search');
+const ipcResource = require('./handlers/ipc-resource.handler');
 
 let win;
 
@@ -43,6 +44,7 @@ const createWindow = () => {
     webPreferences: {
       experimentalFeatures: true,
       nodeIntegration: true,
+      scrollBounce: true
     },
   });
 
@@ -54,22 +56,28 @@ const createWindow = () => {
       type: 'normal',
       role: 'click',
       label: 'quit',
-      click: (mt, win, _) => {
+      click: () => {
         win.close();
       },
     },
   ]);
   tray.setContextMenu(trayMenu);
 
-  const {
+  let {
     // width: displayWidth,
     height: displayHeight,
   } = screen
       .getPrimaryDisplay()
       .size;
 
-  win.setMinimumSize(768, displayHeight - 30);
+  if (process.platform === 'linux') {
+    displayHeight -= 27;
+  }
+
+  win.setMinimumSize(768, displayHeight);
   win.setMaximumSize(992, displayHeight);
+  win.minimize();
+  win.hide();
 
   win.loadURL(
       url.format({
@@ -77,7 +85,18 @@ const createWindow = () => {
         protocol: 'file:',
         slashes: true,
       })
-  );
+  ).then(() => {
+    // workaround for speech synthesis voices
+    win.webContents.reload();
+    win.loadURL(
+        url.format({
+          pathname: path.join(__dirname, `/dist/app-bible/index.html`),
+          protocol: 'file:',
+          slashes: true,
+        })
+    ).then(() => win.show());
+  });
+
 
   // The following is optional and will open the DevTools:
   win.webContents.openDevTools();
@@ -86,6 +105,7 @@ const createWindow = () => {
     ipcFavorite();
     ipcAlarm();
     ipcSearch();
+    ipcResource();
   });
 
   win.on('window-all-closed', app.quit);

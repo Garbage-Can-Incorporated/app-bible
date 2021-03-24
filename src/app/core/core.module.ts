@@ -19,6 +19,8 @@ import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [],
@@ -42,7 +44,9 @@ import { MatDividerModule } from '@angular/material/divider';
     MatCardModule,
     MatSlideToggleModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSelectModule,
+    MatSliderModule
   ],
   exports: [
     CommonModule,
@@ -64,7 +68,9 @@ import { MatDividerModule } from '@angular/material/divider';
     MatCardModule,
     MatSlideToggleModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSelectModule,
+    MatSliderModule
   ]
 })
 export class CoreModule { }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { ElectronService } from 'ngx-electron';
+import {SnackbarService} from './snackbar.service';
 
 import { IAlarmDetail } from '../interfaces/i-alarm-detail';
 
@@ -16,19 +17,30 @@ export class AlarmIpcService {
   private deleteAlarmSubject: Subject<{ message: string }> = new Subject();
 
   constructor(
-    private _electron?: ElectronService,
+    private snackbar: SnackbarService,
+    private _electron?: ElectronService
   ) { }
 
   public listenDltResp(): void {
-    this._electron.ipcRenderer
-      .on('delete-alarm-success', (_, _data) => {
-        this.deleteAlarmSubject.next(_data);
-      });
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .on('delete-alarm-success', (_, _data) => {
+          this.deleteAlarmSubject.next(_data);
+        });
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public deleteAlarm(data: {i: number}): void {
-    this._electron.ipcRenderer
-      .send('delete-alarm', data);
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .send('delete-alarm', data);
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public repeatDayChanged(): void {
@@ -39,55 +51,90 @@ export class AlarmIpcService {
   }
 
   public removeRepeatDay(data: { i: number, day: number }): void {
-    this._electron.ipcRenderer
-      .send(
-        'remove-repeat-day',
-        data,
-      );
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .send(
+          'remove-repeat-day',
+          data,
+        );
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
-  public addRepeatDay(data: { i: number, day: number }): void  {
-    this._electron.ipcRenderer
-      .send(
-        'add-repeat-day',
-        data,
-      );
+  public addRepeatDay(data: {i: number, day: number}): void  {
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .send(
+          'add-repeat-day',
+          data,
+        );
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public editAlarmProp(data: {i: number, [key: string]: any}): void {
-    this._electron.ipcRenderer
-      .send(
-        'edit-alarm-prop',
-        data,
-      );
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .send(
+          'edit-alarm-prop',
+          data,
+        );
+    }  else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public editComplete(): void {
-    this._electron.ipcRenderer
-      .on('edit-alarm-prop-success', (e, data) => {
-        this.editAlarmSubject.next(data);
-      });
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .on('edit-alarm-prop-success', (e, data) => {
+          this.editAlarmSubject.next(data);
+        });
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public submitAlarm(alarm: IAlarmDetail): void {
-    this._electron.ipcRenderer
-      .send('add-alarm', alarm);
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .send('add-alarm', alarm);
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public alarmAdditionSuccess(): void {
-    this._electron.ipcRenderer
-      .on('add-alarm-success', (e, data) => {
-        this.addAlarmSubject.next(data);
-      });
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .on('add-alarm-success', (e, data) => {
+          this.addAlarmSubject.next(data);
+        });
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public getAlarms(): void {
-    this._electron.ipcRenderer.send('get-all-alarms');
+    if (this.isElectron) {
+      this._electron.ipcRenderer.send('get-all-alarms');
 
-    this._electron.ipcRenderer
-      .on('all-alarms', (e, data) => {
-        this.allAlarmsSubject.next(data);
-      });
+      this._electron.ipcRenderer
+        .on('all-alarms', (_, data) => {
+          this.allAlarmsSubject.next(data);
+        });
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public getSubjects(): { [ key in string ]: Subject<any> } {
@@ -98,5 +145,9 @@ export class AlarmIpcService {
       repeatDayRespSubject: this.repeatDayRespSubject,
       deleteAlarmSubject: this.deleteAlarmSubject
     };
+  }
+
+  private get isElectron(): boolean {
+    return this._electron.isElectronApp;
   }
 }

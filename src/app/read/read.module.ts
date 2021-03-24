@@ -10,6 +10,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { DialogService } from '../services/dialog.service';
 import { DbIpcService } from '../services/db-ipc.service';
 import { AlarmIpcService } from '../services/alarm-ipc.service';
+import {LastReadService} from '../services/last-read.service';
 
 import { AppComponent } from '../app.component';
 import { ReadComponent } from './read.component';
@@ -39,6 +40,8 @@ import { AlarmItemControlDirective } from '../directives/alarm-item-control.dire
 import { LabelComponent } from '../label/label.component';
 import { RepeatDaysComponent } from '../repeat-days/repeat-days.component';
 import { RepeatDaysCuratorPipe } from '../pipes/repeat-days-curator.pipe';
+import { FormatVersePipe } from '../pipes/format-verse.pipe';
+import { SettingsComponent } from '../settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,9 @@ import { RepeatDaysCuratorPipe } from '../pipes/repeat-days-curator.pipe';
     AlarmItemControlDirective,
     LabelComponent,
     RepeatDaysComponent,
-    RepeatDaysCuratorPipe
+    RepeatDaysCuratorPipe,
+    FormatVersePipe,
+    SettingsComponent
   ],
   imports: [
     CommonModule,
@@ -82,7 +87,8 @@ import { RepeatDaysCuratorPipe } from '../pipes/repeat-days-curator.pipe';
     SnackbarService,
     DialogService,
     DbIpcService,
-    RendererBwService, AlarmIpcService
+    RendererBwService, AlarmIpcService,
+    LastReadService
   ],
   entryComponents: [
     MoreComponent,

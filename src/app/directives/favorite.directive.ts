@@ -1,4 +1,4 @@
-import { Directive, HostListener, OnInit, Input, ElementRef, OnChanges, OnDestroy } from '@angular/core';
+import { Directive, HostListener, OnInit, Input, ElementRef, OnChanges, OnDestroy, NgZone, ChangeDetectorRef } from '@angular/core';
 
 import { ElectronService } from 'ngx-electron';
 import { SnackbarService } from '../services/snackbar.service';
@@ -20,7 +20,9 @@ export class FavoriteDirective implements OnInit, OnDestroy, OnChanges {
     private _electron: ElectronService,
     private _snackbar: SnackbarService,
     private el: ElementRef,
-    private _dbIPC: DbIpcService
+    private _dbIPC: DbIpcService,
+    private zone: NgZone,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -57,6 +59,8 @@ export class FavoriteDirective implements OnInit, OnDestroy, OnChanges {
 
   @HostListener('click', [ '$event' ])
   onClick(e: Event): void {
+    console.log(`[Fav Directive]`, {toggle: this.toggleIcon});
+
     if (this.toggleIcon) {
       // remove from fav db
       this.removeFavVerse(e.target);
@@ -82,16 +86,19 @@ export class FavoriteDirective implements OnInit, OnDestroy, OnChanges {
     this._electron.ipcRenderer.on(
       'fav-item-removal-status',
       (e, data: IpcMainResponse) => {
+        console.log(`[Fav Directive]`, {data});
+
         if (data.status) {
-          this.addFavIcon(evt);
-        } else {
           this.removeFavIcon(evt);
+        } else {
+          this.addFavIcon(evt);
         }
 
-        // remove snackbar
-        this._snackbar
+        this.zone.run((): void => {
+          this._snackbar
           .showSnackbar(data.message);
-      }
+        });
+    }
     );
   }
 
@@ -103,7 +110,6 @@ export class FavoriteDirective implements OnInit, OnDestroy, OnChanges {
       );
 
       this.waitFavAdditionStatus(e);
-
       return;
     }
   }
@@ -118,9 +124,11 @@ export class FavoriteDirective implements OnInit, OnDestroy, OnChanges {
           this.removeFavIcon(evt);
         }
 
-        // remove snackbar
-        this._snackbar
+        this.zone.run((): void => {
+          this._snackbar
           .showSnackbar(data.message);
+        });
+        this.detectChange();
       }
     );
   }
@@ -129,7 +137,6 @@ export class FavoriteDirective implements OnInit, OnDestroy, OnChanges {
     if (el.classList.contains('far')) {
       el.classList.replace('far', 'fa');
       el.classList.add('__red--color');
-      return;
     }
   }
 
@@ -137,11 +144,16 @@ export class FavoriteDirective implements OnInit, OnDestroy, OnChanges {
     if (el.classList.contains('fa')) {
       el.classList.replace('fa', 'far');
       el.classList.remove('__red--color');
-      return;
     }
   }
 
   private get isElectronApp(): boolean {
     return this._electron.isElectronApp;
+  }
+
+  public detectChange(): void {
+    this.changeDetector.detach();
+    this.changeDetector.reattach();
+    this.changeDetector.detectChanges();
   }
 }

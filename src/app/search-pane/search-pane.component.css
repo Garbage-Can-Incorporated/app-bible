@@ -35,6 +35,11 @@
   flex-direction: row;
 }
 
+.__app--scripture__search--console {
+  position: sticky;
+  top: 2rem;
+}
+
 .__app--scripture__result--header {
   font-size: 10.5px;
 }
@@ -106,17 +111,18 @@
 }
 
 .mdl-textfield__input {
-  border: 1px solid #f02266;
+  border: none;
+  box-shadow: 0 0 2.5px 0.3px #adadad;
   border-radius: 25px;
-  height: 45px;
-  padding: 7px 10px;
+  height: 40px;
+  padding: 7px 15px;
 }
 
 /* small device for the web */
 @media (max-width: 374px) {
   .__app-scripture-search-pane {
     width: 240px;
-    z-index: 10000;
+    z-index: 800;
   }
 
   .__app--pane__action--container {
@@ -128,7 +134,7 @@
 @media (min-width: 992px) {
   .__app-scripture-search-pane {
     width: 400px;
-    z-index: 10000;
+    z-index: 800;
   }
 
   .__app--pane__action--container {

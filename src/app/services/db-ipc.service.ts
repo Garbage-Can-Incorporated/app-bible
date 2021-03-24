@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+
+import { Subject } from 'rxjs';
 
 import { ElectronService } from 'ngx-electron';
-import { Subject } from 'rxjs';
+import {SnackbarService} from './snackbar.service';
 import { IpcMainResponse } from '../interfaces/ipc-main-response';
-import { Dpi } from 'electron';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class DbIpcService {
   private tableInitSubject: Subject<any>;
 
   constructor(
+    private snackbar: SnackbarService,
     private _electron?: ElectronService
   ) {
     this.dbInitSubject = new Subject<any>();
@@ -24,23 +26,38 @@ export class DbIpcService {
   }
 
   public createDB(title: string): Subject<any> {
-    this._electron.ipcRenderer.send('db-init', title);
+    if (this.isElectron) {
+      this._electron.ipcRenderer.send('db-init', title);
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
 
     return this.dbInitSubject;
   }
 
   public isConnected(name: string): Subject<any> {
-    this._electron.ipcRenderer
-      .on(`${name}-db-table-created`, (e, data) => {
-        this.isConnectedSubject.next(data);
-      });
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .on(`${name}-db-table-created`, (e, data) => {
+          this.isConnectedSubject.next(data);
+        });
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
 
     return this.isConnectedSubject;
   }
 
   public isDBCreated(name: string): void {
-    this._electron.ipcRenderer
-      .send(`is-${name}-created`);
+    if (this.isElectron) {
+      this._electron.ipcRenderer
+        .send(`is-${name}-created`);
+    } else {
+      this.snackbar
+        .showSnackbar('This is not an electron app.');
+    }
   }
 
   public get subjects(): {[prop: string]: Subject<any>} {
@@ -50,5 +67,9 @@ export class DbIpcService {
       tableInitSubject: this.tableInitSubject,
       isConnectedSubject: this.isConnectedSubject
     };
+  }
+
+  private get isElectron(): boolean {
+    return this._electron.isElectronApp;
   }
 }

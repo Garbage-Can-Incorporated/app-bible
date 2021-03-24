@@ -1,4 +1,5 @@
-<div class="d-flex w-100 h-100 __app--pane__overlay"></div>
+<div class="d-flex w-100 h-100 __app--pane__overlay"
+  (click)="collapseButton()"></div>
 
 <div class="d-flex __app-scripture-search-pane">
   <div class="d-flex m-2 __app--pane__action--container" (click)="collapseButton()">
@@ -10,7 +11,7 @@
 
     <span class="d-flex ml-auto mr-4 mt-2 font-weight-bold __app--scripture__header">
       <i class="fa fa-search-location mr-2 my-auto"></i>
-      Find in Bible
+      Find something in the Bible
     </span>
 
     <div class="mb-2 d-flex w-100 __app--scripture__search--console">
@@ -28,9 +29,18 @@
       </div>
     </div>
 
-    <span class="d-flex w-100 my-1 ml-3 mr-auto __app--scripture__result--header"> {{ resultsHeaderText }} </span>
+    <span class="d-flex w-100 my-1 ml-3 mr-auto __app--scripture__result--header"> {{ results.length }} result(s) found </span>
 
     <div class="d-flex w-100 __app--scripture__search--result" #searchRes>
+      <ng-container *ngIf="results.length > 0">
+        <ng-container *ngFor="let result of results">
+          <div *ngFor="let match of result.matches" class="d-flex w-100 mb-2 __app--scripture__result--item px-3">
+            <span class="my-1 mr-auto font-weight-bold __app--scripture__result--item__reference">{{result.item.bookTitle.toUpperCase()}} {{result.item.chapterNo.split('-')[ 1 ]}}:{{match.arrayIndex + 1}}</span>
+            <span class="w-100 d-block  __app--scripture__result--item__passage">{{match.value | formatVerse:result.item.bookTitle + ' ' + result.item.chapterNo.split('-')[ 1 ] + ':' + parseIndex(match.arrayIndex):''}}</span>
+          </div>
+        </ng-container>
+      </ng-container>
+
       <div *ngIf="showSpinnerNMock" class="d-flex w-100 __app--scripture__result__mock--container">
         <div *ngFor="let mock of mockLength"
           class="d-flex w-100 __app--scripture__result--item __app--scripture__result--item--mock px-3 mb-2">

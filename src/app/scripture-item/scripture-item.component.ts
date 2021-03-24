@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener, ChangeDetectorRef } from '@angular/core';
 
 import { ElectronService } from 'ngx-electron';
 
@@ -17,13 +17,21 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
   @Input() resource: IScriptures;
   public favIconActive: boolean;
 
+  public textToRemove: string;
+
   constructor(
-    private _electron: ElectronService
+    private _electron: ElectronService,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.textToRemove = `${this.resource.book} ${this.resource.chapter}:${this.resource.verse + 1}`;
+  }
 
-  ngOnChanges(changes: SimpleChanges): void { }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.textToRemove = `${this.resource.book} ${this.resource.chapter}:${this.resource.verse}`;
+    this.detectChange();
+  }
 
   @HostListener('mouseenter', [ '$event' ])
   onMouseover(e: Event): void {
@@ -42,6 +50,8 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
           } else {
             this.favIconActive = false;
           }
+
+          this.detectChange();
         }
       );
 
@@ -53,9 +63,17 @@ export class ScriptureItemComponent implements OnInit, OnChanges {
 
   public showReactionConsole(el: any): void {
     el.toggleIconsVisibility();
+    this.detectChange();
   }
 
   public hideReactionConsole(el: any): void {
     el.toggleIconsVisibility();
+    this.detectChange();
+  }
+
+  public detectChange(): void {
+    this.changeDetector.detach();
+    this.changeDetector.reattach();
+    this.changeDetector.detectChanges();
   }
 }

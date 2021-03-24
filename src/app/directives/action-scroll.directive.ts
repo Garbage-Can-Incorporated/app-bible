@@ -4,8 +4,8 @@ import { Directive, Input, DoCheck, ElementRef, OnInit } from '@angular/core';
   selector: '[appActionScroll]'
 })
 export class ActionScrollDirective implements DoCheck, OnInit {
-  @Input() reveal: string;
-  @Input() _class: string;
+  @Input() public reveal: string;
+  @Input() public _class: string;
 
   private pos: number;
 

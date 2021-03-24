@@ -1,8 +1,21 @@
 .__app-alarm-add-btn {
   position: fixed;
-  right: 15%;
-  bottom: 12%;
+  right: 11%;
+  bottom: 11%;
   z-index: 1000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: #880800;
+  box-shadow: 0 0 5px .5px #adadad;
+}
+
+.__app-alarm-add-btn:hover {
+  cursor: pointer;
+}
+
+.__app-alarm-add-btn i {
+  color: #ffffff;
 }
 
 .__app-alarm--item,
@@ -12,6 +25,25 @@
 
 .__app-alarm--item__container {
   min-height: fit-content;
+}
+
+.__app-alarm--item__container:nth-of-type(even) {
+  margin-left: .5rem;
+  margin-right: auto;
+}
+
+.__app-alarm--item__container:nth-of-type(odd) {
+  margin-right: .5rem;
+  margin-left: auto;
+}
+
+.__app-alarm--item__container:nth-of-type(3n),
+.__app-alarm--item__container:nth-child(n+2) {
+  margin-top: .5rem;
+}
+
+.__app-alarm--item__container:nth-child(2) {
+  margin-top: 0;
 }
 
 .__app-alarm--item__container--background {
@@ -71,5 +103,52 @@ i {
 @media (max-width: 768px) {
   .__app-alarm--item__container:last-child {
     margin-bottom: 5em;
+  }
+
+  .__app-alarm--item__container {
+    margin: .5rem 0 0 0;
+  }
+
+  .__app-alarm--item__container:first-child {
+    margin-top: 0;
+  }
+
+  .__app-alarm--item__container:nth-of-type(even) {
+    margin-left: 0;
+  }
+  
+  .__app-alarm--item__container:nth-of-type(odd) {
+    margin-right: 0;
+  }
+
+  .__app-alarm--item__container:nth-child(2) {
+    margin-top: .5rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .__app-alarm--item__container {
+    margin: .5rem 0 0 0;
+  }
+
+  .__app-alarm--item__container:first-child {
+    margin-top: 0;
+  }
+
+  .__app-alarm--item__container:nth-of-type(even) {
+    margin-left: 0rem;
+    margin-top: 0;
+  }
+  
+  .__app-alarm--item__container:nth-of-type(odd) {
+    margin-right: 0;
+  }
+
+  .__app-alarm--item__container:nth-child(2) {
+    margin-top: 0;
+  }
+
+  .__app-alarm--item__container:nth-child(n+3) {
+    margin-top: .5rem;
   }
 }

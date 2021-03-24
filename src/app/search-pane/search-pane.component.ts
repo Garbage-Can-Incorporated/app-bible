@@ -1,6 +1,5 @@
 import {
-  Component, OnInit, Output, EventEmitter, ElementRef,
-  ViewChild, AfterViewInit, Renderer2,
+  Component, OnInit, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, NgZone,
 } from '@angular/core';
 
 import { Subscription } from 'rxjs';
@@ -15,38 +14,32 @@ import { SearchScripturesService } from '../services/search-scriptures.service';
   styleUrls: ['./search-pane.component.css']
 })
 export class SearchPaneComponent implements OnInit, AfterViewInit {
-  @ViewChild('searchRes', { static: false }) srEl: ElementRef;
   @Output() closePane: EventEmitter<boolean> = new EventEmitter<boolean>();
   public resultsHeaderText = <string> 'No result(s) yet';
   private totalNoOfResult = <number>0;
 
   public query: string;
-  public result: any;
-  private searchResultContainer: any;
+  public results: ISearchResults[] = [];
   public showSpinnerNMock = <boolean> false;
   public mockLength: Array<number> = Array.from({ length: 10 }, (_, i) => i * 1);
   private subscription: Subscription;
 
   constructor(
-    private el: ElementRef,
+    private zone: NgZone,
     private _search: SearchScripturesService,
-    private renderer: Renderer2
+
+    private changeDetector: ChangeDetectorRef
   ) {}
   ngOnInit() {
-    this.el
-      .nativeElement
-      .children[ 0 ]
-      .addEventListener('click', (e: Event) => this.collapseButton());
-
     this._search.listenResult();
   }
 
-  ngAfterViewInit(): void {
-    this.searchResultContainer = this.srEl;
-  }
+  ngAfterViewInit(): void { }
 
   public collapseButton() {
-    this.closePane.emit(false);
+    this.zone.run((): void => (
+      this.closePane.emit(false), this.detectChange()
+    ));
   }
 
   public grabInput(el: HTMLInputElement): void {
@@ -65,22 +58,28 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
       .subscribe(
         (data: ISearchResults) => {
           if (data !== null) {
-            this.result = data;
+            const exist = this.results.find(
+              (result): boolean => data.matches.some((item) => {
+                const anyMatch = (result.matches
+                  .find((match) => result.item.bookTitle === data.item.bookTitle &&
+                  result.item.chapterNo === data.item.chapterNo &&
+                    match.arrayIndex === item.arrayIndex
+                  ));
+                return anyMatch !== undefined ? true : false;
+              })
+            );
 
-            if (this.searchResultContainer) {
-              this.appendResult(data);
+            console.log(`[Search]`, {exist});
+
+            if (!exist) {
+              this.results.push(data);
             }
-
-            if (data.matches.length > 0) {
-              this.totalNoOfResult += 1;
-            }
-
-            this.resultsHeaderText = `${ this.totalNoOfResult } result(s) found`;
           } else {
             this.resultsHeaderText = 'No result(s) found!';
           }
 
           this.showSpinnerNMock = false;
+          this.detectChange();
         },
       (error: any) => {
         console.log({ error });
@@ -97,32 +96,19 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
   }
 
   private clearPreviousResult(): void {
-    const children: HTMLCollection = this.searchResultContainer
-      .nativeElement.children;
-
-    if (children.length > 0) {
-      Array.from(children)
-        .forEach((cur: Element) => cur.remove());
-    }
+    this.zone.run((): void => {
+      this.results = [];
+      this.detectChange();
+    });
   }
 
-  private appendResult(data: ISearchResults): void {
-    data.matches.forEach((cur) => {
-      const parentDiv = this.renderer.createElement('div');
-      parentDiv.classList.add('d-flex', 'w-100', 'mb-2', '__app--scripture__result--item', 'px-3');
+  public parseIndex(any) {
+    return parseInt(any.toString(), 10) + 1;
+  }
 
-      const referenceEl = this.renderer.createElement('span');
-      referenceEl.classList.add('my-1', 'mr-auto', 'font-weight-bold',
-        '__app--scripture__result--item__reference');
-      referenceEl.innerText = `${ data.item.bookTitle.toUpperCase() } ${ data.item.chapterNo.split('-')[ 1 ] }:${ cur.arrayIndex + 1 }`;
-
-      const passageEl = this.renderer.createElement('span');
-      passageEl.classList.add('w-100', 'd-block', '__app--scripture__result--item__passage');
-      passageEl.innerText = ` ${ cur.value }`;
-
-      this.renderer.appendChild(parentDiv, referenceEl);
-      this.renderer.appendChild(parentDiv, passageEl);
-      this.renderer.appendChild(this.searchResultContainer.nativeElement, parentDiv);
-    });
+  public detectChange(): void {
+    this.changeDetector.detach();
+    this.changeDetector.reattach();
+    this.changeDetector.detectChanges();
   }
 }
