@@ -44,6 +44,7 @@ const createWindow = () => {
     webPreferences: {
       experimentalFeatures: true,
       nodeIntegration: true,
+      scrollBounce: true
     },
   });
 
