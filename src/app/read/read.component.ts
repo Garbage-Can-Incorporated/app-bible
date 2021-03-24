@@ -1,13 +1,14 @@
-import { Component, OnInit, HostListener, AfterViewInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, NgZone, ChangeDetectorRef, ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
 
-import { Observable } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 
 import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
 import {LastReadService} from '../services/last-read.service';
+import { MatAutocompleteTrigger } from '@angular/material';
 
 @Component({
   selector: 'app-read',
@@ -15,6 +16,9 @@ import {LastReadService} from '../services/last-read.service';
   styleUrls: ['./read.component.css']
 })
 export class ReadComponent implements OnInit, AfterViewInit {
+  @ViewChild('bookAutoComplete', {read: MatAutocompleteTrigger, static: true}) public bookAutoComplete: MatAutocompleteTrigger;
+  @ViewChild('chapterAutoComplete', {read: MatAutocompleteTrigger, static: true}) public chapAutoComplete: MatAutocompleteTrigger;
+  @ViewChild('verseAutoComplete', {read: MatAutocompleteTrigger, static: true}) public verseAutoComplete: MatAutocompleteTrigger;
   public bookControl: FormControl = new FormControl();
   public chapterControl: FormControl = new FormControl();
   public verseControl: FormControl = new FormControl();
@@ -48,7 +52,6 @@ export class ReadComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.scrolled = false;
     this.scripture = this.lastRead.lastRead || {...this._scripture};
 
     this.populateBookList();
@@ -77,11 +80,35 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.scrolled = false;
-    this.detectChange();
+
+    interval(100)
+      // tslint:disable-next-line: deprecation
+      .subscribe((): void => {
+        this.updateMatAutoComplete();
+      });
   }
 
-  @HostListener('window:scroll') onWindowScroll(): void {
+  private updateMatAutoComplete(): void {
     this.scrolled = true;
+
+    if (this.chapAutoComplete) {
+      if (this.chapAutoComplete.panelOpen === true) {
+        this.chapAutoComplete.updatePosition();
+      }
+    }
+
+    if (this.verseAutoComplete) {
+      if (this.verseAutoComplete.panelOpen === true) {
+        this.verseAutoComplete.updatePosition();
+      }
+    }
+
+    if (this.bookAutoComplete) {
+      if (this.bookAutoComplete.panelOpen === true) {
+        this.bookAutoComplete.updatePosition();
+      }
+    }
+
     this.detectChange();
   }
 
@@ -156,12 +183,13 @@ export class ReadComponent implements OnInit, AfterViewInit {
   private getPassage(b: string, c: number): void {
     this._scripturesProvider
       .getPassage(b, c)
+      // tslint:disable-next-line: deprecation
       .subscribe(
         (data: string[]) => {
           this.passages = data;
           this.showProgressbar = false;
         },
-        (error) => console.log({error})
+        (error) => (this.showProgressbar = false, console.log({error}))
       );
   }
 
@@ -169,27 +197,30 @@ export class ReadComponent implements OnInit, AfterViewInit {
     const {book, chapter, verse} = this.scripture;
 
     this._scripturesProvider
-    .getVerseLength(book.toLowerCase(), chapter)
-    .subscribe(
-      (data) => {
-        this._zone.run((): void => {
-          this.maxVerse = data;
-          this.verseList = this.generateListNumbers(data);
+      .getVerseLength(book.toLowerCase(), chapter)
+      // tslint:disable-next-line: deprecation
+      .subscribe(
+        (data) => {
+          this._zone.run((): void => {
+            this.maxVerse = data;
+            this.verseList = this.generateListNumbers(data);
 
-          if (verse > this.verseList.length) {
-            this.scripture.verse = this.verseList.length;
-            this.focusElementNo = parseInt(verse.toString(), 10) - 1;
-          }
-        });
+            if (verse > this.verseList.length) {
+              this.scripture.verse = this.verseList.length;
+              this.focusElementNo = parseInt(verse.toString(), 10) - 1;
+            }
+          });
 
-        this.detectChange();
-      }
+          this.detectChange();
+        },
+      () => this.showProgressbar = false
     );
   }
 
   private populateChapterList(): void {
     this._scripturesProvider
       .getChapterLength(this.scripture.book.toLowerCase())
+      // tslint:disable-next-line: deprecation
       .subscribe(
         (data: number) => {
           this._zone.run((): void => {
@@ -198,8 +229,9 @@ export class ReadComponent implements OnInit, AfterViewInit {
             this.populateVerseList();
             this.detectChange();
           });
-        }
-    );
+        },
+        () => this.showProgressbar = false
+      );
   }
 
   private generateListNumbers(data: number): number[] {
@@ -211,10 +243,11 @@ export class ReadComponent implements OnInit, AfterViewInit {
   private populateBookList(): void {
     this._scripturesProvider
       .getBookList()
+      // tslint:disable-next-line: deprecation
       .subscribe(
         (data): void => this._zone
           .run((): void => (this.bookList.push(data.toString()), this.detectChange())),
-        (error): void => console.log(error)
+        (error): void => (this.showProgressbar = false, console.log(error))
       );
   }
 

@@ -2,7 +2,7 @@
   <i class="fa fa-search ml-auto mr-4 mt-4 mb-auto fa-1x __app--search___icon" (click)="showSearchPane()"></i>
 </div>
 
-<div class="d-flex w-100 mt-auto __app-scripture-toolbar">
+<div #scriptureToolbar class="d-flex w-100 mt-auto __app-scripture-toolbar">
   <mat-progress-bar *ngIf="showProgressbar" [mode]="'query'" [color]="'warn'"></mat-progress-bar>
   <div class="d-flex w-100 mx-auto my-auto __app--scripture-console">
     <!-- opens dialog -->
@@ -16,7 +16,7 @@
         [(ngModel)]="scripture.book" 
         placeholder="book" 
         [type]="'text'"
-        [formControl]="bookControl" [matAutocomplete]="bookVar" >
+        [formControl]="bookControl" [matAutocomplete]="bookVar" #bookAutoComplete >
 
       <mat-autocomplete #bookVar="matAutocomplete">
         <mat-option *ngFor="let book of filteredBookList | async" [value]="book.toString().charAt(0).toUpperCase() + book.toString().substring(1).toLowerCase()" (click)="searchScripture()">
@@ -37,7 +37,7 @@
         [type]="'number'"
         [min]="1"
         [max]="maxChap"
-        [formControl]="chapterControl" [matAutocomplete]="chapVar" >
+        [formControl]="chapterControl" [matAutocomplete]="chapVar" #chapterAutoComplete >
 
       <mat-autocomplete #chapVar="matAutocomplete">
         <mat-option *ngFor="let chapter of chapterList" [value]="chapter" (click)="searchScripture()">
@@ -58,7 +58,7 @@
         [type]="'number'"
         [min]="1"
         [max]="maxVerse"
-        [formControl]="verseControl" [matAutocomplete]="verseVar" >
+        [formControl]="verseControl" [matAutocomplete]="verseVar" #verseAutoComplete >
 
       <mat-autocomplete #verseVar="matAutocomplete">
         <mat-option *ngFor="let verse of verseList" [value]="verse" (click)="searchScripture()">
@@ -67,7 +67,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <i appActionScroll [reveal]="scrolled" [_class]="'invisible'"  class="fa fa-search mx-4 my-auto fa-1x invisible __app--search___icon--pseudo" (click)="showSearchPane()"></i>
+    <i *ngIf="scrolled === true" appActionScroll [reveal]="scrolled" [_class]="'invisible'" class="fa fa-search mx-4 my-auto fa-1x invisible __app--search___icon--pseudo" (click)="showSearchPane()"></i>
   </div>
 </div>
 
