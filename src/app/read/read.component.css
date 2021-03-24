@@ -62,7 +62,7 @@ input[type=number] {
 
 .__app--navigator {
   position: fixed;
-  top: 45%;
+  top: 50%;
   font-size: 1.5rem;
   font-weight: 600;
 }
