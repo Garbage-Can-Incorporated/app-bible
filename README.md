@@ -11,18 +11,30 @@ npm run start:als
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```bash
+npm run start
+```
 
 ## Build
 
 To build renderer process for production run like so:
-```
+
+```bash
 npm run build:app
 ```
 
 Having sqlite issues?
-```
+
+Use the script provided
+
+```bash
 npm run build:sqlite3
+```
+
+Or Electron builder
+
+```bash
+npm run rebuild:db
 ```
 
 ## Running unit tests
