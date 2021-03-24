@@ -19,10 +19,10 @@ export class ScripturesService {
   public getPassage(bookTitle: string = 'genesis', chapNo: number = 1): Observable<any> {
     return new Observable((obs) => {
       this.getBible((): void => {
-        const chapter = this.semiIndex[`${bookTitle}-chapter-${ chapNo }`][0];
+        const chapter = this.semiIndex[`${bookTitle}-chapter-${ chapNo }`];
 
-        if (chapter !== undefined) {
-          obs.next(chapter.verses);
+        if (chapter && chapter[0] !== undefined) {
+          obs.next(chapter[0].verses);
         }
       });
     });
@@ -31,10 +31,10 @@ export class ScripturesService {
   public getVerseLength(bookTitle: string = 'genesis', chapNo: number = 1): Observable<number> {
     return new Observable((obs) => {
       this.getBible((): void => {
-        const chapter = this.semiIndex[`${bookTitle}-chapter-${ chapNo }`][0];
+        const chapter = this.semiIndex[`${bookTitle}-chapter-${ chapNo }`];
 
-        if (chapter !== undefined) {
-          obs.next(chapter.verses.length);
+        if (chapter && chapter[0] !== undefined) {
+          obs.next(chapter[0].verses.length);
         }
       });
     });
@@ -43,10 +43,10 @@ export class ScripturesService {
   public getChapterLength(bookTitle: string = 'genesis'): Observable<number> {
     return new Observable((obs) => {
       this.getBible((): void => {
-        const resource = this.semiIndex[bookTitle];
+        const resource = this.semiIndex[bookTitle.toLowerCase()];
 
         if (resource !== undefined) {
-          const len = this.semiIndex[bookTitle].length;
+          const len = this.semiIndex[bookTitle.toLowerCase()].length;
           obs.next(len);
         }
       });
@@ -72,6 +72,7 @@ export class ScripturesService {
       cb(this.resource);
     } else {
       this._resources.fetchResource()
+        // tslint:disable-next-line: deprecation
         .subscribe(
           (data: Array<BibleElement>) => {
             this.resource = data;
@@ -102,7 +103,7 @@ export class ScripturesService {
           if (this.semiIndex[indexKey] === undefined) {
             this.semiIndex[indexKey] = [];
           }
-          
+
           if (this.semiIndex[indexKey].length === 0) {
             if (key === 'bookTitle') {
               this.semiIndex[indexKey] = this.resource
