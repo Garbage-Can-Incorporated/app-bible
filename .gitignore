@@ -3,7 +3,7 @@
 # others
 test.js
 test-alarm.js
-/resource
+*-lock.json
 !/resource/bible-kjv.json
 
 # compiled output
