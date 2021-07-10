@@ -1,7 +1,7 @@
 .__app-cover {
   height: var(--cover-height);
   background-clip: border-box;
-  background-image: url("~/assets/imgs/cover-img.png");
+  background-image: url("/assets/imgs/cover-img.png");
   background-size: cover;
   color: var(--white);
 }
