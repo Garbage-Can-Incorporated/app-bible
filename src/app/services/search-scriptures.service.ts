@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import Fuse from 'fuse.js';
+// import Fuse from 'fuse.js';
 import { ScripturesService } from './scriptures.service';
 import { Observable } from 'rxjs';
 import { ISearchResults } from '../interfaces/i-search-results';
@@ -31,29 +31,29 @@ export class SearchScripturesService {
   constructor(
     private _scripture: ScripturesService
   ) {
-    this.__init__();
+    // this.__init__();
   }
 
-  public __init__(): void {
-    console.log('__init__');
+  // public __init__(): void {
+  //   console.log('__init__');
 
-    this._scripture
-      ._getBible.subscribe(
-        (data: any) => {
-          this.data = data.request;
+  //   this._scripture
+  //     ._getBible.subscribe(
+  //       (data: any) => {
+  //         this.data = data.request;
 
-          this.fuse = new Fuse(this.data, this.options);
-        },
-        (error) => console.log({error})
-      );
-  }
+  //         this.fuse = new Fuse(this.data, this.options);
+  //       },
+  //       (error) => console.log({error})
+  //     );
+  // }
 
-  public search(string: string): Observable<ISearchResults> {
-    // console.log(this.data);
-    return this.fuse.search(<string>string);
-  }
+  // public search(string: string): Observable<ISearchResults> {
+  //   // console.log(this.data);
+  //   return this.fuse.search(<string>string);
+  // }
 
-  public changeOptions(): any {
-    return this.options;
-  }
+  // public changeOptions(): any {
+  //   return this.options;
+  // }
 }

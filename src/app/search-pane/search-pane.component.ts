@@ -49,30 +49,30 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
     this.clearPreviousResult();
     this.showSpinnerNMock = true;
 
-    this._search
-      .search(this.query)
-      .subscribe(
-      (data: ISearchResults) => {
-        console.log({ data });
-        this.result = data;
+    // this._search
+    //   .search(this.query)
+    //   .subscribe(
+    //   (data: ISearchResults) => {
+    //     console.log({ data });
+    //     this.result = data;
 
-        if (this.searchResultContainer) {
-          this.appendResult(data);
-        }
+    //     if (this.searchResultContainer) {
+    //       this.appendResult(data);
+    //     }
 
-        if (data.matches.length > 0) {
-          this.totalNoOfResult += 1;
-        }
-      },
-      (error: any) => {
-        console.log({ error });
-        this.showSpinnerNMock = false;
-      },
-      () => {
-        this.resultsHeaderText = `${this.totalNoOfResult} result(s) found`;
-        this.showSpinnerNMock = false;
-      }
-    );
+    //     if (data.matches.length > 0) {
+    //       this.totalNoOfResult += 1;
+    //     }
+    //   },
+    //   (error: any) => {
+    //     console.log({ error });
+    //     this.showSpinnerNMock = false;
+    //   },
+    //   () => {
+    //     this.resultsHeaderText = `${this.totalNoOfResult} result(s) found`;
+    //     this.showSpinnerNMock = false;
+    //   }
+    // );
   }
 
   private clearPreviousResult(): void {
