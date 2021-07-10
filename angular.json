@@ -124,7 +124,7 @@
     "app-bible-e2e": {
       "root": "e2e/",
       "projectType": "application",
-      "prefix": "",
+      "prefix": "app",
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
@@ -148,6 +148,11 @@
           }
         }
       }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
     }
   },
   "defaultProject": "app-bible"
