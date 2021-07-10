@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ScripturePlayerComponent } from './scripture-player.component';
 
@@ -6,7 +6,7 @@ describe('ScripturePlayerComponent', () => {
   let component: ScripturePlayerComponent;
   let fixture: ComponentFixture<ScripturePlayerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ScripturePlayerComponent ]
     })

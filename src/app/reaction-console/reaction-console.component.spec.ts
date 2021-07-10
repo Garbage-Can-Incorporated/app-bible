@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ReactionConsoleComponent } from './reaction-console.component';
 
@@ -6,7 +6,7 @@ describe('ReactionConsoleComponent', () => {
   let component: ReactionConsoleComponent;
   let fixture: ComponentFixture<ReactionConsoleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ReactionConsoleComponent ]
     })
