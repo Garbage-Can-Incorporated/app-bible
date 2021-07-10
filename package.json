@@ -4,7 +4,7 @@
   "main": "main.js",
   "scripts": {
     "ng": "ng",
-    "dev": "ng serve --aot --port 3336 -o",
+    "dev": "ng serve --port 3336 -o",
     "build": "ng build --prod --optimization --build-optimizer",
     "test": "ng test",
     "lint": "ng lint",
