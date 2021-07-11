@@ -15,15 +15,20 @@ export interface BibleElement {
   providedIn: 'root'
 })
 export class ResourceHandlerService {
-  private url = './assets/resource/bible-kjv.json';
+  private url = './assets/resource';
   private resource: Subject<Array<BibleElement>> = new Subject();
 
   constructor(
     private http: HttpClient
   ) { }
 
+  public get getURL(): string {
+    let version;
+    return `${this.url}/bible-${version || 'kjv'}.json`;
+  }
+
   public fetchResource(): Observable<{request: Array<BibleElement>}> {
-    return this.http.get<{request: Array<BibleElement>}>(this.url, {
+    return this.http.get<{request: Array<BibleElement>}>(this.getURL, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),

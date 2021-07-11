@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { map } from 'rxjs/internal/operators/map';
 import { Observable } from 'rxjs';
@@ -7,11 +7,13 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
+import {LastReadService} from '../services/last-read.service';
 
 @Component({
   selector: 'ewd-read',
   templateUrl: './read.component.html',
-  styleUrls: ['./read.component.scss']
+  styleUrls: ['./read.component.scss'],
+  providers: [LastReadService]
 })
 export class ReadComponent implements OnInit, AfterViewInit {
   @ViewChild('scriptureToolbar', {static: true})
@@ -44,10 +46,15 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public showProgressbar = <boolean> false;
 
   constructor(
-    private _scripturesProvider: ScripturesService
+    private _scripturesProvider: ScripturesService,
+    private lastRead: LastReadService,
+
+    private _zone: NgZone,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
+    this.scripture = this.lastRead.lastRead || {...this._scripture};
     localStorage.setItem('p', (0).toString());
     this.scrolled = false;
 
@@ -132,30 +139,27 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.searchScripture();
   }
 
-  public previousScripture(e: any): void {
-    Object.assign(this.scripture, e);
-    this.searchScripture();
-  }
-
-  public nextScripture(e: any): void {
-    Object.assign(this.scripture, e);
-    this.searchScripture();
-  }
-
   public searchScripture(): void {
     this.showProgressbar = true;
-    const {book, chapter} = this.scripture;
+    const {book, verse, chapter} = this.scripture;
 
-    if (
-      book !== '' && book !== undefined && book !== ' ' && book !== null &&
-      chapter !== undefined && chapter !== null &&
-      (typeof chapter === 'string' ? chapter !== ' ' : true)
+    this._zone.run((): void => {
+      if (
+        book !== '' && book !== undefined &&
+        book !== ' ' && book !== null &&
+        chapter !== undefined && chapter !== null &&
+        (typeof chapter === 'string' ? chapter !== ' ' : true) &&
+        verse !== undefined && verse !== null
       ) {
-      this.focusElementNo = parseInt(this.scripture.verse.toString(), 10);
+        this.focusElementNo = parseInt(verse.toString(), 10) - 1;
 
-      this.populateChapterList();
-      this.getPassage(book.toLowerCase(), chapter);
-    }
+        this.populateChapterList();
+        this.getPassage(book.toLowerCase(), chapter);
+        this.lastRead.setLastRead(this.scripture);
+
+        this.detectChange();
+      }
+    });
   }
 
   private getPassage(b: string, c: number): void {
@@ -174,17 +178,22 @@ export class ReadComponent implements OnInit, AfterViewInit {
     const {book, chapter, verse} = this.scripture;
 
     this._scripturesProvider
-    .getVerseLength(book.toLowerCase(), chapter)
-    .subscribe(
-      (data) => {
-        this.maxVerse = data;
-        this.verseList = this.generateListNumbers(data);
+      .getVerseLength(book.toLowerCase(), chapter)
+      .subscribe(
+        (data) => {
+          this._zone.run((): void => {
+            this.maxVerse = data;
+            this.verseList = this.generateListNumbers(data);
 
-        if (verse > this.verseList.length) {
-          this.scripture.verse = this.verseList.length;
-          this.focusElementNo = parseInt(verse.toString(), 10);
-        }
-      }
+            if (verse > this.verseList.length) {
+              this.scripture.verse = this.verseList.length;
+              this.focusElementNo = parseInt(verse.toString(), 10) - 1;
+            }
+          });
+
+          this.detectChange();
+        },
+      () => this.showProgressbar = false
     );
   }
 
@@ -192,12 +201,16 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getChapterLength(this.scripture.book.toLowerCase())
       .subscribe(
-      (data: number) => {
-        this.maxChap = data;
-        this.chapterList = this.generateListNumbers(data);
-        this.populateVerseList();
-      }
-    );
+        (data: number) => {
+          this._zone.run((): void => {
+            this.maxChap = data;
+            this.chapterList = this.generateListNumbers(data);
+            this.populateVerseList();
+            this.detectChange();
+          });
+        },
+        () => this.showProgressbar = false
+      );
   }
 
   private generateListNumbers(data: number): number[] {
@@ -210,8 +223,9 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this._scripturesProvider
       .getBookList()
       .subscribe(
-        (data) => this.bookList.push(data.toString()),
-        (error) => console.log(error)
+        (data): void => this._zone
+          .run((): void => (this.bookList.push(data.toString()), this.detectChange())),
+        (error): void => (this.showProgressbar = false, console.log(error))
       );
   }
 
@@ -222,4 +236,10 @@ export class ReadComponent implements OnInit, AfterViewInit {
   public showSearchPane(): void {
     this._showSearchPane = true;
   }
+
+  public detectChange(): void {
+    this.changeDetector.detach();
+    this.changeDetector.reattach();
+    this.changeDetector.detectChanges();
+  } 
 }

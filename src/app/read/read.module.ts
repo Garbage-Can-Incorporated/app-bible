@@ -51,7 +51,7 @@ import { FavoriteDirective } from '../directives/favorite.directive';
     PlayerService,
     SpeechSynthesisService,
     FavoritesService,
-    LocalStorageService
+    LocalStorageService,
   ]
 })
 export class ReadModule { }
