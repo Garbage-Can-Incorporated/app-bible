@@ -1,5 +1,6 @@
-<div class="d-flex w-100 ewd--scriptures__item--container" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
+<div class="d-flex flex-column w-100 ewd--scriptures__item--container" (mouseover)="showReactionConsole(reactionConsole)" (mouseout)="hideReactionConsole(reactionConsole)">
   <div class="d-flex text-left w-100" [ngClass]="{'ewd-scriptures-item--focus': (i + 1) === focusElementNo}">
+    <span class="mr-2">{{i + 1}}</span>
     <span class="d-flex"> {{ passage }} </span>
   </div>
 

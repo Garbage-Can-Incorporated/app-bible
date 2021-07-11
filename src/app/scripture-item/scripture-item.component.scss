@@ -1,15 +1,8 @@
-sup {
-  line-height: normal;
-  height: fit-content;
-  top: 0!important;
-  position: static;
-}
+@import '../../styles.scss';
 
 .ewd--scriptures__item--container {
-  flex-direction: column;
-}
-
-.ewd-scriptures-item--focus {
-  font-weight: 700;
-  outline: none;
+  .ewd-scriptures-item--focus {
+    @include no-outline();
+    color: $text-accent;
+  }
 }
