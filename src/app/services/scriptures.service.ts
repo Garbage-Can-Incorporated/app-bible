@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinct } from 'rxjs/operators';
 
-import { ResourceHandlerService } from './resource-handler.service';
+import { BibleElement, ResourceHandlerService } from './resource-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -86,7 +86,7 @@ export class ScripturesService {
     );
   }
 
-  private getBible(cb: any): void {
+  private getBible(cb: (data: Array<BibleElement>) => void): void {
     if (this.resource !== undefined) {
       cb(this.resource);
     } else {
@@ -104,7 +104,7 @@ export class ScripturesService {
     }
   }
 
-  public get _getBible(): Observable<any> {
+  public get _getBible(): Observable<{request: Array<BibleElement>}> {
     return this._resources.fetchResource();
   }
 }
