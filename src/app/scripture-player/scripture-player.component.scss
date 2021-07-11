@@ -1,21 +1,39 @@
+@import '../../styles.scss';
+
+div {
+  &.ewd-scriptures-player--bar {
+    height: $scripture-player-height;
+    box-shadow: 0 0 3px 0 black;
+    // background-color: map-get($evryword-theme, 'accent', 'darker');  
+    // position: fixed;
+    // bottom: 0;
+    // left: 0;
+    // visibility: hidden;
+    // transform: translate3d(0, $scripture-player-height, 0);
+    @media (max-width: 575.98px) {
+      height: 64px;
+    }
+  }
+}
+
 .ewd-scriptures-player {
   flex-direction: column;
 }
 
-.ewd-scriptures-player {
-  position: fixed;
-  bottom: var(--player-bottom);
-  width: var(--player-width);
-  height: var(--player-height);
-  background-color: var(--white);
-  box-shadow: 0 0 4px 0px #adb5bdfc;
-  z-index: 1000;
-  border-top-left-radius: var(--player-bottom-radius);
-  border-top-right-radius: var(--player-bottom-radius);
-  border-bottom-left-radius: var(--player-bottom-radius);
-  border-bottom-right-radius: var(--player-bottom-radius);
-  transition: all 1s ease-in-out .3s;
-}
+// .ewd-scriptures-player {
+//   position: fixed;
+//   bottom: var(--player-bottom);
+//   width: var(--player-width);
+//   height: var(--player-height);
+//   background-color: var(--white);
+//   box-shadow: 0 0 4px 0px #adb5bdfc;
+//   z-index: 1000;
+//   border-top-left-radius: var(--player-bottom-radius);
+//   border-top-right-radius: var(--player-bottom-radius);
+//   border-bottom-left-radius: var(--player-bottom-radius);
+//   border-bottom-right-radius: var(--player-bottom-radius);
+//   transition: all 1s ease-in-out .3s;
+// }
 
 .__player-position-left {
   left: var(--player-right);

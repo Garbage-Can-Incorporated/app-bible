@@ -112,11 +112,11 @@ $evryword-accent: (
   )
 );
 
-$evryword-primary: mat-palette($evryword-primary, 700, 500, 900, 900);
-$evryword-accent: mat-palette($evryword-accent, 700, 500, 900, 900);
+$evryword-primary: mat-palette($evryword-primary, 700, 100, 900, 900);
+$evryword-accent: mat-palette($evryword-accent, 700, 100, 900, 900);
 
 // The warn palette is optional (defaults to red).
-$evryword-warn: mat-palette($evryword-warn, 700, 500, 900, 900);
+$evryword-warn: mat-palette($evryword-warn, 700, 100, 900, 900);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -170,6 +170,7 @@ $text-warn: map.get($evryword-theme, 'warn', 'default');
 
 $cover-height: 164px;
 $scripture-toolbar-height: 70px;
+$scripture-player-height: 72px;
 
 :root {
   --light-grey: #eeebebf6;
@@ -177,11 +178,6 @@ $scripture-toolbar-height: 70px;
   --dark-red: #260403;
   --light-red: #4c0503;
   --light-red-1x: #bf0803;
-  --player-bottom: 30px;
-  --player-height: 200px;
-  --player-width: 60px;
-  --player-right: 20px;
-  --player-bottom-radius: 30px;
   --app-scripture-result-item: 60px;
 }
 
@@ -234,24 +230,6 @@ app-reaction-console {
 
 .mat-form-field-wrapper {
   padding-bottom: 0!important;
-}
-
-/* typeahead modification */
-typeahead-container {
-  width: 100%;
-  min-height: 150px;
-}
-
-typeahead-container button {
-  height: 40px;
-}
-
-.__grey {
-  /* background-color: var(--light-red);
-  box-shadow: 0 0 5px .5px var(--dark); */
-  background-color: #f8f9fa;
-  box-shadow: 0 0 3px 1px var(--dark-red);
-  /* transition: 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53); */
 }
 
 /* width */

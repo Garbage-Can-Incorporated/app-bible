@@ -56,6 +56,21 @@ div {
   }
 }
 
+ewd-scripture-container {
+  margin-bottom: $scripture-player-height;
+}
+
+ewd-scripture-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  transition-property: transform, height;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  z-index: 3;
+}
+
 .ewd-search___icon,
 .ewd-search___icon--pseudo,
 .ewd-reactions--container i,

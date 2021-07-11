@@ -1,17 +1,25 @@
-<div class="d-flex ewd-scriptures-player __player-position-left">
-  <i class="fa fa-fast-backward mx-auto mt-auto" (click)="previous()"></i>
+<mat-progress-bar *ngIf="true" [mode]="'determinate'" [color]="'accent'" [value]="10"></mat-progress-bar>
+<div class="d-flex w-100 ewd-scriptures-player--bar bg-white">
+  <div class="d-flex h-100">
+    <button mat-icon-button color="accent" class="my-auto p-2 p-sm-3" style="width: fit-content; height: fit-content;" (click)="previous()">
+      <mat-icon class="material-icons-outlined">skip_previous_outline</mat-icon>
+    </button>
 
-  <i *ngIf="playerState === false" class="fa fa-play fa-1x mx-auto my-4" (click)="togglePlayerState()"
-    (click)="playChapter()"></i>
+    <button *ngIf="playerState === false" mat-icon-button color="accent" class="my-auto p-2 p-sm-3" style="width: fit-content; height: fit-content;" (click)="togglePlayerState()" (click)="playChapter()">
+      <mat-icon class="material-icons-outlined">play_arrow_outline'</mat-icon>
+    </button>
 
-  <i *ngIf="playerState === true" class="fa fa-pause fa-1x mx-auto my-4" (click)="togglePlayerState()"
-    (click)="pause()"></i>
+    <button *ngIf="playerState" mat-icon-button color="accent" class="my-auto p-2 p-sm-3" (click)="togglePlayerState()" (click)="pause()">
+      <mat-icon>pause</mat-icon>
+    </button>
 
-  <i class="fa fa-stop fa-1x mx-auto mb-4" (click)="stopPlay()"></i>
+    <button mat-icon-button color="accent" class="my-auto p-2 p-sm-3" style="width: fit-content; height: fit-content;" (click)="next()">
+      <mat-icon class="material-icons-outlined">skip_next_outline</mat-icon>
+    </button>
+  </div>
 
-  <i class="fa fa-fast-forward mb-4 mx-auto" (click)="next()"></i>
-
-  <i class="fa fa-circle-notch mb-auto mx-auto"
-    [ngClass]="repeatAll ? 'ewd--scriptures__player--button__repeat--active' : 'ewd--scriptures__player--button__repeat--inactive'"
-    (click)="toggleRepeat()"></i>
+  <div class="d-flex h-100 flex-column ml-3 ml-sm-5">
+    <span class="mat-subheading-2 mt-auto mb-0" style="line-height: normal;">Genesis</span>
+    <span class="mat-h5 mb-auto">Chapter 1:1</span>
+  </div>
 </div>
