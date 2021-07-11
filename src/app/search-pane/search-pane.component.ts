@@ -88,15 +88,15 @@ export class SearchPaneComponent implements OnInit, AfterViewInit {
   private appendResult(data: ISearchResults): void {
     data.matches.forEach((cur) => {
       const parentDiv = this.renderer.createElement('div');
-      parentDiv.classList.add('d-flex', 'w-100', 'mb-2', '__app--scripture__result--item', 'px-3');
+      parentDiv.classList.add('d-flex', 'w-100', 'mb-2', 'ewd--scripture__result--item', 'px-3');
 
       const referenceEl = this.renderer.createElement('span');
       referenceEl.classList.add('my-1', 'mr-auto', 'font-weight-bold',
-        '__app--scripture__result--item__reference');
+        'ewd--scripture__result--item__reference');
       referenceEl.innerText = `${ data.item.bookTitle.toUpperCase() } ${ data.item.chapterNo.split('-')[ 1 ] }:${ cur.arrayIndex + 1 }`;
 
       const passageEl = this.renderer.createElement('span');
-      passageEl.classList.add('w-100', 'd-block', '__app--scripture__result--item__passage');
+      passageEl.classList.add('w-100', 'd-block', 'ewd--scripture__result--item__passage');
       passageEl.innerText = ` ${ cur.value }`;
 
       this.renderer.appendChild(parentDiv, referenceEl);

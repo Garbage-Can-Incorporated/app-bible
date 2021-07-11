@@ -1,18 +1,15 @@
-<div class="d-flex w-100 __app-scriptures-container">
-  <span class="d-flex __app-scriptures-book text-uppercase mt-3">
-    <p class="my-auto ml-0 mr-2 text-capitalize">The book of</p>
-    {{ book }}
-  </span>
+<div class="d-flex w-100 flex-column container px-2 px-sm-0 py-3">
+  <span class="d-flex w-100 mat-title">The Book of {{book}}</span>
 
-  <div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100">
+  <div *ngIf="passages !== undefined; else loadingElseBlock" class="d-flex w-100 flex-column">
     <ewd-scripture-item *ngFor="let passage of passages; index as i"
-      class="d-flex w-100 __app-scriptures-item mb-2"
+      class="d-flex w-100 my-1"
       [passage]="passage" [i]="i" [focusElementNo]="focusElementNo"
       appScrollView [status]="(i + 1) === focusElementNo" [exception]="(i + 1) > 5"
       [resource]="{book: resource.book, chapter: resource.chapter, verse: i}"></ewd-scripture-item>
   </div>
 
   <ng-template #loadingElseBlock class="d-flex w-100">
-    <i class="fa fa-bible fa-spin fa-3x mx-auto my-auto __app--preloading__icon"> </i>
+    <i class="fa fa-bible fa-spin fa-3x mx-auto my-auto ewd--preloading__icon"> </i>
   </ng-template>
 </div>

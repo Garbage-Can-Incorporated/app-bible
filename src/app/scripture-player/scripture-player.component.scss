@@ -1,8 +1,8 @@
-.__app-scriptures-player {
+.ewd-scriptures-player {
   flex-direction: column;
 }
 
-.__app-scriptures-player {
+.ewd-scriptures-player {
   position: fixed;
   bottom: var(--player-bottom);
   width: var(--player-width);
@@ -25,27 +25,27 @@
   right: var(--player-right);
 }
 
-.__app-scriptures-player i {
+.ewd-scriptures-player i {
   cursor: pointer;
 }
 
-.__app-scriptures-player i:first-of-type:hover,
-.__app-scriptures-player i:nth-child(3):hover,
-.__app-scriptures-player i:nth-child(4):hover {
+.ewd-scriptures-player i:first-of-type:hover,
+.ewd-scriptures-player i:nth-child(3):hover,
+.ewd-scriptures-player i:nth-child(4):hover {
   color: var(--dark-red);
   z-index: 1000;
 }
 
-.__app-scriptures-player i:nth-child(2):hover {
+.ewd-scriptures-player i:nth-child(2):hover {
   color: var(--blue);
   z-index: 1000;
 }
 
-.__app--scriptures__player--button__repeat--active {
+.ewd--scriptures__player--button__repeat--active {
   color: #03b503;
 }
 
-.__app--scriptures__player--button__repeat--active:after {
+.ewd--scriptures__player--button__repeat--active:after {
   content: '1';
   padding: 3px 5px;
   position: absolute;
@@ -57,13 +57,13 @@
   border-radius: 50%;
 }
 
-.__app--scriptures__player--button__repeat--inactive {
+.ewd--scriptures__player--button__repeat--inactive {
   color: rebeccapurple;
 }
 
 /* small devices for the web */
 @media (max-width: 576px) {
-  .__app-scriptures-player {
+  .ewd-scriptures-player {
     bottom: 10px;
     left: 7px;
     width: 40px;

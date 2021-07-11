@@ -1,16 +1,16 @@
-<div class="d-flex w-100 h-100 __app--pane__overlay"></div>
+<div class="d-flex w-100 h-100 ewd--pane__overlay"></div>
 
-<div class="d-flex __app-scripture-search-pane">
-  <div class="d-flex m-2 __app--pane__action--container" (click)="collapseButton()">
-    <i class="fa fa-long-arrow-alt-right m-auto __app--pane__cancel--icon"></i>
+<div class="d-flex ewd-scripture-search-pane">
+  <div class="d-flex m-2 ewd--pane__action--container" (click)="collapseButton()">
+    <i class="fa fa-long-arrow-alt-right m-auto ewd--pane__cancel--icon"></i>
   </div>
 
-  <div class="d-flex w-100 __app--scripture__search--pane__body">
+  <div class="d-flex w-100 ewd--scripture__search--pane__body">
     <mat-progress-bar *ngIf="showSpinnerNMock" mode="query"></mat-progress-bar>
 
-    <span class="d-flex ml-auto mr-4 mt-2 font-weight-bold __app--scripture__header"> <i class="fa fa-search-location mr-2 my-auto"></i> Find in Bible </span>
-    <div class="px-3 mb-2 d-flex w-100 __app--scripture__search--console">
-      <div class="w-100 d-flex __app--scripture__search--console__container">
+    <span class="d-flex ml-auto mr-4 mt-2 font-weight-bold ewd--scripture__header"> <i class="fa fa-search-location mr-2 my-auto"></i> Find in Bible </span>
+    <div class="px-3 mb-2 d-flex w-100 ewd--scripture__search--console">
+      <div class="w-100 d-flex ewd--scripture__search--console__container">
         <div class="d-flex w-100 mdl-textfield mt-2 py-0 mdl-js-textfield mdl-textfield--floating-label">
           <input
           #queryInput
@@ -24,14 +24,14 @@
       </div>
     </div>
 
-    <span class="d-flex w-100 my-1 ml-3 mr-auto __app--scripture__result--header"> {{ resultsHeaderText }} </span>
+    <span class="d-flex w-100 my-1 ml-3 mr-auto ewd--scripture__result--header"> {{ resultsHeaderText }} </span>
 
-    <div class="d-flex w-100 __app--scripture__search--result" #searchRes>
-      <div *ngIf="showSpinnerNMock" class="d-flex w-100 __app--scripture__result__mock--container">
+    <div class="d-flex w-100 ewd--scripture__search--result" #searchRes>
+      <div *ngIf="showSpinnerNMock" class="d-flex w-100 ewd--scripture__result__mock--container">
         <div *ngFor="let mock of mockLength"
-          class="d-flex w-100 __app--scripture__result--item __app--scripture__result--item--mock px-3 mb-2">
-          <span class="mt-1 mb-2 mr-auto font-weight-bold __app--scripture__result--item__reference--mock"></span>
-          <span class="w-100 d-block mb-2 __app--scripture__result--item__passage--mock"></span>
+          class="d-flex w-100 ewd--scripture__result--item ewd--scripture__result--item--mock px-3 mb-2">
+          <span class="mt-1 mb-2 mr-auto font-weight-bold ewd--scripture__result--item__reference--mock"></span>
+          <span class="w-100 d-block mb-2 ewd--scripture__result--item__passage--mock"></span>
         </div>
       </div>
     </div>
