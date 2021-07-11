@@ -6,9 +6,9 @@ import { SnackbarService } from '../services/snackbar.service';
 import {IScriptures} from '../interfaces/i-scriptures';
 
 @Component({
-  selector: 'app-reaction-console',
+  selector: 'ewd-reaction-console',
   templateUrl: './reaction-console.component.html',
-  styleUrls: ['./reaction-console.component.css']
+  styleUrls: ['./reaction-console.component.scss']
 })
 export class ReactionConsoleComponent implements OnInit, OnChanges {
   @Input() passage: string;

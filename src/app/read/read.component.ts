@@ -8,9 +8,9 @@ import { map } from 'rxjs/internal/operators/map';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-read',
+  selector: 'ewd-read',
   templateUrl: './read.component.html',
-  styleUrls: ['./read.component.css']
+  styleUrls: ['./read.component.scss']
 })
 export class ReadComponent implements OnInit, AfterViewInit {
   public bookControl: FormControl = new FormControl();

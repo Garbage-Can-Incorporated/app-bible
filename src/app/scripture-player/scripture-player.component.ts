@@ -2,9 +2,9 @@ import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angu
 import { PlayerService } from '../services/player.service';
 
 @Component({
-  selector: 'app-scripture-player',
+  selector: 'ewd-scripture-player',
   templateUrl: './scripture-player.component.html',
-  styleUrls: ['./scripture-player.component.css']
+  styleUrls: ['./scripture-player.component.scss']
 })
 export class ScripturePlayerComponent implements OnInit, OnChanges {
   @Input() public passages: Array<string>;

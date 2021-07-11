@@ -3,9 +3,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IScriptures } from '../interfaces/i-scriptures';
 
 @Component({
-  selector: 'app-scripture-item',
+  selector: 'ewd-scripture-item',
   templateUrl: './scripture-item.component.html',
-  styleUrls: ['./scripture-item.component.css']
+  styleUrls: ['./scripture-item.component.scss']
 })
 export class ScriptureItemComponent implements OnInit {
   @Input() public passage: string;

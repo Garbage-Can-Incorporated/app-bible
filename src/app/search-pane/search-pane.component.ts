@@ -7,9 +7,9 @@ import { SearchScripturesService } from '../services/search-scriptures.service';
 import { ISearchResults } from '../interfaces/i-search-results';
 
 @Component({
-  selector: 'app-search-pane',
+  selector: 'ewd-search-pane',
   templateUrl: './search-pane.component.html',
-  styleUrls: ['./search-pane.component.css']
+  styleUrls: ['./search-pane.component.scss']
 })
 export class SearchPaneComponent implements OnInit, AfterViewInit {
   @ViewChild('searchRes', { static: true }) srEl: ElementRef;

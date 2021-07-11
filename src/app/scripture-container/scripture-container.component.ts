@@ -3,9 +3,9 @@ import { Component, OnInit, Input, AfterContentChecked, OnDestroy } from '@angul
 import { IScriptures } from '../interfaces/i-scriptures';
 
 @Component({
-  selector: 'app-scripture-container',
+  selector: 'ewd-scripture-container',
   templateUrl: './scripture-container.component.html',
-  styleUrls: ['./scripture-container.component.css']
+  styleUrls: ['./scripture-container.component.scss']
 })
 export class ScriptureContainerComponent implements OnInit, AfterContentChecked, OnDestroy {
   @Input() passages: Array<string>;

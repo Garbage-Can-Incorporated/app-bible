@@ -68,11 +68,11 @@
   </div>
 </div>
 
-<!-- <app-search-pane *ngIf="_showSearchPane" (closePane)="collapseSearchPane($event)"></app-search-pane> -->
+<!-- <ewd-search-pane *ngIf="_showSearchPane" (closePane)="collapseSearchPane($event)"></ewd-search-pane> -->
 
-<app-scripture-container class="d-flex w-100" [resource]="scripture" [passages]="passages"
+<ewd-scripture-container class="d-flex w-100" [resource]="scripture" [passages]="passages"
   [focusElementNo]="focusElementNo">
-</app-scripture-container>
+</ewd-scripture-container>
 
 <!-- paginator - left -->
 <i appScriptureNavigator *ngIf="passages" [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-left ml-auto __app--navigator __app--navigator__left" (watchOutput)="previousScripture($event)"></i>
@@ -80,4 +80,4 @@
 <!-- paginator - right -->
 <i appScriptureNavigator *ngIf="passages" [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-right mr-auto __app--navigator __app--navigator__right" (watchOutput)="nextScripture($event)"></i>
 
-<app-scripture-player [passages]="passages" (watchFocus)="keepFocus($event)"></app-scripture-player>
+<ewd-scripture-player [passages]="passages" (watchFocus)="keepFocus($event)"></ewd-scripture-player>
