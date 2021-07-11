@@ -9,7 +9,16 @@ div {
     background-position: 50%;
   }
 
+  will-change: transform;
+  transform: translateZ(0);
+  transition: transform 300ms cubic-bezier(0.24,1,0.32,1), background-color 400ms cubic-bezier(0.39,0.575,0.565,1);
+
+  &.scroll-ease {
+    transform: translate3d(0,-70px,0);
+  }
+
   &.ewd-scripture-toolbar {
+    overflow: hidden;
     height: $scripture-toolbar-height;
     position: sticky;
     top: 0;
@@ -24,13 +33,23 @@ div {
         max-width: 40%;
       }
 
-      @media (max-width: 577.98px) {
+      @media (max-width: 575.98px) {
         > mat-form-field:nth-child(n+1) {
           max-width: 20%;
         }
       
         > mat-form-field:first-of-type {
           max-width: 30%;
+        }
+      }
+  
+      @media (min-width: 676px) {
+        > mat-form-field:nth-child(n+1) {
+          max-width: 150px;
+        }
+      
+        > mat-form-field:first-of-type {
+          max-width: 50%;
         }
       }
     }
@@ -64,16 +83,4 @@ div {
 
 .ewd-navigator__right {
   right: 3%;
-}
-
-/* breakpoints */
-/* large devices for the web */
-@media (min-width: 678px) {
-  .ewd-scripture-console mat-form-field:nth-child(n+1) {
-    max-width: 150px;
-  }
-
-  .ewd-scripture-console mat-form-field:first-of-type {
-    max-width: 50%;
-  }
 }

@@ -1,11 +1,12 @@
-import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { map } from 'rxjs/internal/operators/map';
+import { Observable } from 'rxjs';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
-import { FormControl } from '@angular/forms';
-import { map } from 'rxjs/internal/operators/map';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ewd-read',
@@ -13,6 +14,10 @@ import { Observable } from 'rxjs';
   styleUrls: ['./read.component.scss']
 })
 export class ReadComponent implements OnInit, AfterViewInit {
+  @ViewChild('scriptureToolbar', {static: true})
+  public scriptureToolbar!: ElementRef;
+  @ViewChild('chapterEl', {static: true, read: MatAutocompleteTrigger}) public chapAutocomplete!: MatAutocompleteTrigger;
+  @ViewChild('verseEl', {static: true, read: MatAutocompleteTrigger}) public verseAutocomplete!: MatAutocompleteTrigger;
   public bookControl: FormControl = new FormControl();
   public chapterControl: FormControl = new FormControl();
   public verseControl: FormControl = new FormControl();
@@ -43,6 +48,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    localStorage.setItem('p', (0).toString());
     this.scrolled = false;
 
     this.populateBookList();
@@ -73,8 +79,30 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.scrolled = false;
   }
 
-  @HostListener('window:scroll') onWindowScroll(): void {
+  @HostListener('window:scroll')
+  public pageScrolled(): void {
     this.scrolled = true;
+    this.chapAutocomplete.closePanel();
+    this.verseAutocomplete.closePanel();
+
+    const toolbar = this.scriptureToolbar.nativeElement;
+    const position = document?.scrollingElement?.scrollTop;
+    const lastPos = localStorage.getItem('p');
+
+    if (lastPos && position && (position <= +lastPos)) {
+      // INFO scroll down
+      toolbar.classList.remove('scroll-ease');
+      toolbar.classList.add('shadow-sm');
+    } else {
+      // INFO scroll up
+      toolbar.classList.add('scroll-ease');
+    }
+
+    localStorage.setItem('p', (position as number)?.toString());
+
+    if (position === 0) {
+      toolbar.classList.remove('shadow-sm', 'scroll-ease');
+    }
   }
 
   private _filter(val: string, data: any): string[] {

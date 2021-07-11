@@ -2,18 +2,19 @@
   <img src="https://storage.googleapis.com/gci-static-assets/icons/icon-72x72.png" alt="logo-image" style="width: 32px; height: 32px;">
 </div>
 
-<div class="d-flex flex-column w-100 mt-auto bg-white shadow ewd-scripture-toolbar">
+<div #scriptureToolbar class="d-flex flex-column w-100 mt-auto bg-white shadow ewd-scripture-toolbar px-0 mat-small">
   <mat-progress-bar *ngIf="showProgressbar" [mode]="'query'" [color]="'accent'"></mat-progress-bar>
-  <div class="d-flex w-100 mx-auto my-auto px-3 ewd-scripture-console" style="overflow: hidden;">
-    <mat-form-field class="mr-2 ml-auto" appearance="outline">
+  <div class="d-flex w-100 mx-auto my-auto px-3 ewd-scripture-console">
+    <mat-form-field class="mr-2 ml-auto mat-small h-100" appearance="outline">
       <mat-label>Book</mat-label>
       <input 
-      matInput 
-      (keyup)="searchScripture()"
-      [(ngModel)]="scripture.book"
-      placeholder="book"
-      [type]="'text'"
-      [formControl]="bookControl" [matAutocomplete]="bookVar" >
+        autocomplete="false"
+        matInput
+        (keyup)="searchScripture()"
+        [(ngModel)]="scripture.book"
+        placeholder="book"
+        [type]="'text'"
+        [formControl]="bookControl" [matAutocomplete]="bookVar" >
 
       <mat-autocomplete #bookVar="matAutocomplete">
         <mat-option *ngFor="let book of filteredBookList | async" [value]="book.toString().charAt(0).toUpperCase() + book.toString().substring(1).toLowerCase()" (click)="searchScripture()">
@@ -22,9 +23,11 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="mr-2" appearance="outline">
+    <mat-form-field class="mr-2 mat-small h-100" appearance="outline">
       <mat-label>Chapter</mat-label>
       <input
+        autocomplete="false"
+        matAutoComplete
         #chapterEl
         matInput
         (keyup)="searchScripture()"
@@ -43,19 +46,21 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="mr-auto" appearance="outline">
+    <mat-form-field class="mat-small h-100" appearance="outline">
       <mat-label>Verse</mat-label>
       <input 
-      matInput
-      #verseEl
-      (keyup)="searchScripture()"
-      (keyup)="validateVerse(verseEl, $event)"
-      [(ngModel)]="scripture.verse"
-      placeholder="verse"
-      [type]="'number'"
-      [min]="1"
-      [max]="maxVerse"
-      [formControl]="verseControl" [matAutocomplete]="verseVar" >
+        autocomplete="off"
+        matInput
+        #verseEl
+        matAutoComplete
+        (keyup)="searchScripture()"
+        (keyup)="validateVerse(verseEl, $event)"
+        [(ngModel)]="scripture.verse"
+        placeholder="verse"
+        [type]="'number'"
+        [min]="1"
+        [max]="maxVerse"
+        [formControl]="verseControl" [matAutocomplete]="verseVar" >
 
       <mat-autocomplete #verseVar="matAutocomplete">
         <mat-option *ngFor="let verse of verseList" [value]="verse" (click)="searchScripture()">
@@ -64,7 +69,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <button mat-icon-button class="my-auto rounded" color="primary">
+    <button mat-icon-button class="ml-auto my-auto rounded" color="primary">
       <mat-icon>search_outline</mat-icon>
     </button>
   </div>
