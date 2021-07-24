@@ -87,4 +87,4 @@
 <!-- paginator - right -->
 <i appScriptureNavigator *ngIf="passages" [watch]="{chapterList: chapterList, bookList: bookList}"  [resource]="scripture" class="fa fa-angle-right mr-auto ewd-navigator ewd-navigator__right" (watchOutput)="nextScripture($event)"></i>
 
-<ewd-scripture-player class="w-100" [passages]="passages" (watchFocus)="keepFocus($event)"></ewd-scripture-player>
+<ewd-scripture-player class="w-100" [passages]="passages" (watchFocus)="keepFocus($event)" [scripture]="scripture"></ewd-scripture-player>

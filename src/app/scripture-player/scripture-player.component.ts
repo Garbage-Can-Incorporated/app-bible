@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+import { IScriptures } from '../interfaces/i-scriptures';
 import { PlayerService } from '../services/player.service';
 
 @Component({
@@ -7,6 +8,7 @@ import { PlayerService } from '../services/player.service';
   styleUrls: ['./scripture-player.component.scss']
 })
 export class ScripturePlayerComponent implements OnInit, OnChanges {
+  @Input() public scripture: IScriptures;
   @Input() public passages: Array<string>;
   @Output() public watchFocus: EventEmitter<number> = new EventEmitter();
   public repeatAll = <boolean>false;
@@ -46,6 +48,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
     this.stopPlay();
 
     this.initial += 1;
+
     if (this.passageOverflow) {
       this.initial = 0;
     }
