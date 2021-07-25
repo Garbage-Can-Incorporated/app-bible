@@ -151,7 +151,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
         (typeof chapter === 'string' ? chapter !== ' ' : true) &&
         verse !== undefined && verse !== null
       ) {
-        this.focusElementNo = parseInt(verse.toString(), 10) - 1;
+        this.focusElementNo = parseInt(verse.toString(), 10);
 
         this.populateChapterList();
         this.getPassage(book.toLowerCase(), chapter);
@@ -187,7 +187,7 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
             if (verse > this.verseList.length) {
               this.scripture.verse = this.verseList.length;
-              this.focusElementNo = parseInt(verse.toString(), 10) - 1;
+              this.focusElementNo = parseInt(verse.toString(), 10);
             }
           });
 
