@@ -1,0 +1,26 @@
+@import '../../styles.scss';
+
+.ewd-dialog-container {
+    background-color: #ffffff;
+    width: 85vw;
+    height: fit-content;
+    max-height: 80vh;
+    overflow: hidden;
+
+    @media (min-width: 576px) {
+        width: 45vw;
+    }
+
+    mat-toolbar {
+        top: 0;
+        border-bottom: 1px solid map-get($map: $evryword-theme-primary, $key: 'default');
+
+        .mat-title {
+            color: map-get($map: $evryword-theme-primary, $key: 'darker');
+        }
+    }
+
+    .ewd-disclaimer-heading {
+        color: map-get($map: $evryword-theme-primary, $key: 'default');
+    }
+}

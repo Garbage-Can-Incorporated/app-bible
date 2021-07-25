@@ -145,6 +145,7 @@ $evryword-typography: mat-typography-config(
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp");
 
+$evryword-theme-primary: map-get($evryword-theme, 'primary');
 $enable-responsive-font-sizes: true;
 $text-primary-contrast: map.get($evryword-theme, 'primary', 'default-contrast');
 $text-accent-contrast: map.get($evryword-theme, 'accent', 'default-contrast');
@@ -220,12 +221,13 @@ app-reaction-console {
   cursor: pointer;
 }
 
-.__red--color {
-  color: red;
-}
-
-.__blue--color {
-  color: #1414fa;
+.ewd-general_dialog {
+  & > mat-dialog-container.mat-dialog-container {
+    border-radius: 16px!important;
+    padding: 0!important;
+    background-color: transparent;
+    z-index: 5001;
+  }
 }
 
 .mat-form-field-wrapper {

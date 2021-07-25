@@ -7,9 +7,12 @@ import { AppComponent } from './app.component';
 import { ReadModule } from './read/read.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { DisclaimerComponent } from './disclaimer/disclaimer.component';
 
 @NgModule({
-  declarations: [ ],
+  declarations: [
+    DisclaimerComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -18,6 +21,7 @@ import { environment } from '../environments/environment';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [ ],
+  entryComponents: [DisclaimerComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
