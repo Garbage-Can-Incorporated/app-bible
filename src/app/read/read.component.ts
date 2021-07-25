@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
