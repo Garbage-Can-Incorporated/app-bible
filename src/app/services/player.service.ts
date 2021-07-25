@@ -29,7 +29,7 @@ export class PlayerService {
   }
 
   private initSpeechSynth(): void {
-    this._speechSynth.__init__();
+    // this._speechSynth.__init__();
   }
 
   public get isPending(): boolean {

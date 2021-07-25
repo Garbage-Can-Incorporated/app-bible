@@ -8,21 +8,24 @@ import { Observable } from 'rxjs';
 export class SpeechSynthesisService {
   private synth = window.speechSynthesis;
   private volume: number;
-  private pitch = <number>1;
-  private rate = <number>1;
-  private voicesList: any[];
+  private pitch = 1;
+  private rate = 1;
+  private voicesList: SpeechSynthesisVoice[];
 
   constructor() { }
 
+  // WARNING returns new observable everytime
   public play (content: string): Observable<any> {
+    this.initSetup();
+
     return new Observable(
       (obs) => {
-        if (this.synth.speaking === true) {
-          console.log('was speaking!');
+        if (this.synth.paused === true || this.synth.speaking === true) {
+          console.log('[Synth] was paused/speaking!');
 
           this.synth.resume();
-
           obs.next({ status: true, msg: 'Resumed speaking' });
+
           return;
         }
 
@@ -44,7 +47,7 @@ export class SpeechSynthesisService {
             obs.complete();
           };
         } else {
-          console.log('voice models depends on the internet');
+          console.log('[Synth] voice models depends on the internet');
 
           obs.error({
             status: false,
@@ -60,10 +63,12 @@ export class SpeechSynthesisService {
   }
 
   public pause(): void {
-    if (this.synth.paused === false) {
+    if (this.synth.paused === true) {
+      console.log('[Synth] pause', this.synth.paused);
       this.synth.pause();
-      console.log('original pause');
-      return;
+    } else {
+      console.log('[Synth] resume', this.synth.paused);
+      this.synth.resume();
     }
   }
 
@@ -84,8 +89,9 @@ export class SpeechSynthesisService {
   }
 
   private getVoices(): any[] {
-    console.log({ voicesAvailable: speechSynthesis.getVoices() });
-    this.voicesList = speechSynthesis.getVoices();
+    // console.log({ voicesAvailable: this.synth.getVoices() });
+    this.voicesList = this.synth.getVoices();
+
     return this.voicesList;
   }
 
@@ -94,7 +100,7 @@ export class SpeechSynthesisService {
     return this.voicesList;
   }
 
-  public __init__ (): void {
+  public initSetup(): void {
     this.setVolume();
     this.getVoices();
   }

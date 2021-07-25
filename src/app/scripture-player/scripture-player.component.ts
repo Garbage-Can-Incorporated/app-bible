@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { IScriptures } from '../interfaces/i-scriptures';
-import { PlayerService } from '../services/player.service';
+import { LastReadService } from '../services/last-read.service';
+import { SpeechSynthesisService } from '../services/speech-synthesis.service';
 
 @Component({
   selector: 'ewd-scripture-player',
@@ -11,19 +12,33 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   @Input() public scripture: IScriptures;
   @Input() public passages: Array<string>;
   @Output() public watchFocus: EventEmitter<number> = new EventEmitter();
-  public repeatAll = <boolean>false;
-  public playerState = <boolean> false;
-  public initial = <number> 0;
+  public repeatAll = false;
+  public playerState = false;
+  public pauseState = false;
+  public stopState = false;
+  public initial = 0;
 
   constructor(
-    private _player: PlayerService
+    private speechSynth: SpeechSynthesisService,
+    private lastRead: LastReadService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.lastRead.lastReadSubject
+      .subscribe((scripture) => {
+        this.scripture = scripture;
+        this.initial = this.scripture.verse - 1;
+      });
+  }
 
   ngOnChanges() {
     if (this.passages !== undefined) {
       this.passages = this.passages;
+    }
+
+    if (this.scripture !== undefined) {
+      // INFO index is zero-based
+      this.initial = this.scripture.verse - 1;
     }
   }
 
@@ -32,35 +47,37 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   }
 
   public previous(): void {
+    this.stopState = true;
     this.stopPlay();
-
     this.initial -= 1;
 
     if (this.passageUnderflow) {
       this.initial = 0;
     }
 
-    console.log({ _init: this.initial });
-    // this.playChapter();
+    console.log({ prev: this.initial });
+    this.playChapter();
   }
 
   public next(): void {
+    this.stopState = true;
     this.stopPlay();
-
     this.initial += 1;
 
     if (this.passageOverflow) {
       this.initial = 0;
     }
 
-    console.log({ init_: this.initial });
-    // this.playChapter();
+    console.log({ next: this.initial });
+    this.playChapter();
   }
 
   public playChapter() {
     this.playerState = true;
+    this.pauseState = true;
+    this.stopState = false;
 
-    this._player
+    this.speechSynth
       .play(this.passages[ this.initial ])
       .subscribe(
         (data) => console.log({ data }),
@@ -70,8 +87,7 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
           this.stopPlay();
         },
         () => {
-          console.log('done!');
-          console.log('last played => ', { lastPlayed: this.initial + 1 });
+          console.log('[Scripture Player] done!');
 
           // end of list EOL
           if (this.EOPassage) {
@@ -85,10 +101,12 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
           }
 
           // play next on the list
-          if (this.playerState === true) {
+          if (this.pauseState === true && this.stopState === false) {
             this.initial += 1;
-            console.log('currently being played', { currentlyPlayed: this.initial + 1 });
+            // console.log('[Scripture Player] currently being played', { currentlyPlayed: this.initial + 1 });
             this.playChapter();
+            this.scripture.verse = this.initial + 1;
+            this.lastRead.setLastRead(this.scripture);
           }
 
           this.watchFocus.emit(this.initial + 1);
@@ -97,17 +115,13 @@ export class ScripturePlayerComponent implements OnInit, OnChanges {
   }
 
   public pause(): void {
-    this._player.pause();
+    this.speechSynth.pause();
+    this.pauseState = false;
   }
 
   public stopPlay(): void {
-    this._player.stop();
-    this.togglePlayerState();
     this.playerState = false;
-  }
-
-  public togglePlayerState(): void {
-    this.playerState = !this.playerState;
+    this.speechSynth.stop();
   }
 
   private get passageUnderflow(): boolean {
