@@ -241,5 +241,5 @@ export class ReadComponent implements OnInit, AfterViewInit {
     this.changeDetector.detach();
     this.changeDetector.reattach();
     this.changeDetector.detectChanges();
-  } 
+  }
 }

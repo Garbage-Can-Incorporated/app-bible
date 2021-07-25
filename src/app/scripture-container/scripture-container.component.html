@@ -9,7 +9,10 @@
       [resource]="{book: resource.book, chapter: resource.chapter, verse: i}"></ewd-scripture-item>
   </div>
 
-  <ng-template #loadingElseBlock class="d-flex w-100">
-    <i class="fa fa-bible fa-spin fa-3x mx-auto my-auto ewd--preloading__icon"> </i>
+  <ng-template #loadingElseBlock>
+    <div class="d-flex w-100 flex-column mat-h2">
+      <img class="mx-auto mt-5 mb-3" src="https://storage.googleapis.com/gci-static-assets/document.gif" style="width: 96px;" alt="document" />
+      <span class="mx-auto mb-auto">Finding resources...</span>
+    </div>
   </ng-template>
 </div>
