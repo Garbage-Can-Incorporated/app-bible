@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { IScriptures } from '../interfaces/i-scriptures';
 
@@ -6,11 +7,13 @@ import { IScriptures } from '../interfaces/i-scriptures';
   providedIn: 'root'
 })
 export class LastReadService {
+  public lastReadSubject: Subject<IScriptures> = new Subject();
 
   constructor() { }
 
   public setLastRead(item: IScriptures): void {
     window.localStorage.setItem('lr', JSON.stringify(item));
+    this.lastReadSubject.next(item);
   }
 
   public get lastRead(): IScriptures {
