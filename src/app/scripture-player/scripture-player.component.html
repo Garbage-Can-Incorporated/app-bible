@@ -1,19 +1,19 @@
 <mat-progress-bar *ngIf="true" [mode]="'determinate'" [color]="'accent'" [value]="passages ? ((initial + 1)/passages.length) * 100 : 0"></mat-progress-bar>
 <div class="d-flex w-100 ewd-scriptures-player--bar bg-white">
   <div class="d-flex h-100">
-    <button mat-icon-button color="accent" class="my-auto p-2 p-sm-3" style="width: fit-content; height: fit-content;" (click)="previous()">
+    <button mat-icon-button color="accent" class="my-auto p-2 p-sm-3" style="width: fit-content; height: fit-content;" (click)="previous()" [disabled]="passages === undefined || passages.length === 0">
       <mat-icon class="material-icons-outlined">skip_previous_outline</mat-icon>
     </button>
 
-    <button *ngIf="pauseState === false" mat-icon-button color="accent" class="my-auto p-2 p-sm-3" style="width: fit-content; height: fit-content;" (click)="playChapter()">
+    <button *ngIf="pauseState === false" mat-icon-button color="accent" class="my-auto p-2 p-sm-3" style="width: fit-content; height: fit-content;" (click)="playChapter()" [disabled]="passages === undefined || passages.length === 0">
       <mat-icon class="material-icons-outlined">play_arrow_outline'</mat-icon>
     </button>
 
-    <button *ngIf="pauseState === true" mat-icon-button color="accent" class="my-auto p-2 p-sm-3" (click)="pause()">
+    <button *ngIf="pauseState === true" mat-icon-button color="accent" class="my-auto p-2 p-sm-3" (click)="pause()" [disabled]="passages === undefined || passages.length === 0">
       <mat-icon>pause</mat-icon>
     </button>
 
-    <button mat-icon-button color="accent" class="my-auto p-2 p-sm-3" style="width: fit-content; height: fit-content;" (click)="next()">
+    <button mat-icon-button color="accent" class="my-auto p-2 p-sm-3" style="width: fit-content; height: fit-content;" (click)="next()" [disabled]="passages === undefined || passages.length === 0">
       <mat-icon class="material-icons-outlined">skip_next_outline</mat-icon>
     </button>
   </div>
