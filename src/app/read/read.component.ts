@@ -8,6 +8,7 @@ import { IScriptures } from '../interfaces/i-scriptures';
 
 import { ScripturesService } from '../services/scriptures.service';
 import {LastReadService} from '../services/last-read.service';
+import { ResourceHandlerService } from '../services/resource-handler.service';
 
 @Component({
   selector: 'ewd-read',
@@ -44,19 +45,27 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   public _showSearchPane = <boolean>false;
   public showProgressbar = <boolean> false;
+  public versions: string[] = [];
 
   constructor(
     private _scripturesProvider: ScripturesService,
     private lastRead: LastReadService,
 
     private _zone: NgZone,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private resourceHandler: ResourceHandlerService
   ) { }
 
   ngOnInit() {
     this.scripture = this.lastRead.lastRead || {...this._scripture};
     localStorage.setItem('p', (0).toString());
     this.scrolled = false;
+
+    this.resourceHandler
+      .getVersions()
+      .subscribe((data) => {
+        this.versions = data.data;
+      });
 
     this.populateBookList();
     this.populateChapterList();
@@ -84,6 +93,13 @@ export class ReadComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.scrolled = false;
+  }
+
+  public setBibleVersion(version: string): void {
+    window.localStorage.setItem('sv', version);
+    this.populateBookList();
+    this.populateChapterList();
+    this.populateVerseList();
   }
 
   @HostListener('window:scroll')

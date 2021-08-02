@@ -9,7 +9,7 @@ import { BibleElement, ResourceHandlerService } from './resource-handler.service
   providedIn: 'root',
 })
 export class ScripturesService {
-  private resource: Array<BibleElement>;
+  private resource: {[key in string]: Array<BibleElement>} = {};
   private semiIndex: {[key in string]: Array<BibleElement>} = {};
 
   constructor(
@@ -68,15 +68,15 @@ export class ScripturesService {
   }
 
   private getBible(cb: (data?: Array<BibleElement>) => any): void {
-    if (this.resource !== undefined) {
-      cb(this.resource);
+    if (this.resource[window.localStorage.getItem('sv') ?? 'kjv'] !== undefined) {
+      cb(this.resource[window.localStorage.getItem('sv') ?? 'kjv']);
     } else {
       this._resources.fetchResource()
         .subscribe(
           (data: {request: Array<BibleElement>}) => {
-            this.resource = data.request;
+            this.resource[window.localStorage.getItem('sv') ?? 'kjv'] = data.request;
             this.semiIndexList();
-            cb(this.resource);
+            cb(this.resource[window.localStorage.getItem('sv') ?? 'kjv'] );
           },
           (error) => {
             console.error({ error });
@@ -91,12 +91,12 @@ export class ScripturesService {
 
     if (knownKeys === undefined) {
       // take first element's key as model, keys are circular, same for all elements
-      knownKeys = Object.keys(this.resource[0]);
+      knownKeys = Object.keys(this.resource[window.localStorage.getItem('sv') ?? 'kjv'][0]);
     }
 
     knownKeys.filter(key => (key !== 'verses' || (key as string) !== 'version'))
       .forEach((key) => {
-        this.resource.forEach((resource) => {
+        this.resource[window.localStorage.getItem('sv') ?? 'kjv'].forEach((resource) => {
           const indexKey = key === 'bookTitle' ? resource[key] : `${resource.bookTitle}-${resource[key]}`;
 
           if (this.semiIndex[indexKey] === undefined) {
@@ -105,14 +105,14 @@ export class ScripturesService {
 
           if (this.semiIndex[indexKey].length === 0) {
             if (key === 'bookTitle') {
-              this.semiIndex[indexKey] = this.resource
+              this.semiIndex[indexKey] = this.resource[window.localStorage.getItem('sv') ?? 'kjv']
               .map(r => {
                 if (indexKey === r[key]) {
                   return r;
                 }
               }).filter((e) => e !== undefined);
             } else {
-              this.semiIndex[indexKey] = this.resource
+              this.semiIndex[indexKey] = this.resource[window.localStorage.getItem('sv') ?? 'kjv']
                 .map(r => {
                   if (resource[key] === r[key] && resource.bookTitle === r.bookTitle) {
                     return r;

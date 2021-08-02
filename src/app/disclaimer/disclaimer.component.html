@@ -1,0 +1,15 @@
+<div class="d-flex flex-column ewd-dialog-container postion-sticky">
+    <mat-toolbar class="d-flex py-2 text-white bg-white text-dark">
+        <span class="my-auto mat-title">Disclaimer</span>
+
+        <button mat-icon-button mat-dialog-close class="ml-auto my-auto" color="accent">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+    <div class="d-flex flex-column px-3 py-3" style="overflow: hidden auto;">
+        <div *ngFor="let item of disclaimerTexts; index as i" class="d-flex flex-column">
+            <p class="mat-h3 mb-2 ewd-disclaimer-heading">{{i + 1}}. {{item.heading}}</p>
+            <span *ngFor="let content of item.contents" class="mat-h5 mb-1">{{content}}</span>
+        </div>
+    </div>
+</div>
