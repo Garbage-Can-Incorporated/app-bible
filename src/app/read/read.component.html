@@ -1,10 +1,26 @@
 <div class="d-flex w-100 ewd-cover px-2 py-2 px-sm-4 py-sm-4 text-white">
   <img src="https://storage.googleapis.com/gci-static-assets/icons/icon-72x72.png" alt="logo-image" style="width: 32px; height: 32px;">
+
+  <button class="ml-auto px-3 py-2 rounded-pill" mat-raised-button color="accent" style="height: fit-content;" [matMenuTriggerFor]="versionMenu">
+    <mat-icon>library_books</mat-icon>
+    <span class="ml-2">Versions</span>
+  </button>
+
+  <mat-menu #versionMenu="matMenu">
+    <button *ngFor="let version of versions" class="d-flex my-2" mat-menu-item style="height: fit-content;" (click)="setBibleVersion(version)">
+      <!-- <mat-icon>dialpad</mat-icon> -->
+      <span class="text-uppercase" style="white-space: normal;">{{version}}</span>
+    </button>
+  </mat-menu>
 </div>
 
 <div #scriptureToolbar class="d-flex flex-column w-100 mt-auto bg-white shadow-sm ewd-scripture-toolbar px-0 mat-small">
   <mat-progress-bar *ngIf="showProgressbar" [mode]="'query'" [color]="'accent'"></mat-progress-bar>
   <div class="d-flex w-100 mx-auto my-auto px-3 ewd-scripture-console">
+    <button mat-icon-button color="accent" class="my-auto rounded"[matMenuTriggerFor]="versionMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
     <mat-form-field class="mr-2 ml-auto mat-small h-100" appearance="outline">
       <mat-label>Book</mat-label>
       <input 
