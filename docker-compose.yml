@@ -1,0 +1,22 @@
+ersion: "3"
+services:
+  frontend:
+    container_name: ewd-bible-web-1.0.0
+    labels:
+      ewd-bible-web: "This is the Frontend of Ev'ryWord's Web Application"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ewd-bible-web:1.0.0
+    restart: unless-stopped
+    networks:
+      - ewd-bible-web-common-network
+    ports:
+      - "45902:80"
+    volumes:
+      - ./node_modules:/usr/app/node_modules
+      - ./dist:/usr/app/dist
+
+networks:
+  ewd-bible-web-common-network:
+    driver: bridge

@@ -1,0 +1,44 @@
+name: EvryWord Web Application CI/CD
+
+on:
+  push:
+    branches: [ do-staging ]
+  pull_request:
+    branches: [ do-staging ]
+
+jobs:
+  deploy:
+
+    runs-on: [self-hosted, linux, x64]
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checks Out to Repo 
+        uses: actions/checkout@v2
+      
+      - name: Create staging directory
+        if: ${{ cancelled() == false && failure() == false }}
+        run: |
+          mkdir -p /home/${{secrets.USER}}/${{secrets.APP_PATH}}
+      - name: Build Artifacts
+        if: ${{ cancelled() == false && failure() == false }}
+        run: |
+          npm i
+          npm run build
+      
+      - name: Copy Source & Clean
+        if: ${{ cancelled() == false && failure() == false }}
+        run: |
+          cp -r docker-compose.yml Dockerfile dist nginx-conf-gen.sh server.js angular.json -t /home/${{secrets.USER}}/${{secrets.APP_PATH}}
+          rm -rf node_modules
+      - name: Start Application
+        if: ${{ failure() == false && cancelled() == false }}
+        run: |
+          cd /home/${{secrets.USER}}/${{secrets.APP_PATH}}
+          npm i express
+          docker-compose up -d --build
+          chmod +x nginx-conf-gen.sh
+          echo ${{secrets.SSH_PASSWORD}} | sudo -S ./nginx-conf-gen.sh study.evryword.com.ng --purpose=frontend $(docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{(index $conf 0).HostPort}} {{end}}' ewd-bible-web-1.0.0) ewd-bible-web-1.0.0.conf
