@@ -16,7 +16,7 @@ export interface BibleElement {
   providedIn: 'root'
 })
 export class ResourceHandlerService {
-  private url = 'https://api-ent-bible.appspot.com/v1/api';
+  private url = 'https://api.evryword.com.ng/v1/api';
   // private url = 'http://localhost:4445/v1/api';
   private resource: Subject<Array<BibleElement>> = new Subject();
 
